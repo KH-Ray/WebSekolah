@@ -2,6 +2,8 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
+import logo from "../images/cropped-bakdhatlogo.svg";
+
 const navigation = [
   { name: "Beranda", href: "#", current: true },
   { name: "Profile", href: "#", current: false },
@@ -42,7 +44,7 @@ export default function NavBar() {
                 <div className="flex items-center gap-4 hover:cursor-pointer">
                   <img
                     className="w-16"
-                    src="src/assets/cropped-bakdhatlogo.svg"
+                    src={logo}
                     alt="Logo Sekolah Bakti Idhata"
                   />
                   <h1 className="flex flex-col font-antonio text-2xl font-semibold uppercase">

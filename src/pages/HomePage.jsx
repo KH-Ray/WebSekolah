@@ -6,29 +6,33 @@ import { customButtonTheme } from "../themes/flowbiteThemes";
 import { Carousel } from "@material-tailwind/react";
 import Notice from "../components/Notice";
 
+import placeholder from "../images/placeholder.png";
+import gedung1 from "../images/foto-gedung-1.png";
+import gedung2 from "../images/foto-gedung-2.png";
+
 const news = [
   {
     title: "Headline #1",
     subtitle: "Sub-Headline",
-    imgSrc: "src/assets/placeholder.png",
+    imgSrc: placeholder,
     imgAlt: "placeholder image",
   },
   {
     title: "Headline #2",
     subtitle: "Sub-Headline",
-    imgSrc: "src/assets/placeholder.png",
+    imgSrc: placeholder,
     imgAlt: "placeholder image",
   },
   {
     title: "Headline #3",
     subtitle: "Sub-Headline",
-    imgSrc: "src/assets/placeholder.png",
+    imgSrc: placeholder,
     imgAlt: "placeholder image",
   },
   {
     title: "Headline #4",
     subtitle: "Sub-Headline",
-    imgSrc: "src/assets/placeholder.png",
+    imgSrc: placeholder,
     imgAlt: "placeholder image",
   },
 ];
@@ -55,8 +59,8 @@ const HomePage = () => {
   return (
     <main className="font-poppins">
       <Carousel className="h-[640px] overflow-hidden">
-        <img className="w-full" src="src/assets/foto-gedung-1.png" />
-        <img className="w-full" src="src/assets/foto-gedung-2.png" />
+        <img className="w-full" src={gedung1} />
+        <img className="w-full" src={gedung2} />
       </Carousel>
 
       <div className="space-y-32">
@@ -103,7 +107,7 @@ const HomePage = () => {
           <div className="!mb-40">
             <h2 className="mb-3 text-3xl font-bold">Pengumuman</h2>
 
-            <div className="divide-y divide-solid divide-gray-500">
+            <div className="divide-y divide-solid divide-gray-400">
               {notices.map((notice, i) => (
                 <Notice
                   key={i}
