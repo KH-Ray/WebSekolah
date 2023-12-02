@@ -1,4 +1,6 @@
 import logo from "../images/cropped-bakdhatlogo.svg";
+import phone from "../images/icons/phone-flip.svg";
+import envelope from "../images/icons/envelope.svg";
 
 const pageLinks = [
   "Halaman #1",
@@ -52,17 +54,20 @@ const Footer = () => {
             <p className="mb-8 text-4xl font-extrabold md:mb-12">
               {contact.heading}
             </p>
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-6">
               <p className="w-64 leading-6">{contact.content}</p>
+              <p className="flex items-center gap-4">
+                <img src={envelope} alt="Envelope icon" />
+                SekolahXX@address.com
+              </p>
+              <p className="flex items-center gap-4">
+                <img src={phone} alt="Phone icon" />
+                (021) XXXXXXX
+              </p>
             </div>
           </div>
         </div>
       </div>
-
-      {/* mobile accordion */}
-      {/* <div className="md:hidden">
-        <Accord items={footerContent} />
-      </div> */}
     </footer>
   );
 };

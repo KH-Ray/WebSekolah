@@ -1,5 +1,6 @@
 import Box from "./PhotoBox";
 import megaphone from "../images/icons/megaphone.svg";
+import calendar from "../images/icons/calendar-icon.svg";
 
 const Notice = (props) => {
   return (
@@ -11,8 +12,7 @@ const Notice = (props) => {
       <div className="flex flex-col gap-2">
         <h3 className="text-4xl">{props.title}</h3>
         <p className="flex gap-4 text-xl">
-          <img className="h-6 w-6" src={megaphone} alt="Calendar icon" />
-
+          <img className="h-6 w-6" src={calendar} alt="Calendar icon" />
           {props.date}
         </p>
         <p className="text-xl text-gray-500">{props.subtitle}</p>
