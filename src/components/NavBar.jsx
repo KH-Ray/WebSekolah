@@ -3,15 +3,16 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import logo from "../images/cropped-bakdhatlogo.svg";
+import { Link } from "react-router-dom";
 
 const navigation = [
-  { name: "Beranda", href: "#", current: true },
-  { name: "Profile", href: "#", current: false },
-  { name: "Data", href: "#", current: false },
-  { name: "Berita", href: "#", current: false },
-  { name: "Kegiatan", href: "#", current: false },
-  { name: "Gallery", href: "#", current: false },
-  { name: "Kontak", href: "#", current: false },
+  { name: "Beranda", link: "/" },
+  { name: "Profile", link: "/profile" },
+  { name: "Data", link: "#" },
+  { name: "Berita", link: "#" },
+  { name: "Kegiatan", link: "#" },
+  { name: "Gallery", link: "#" },
+  { name: "Kontak", link: "#" },
 ];
 
 export default function NavBar() {
@@ -22,25 +23,24 @@ export default function NavBar() {
     >
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl lg:px-6">
+          <div className="mx-auto max-w-7xl px-4 lg:px-6">
             <div className="relative flex h-24 items-center justify-between">
               <div className="order-last flex flex-1 items-center justify-center sm:items-stretch sm:justify-end">
                 <div className="hidden md:block">
                   <div className="flex">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.link}
                         className="rounded-lg px-3 py-2 text-sm text-dark-gray hover:bg-gray-50/25 lg:px-3 lg:py-2 lg:text-base"
-                        aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
               </div>
-              <div className="absolute inset-y-0 left-0 flex w-full items-center justify-between p-2 sm:static sm:inset-auto">
+              <div className="absolute inset-y-0 left-0 flex w-full items-center justify-between sm:static sm:inset-auto">
                 <div className="flex items-center gap-4 hover:cursor-pointer">
                   <img
                     className="w-16"
@@ -79,7 +79,6 @@ export default function NavBar() {
                   as="a"
                   href={item.href}
                   className="block rounded-md px-3 py-2 text-base font-medium hover:bg-gray-300"
-                  aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>

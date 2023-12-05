@@ -58,16 +58,17 @@ const notices = [
 const HomePage = () => {
   return (
     <main className="font-poppins">
-      <Carousel className="h-[640px] overflow-hidden">
+      <Carousel className="overflow-hidden">
         <img className="w-full" src={gedung1} />
-        <img className="w-full" src={gedung2} />
+        <img className="w-full" src={gedung1} />
+        <img className="w-full" src={gedung1} />
       </Carousel>
 
       <div className="space-y-32">
         <p className="p-12 pb-0 text-right">Berita</p>
 
-        <div className="mx-auto max-w-7xl space-y-32 lg:px-6">
-          <div className="grid h-96 grid-cols-[1fr_2fr] gap-8">
+        <div className="max-w-7xl space-y-32 px-12 lg:mx-auto">
+          <div className="grid h-96 grid-cols-1 gap-8 lg:grid-cols-[1fr_2fr]">
             <PhotoBox styles="text-white text-3xl flex items-center justify-center">
               Foto Kepala Sekolah
             </PhotoBox>
@@ -77,21 +78,21 @@ const HomePage = () => {
           </div>
 
           <div>
-            <div className="mb-10 flex h-14 justify-between">
+            <div className="mb-24 flex h-14 flex-col justify-between gap-4 sm:mb-10 sm:flex-row">
               <h2 className="flex flex-col justify-between text-3xl font-bold">
                 Berita
-                <span className="text-base font-normal text-gray-500">
+                <span className="hid text-sm font-normal text-gray-500 sm:text-base">
                   Berita dan informasi terbaru
                 </span>
               </h2>
               <Flowbite theme={{ theme: customButtonTheme }}>
-                <Button color="dark-gray" size="md">
+                <Button color="dark-gray" size="lg">
                   Semua berita
                 </Button>
               </Flowbite>
             </div>
 
-            <div className="flex gap-6">
+            <div className="mx-auto flex flex-col items-center gap-6 md:grid md:grid-cols-2 lg:grid-cols-4">
               {news.map((n, i) => (
                 <NewsCard
                   key={i}
