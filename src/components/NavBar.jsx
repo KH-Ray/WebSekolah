@@ -77,8 +77,8 @@ export default function NavBar() {
                 <Disclosure.Button
                   key={item.name}
                   as="a"
-                  href={item.href}
-                  className="block rounded-md px-3 py-2 text-base font-medium hover:bg-gray-300"
+                  href={item.link}
+                  className="block cursor-pointer rounded-md px-3 py-2 text-base font-medium hover:bg-gray-300"
                 >
                   {item.name}
                 </Disclosure.Button>
