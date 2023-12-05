@@ -7,8 +7,7 @@ import { Carousel } from "@material-tailwind/react";
 import Notice from "../components/Notice";
 
 import placeholder from "../images/placeholder.png";
-import gedung1 from "../images/foto-gedung-1.png";
-import gedung2 from "../images/foto-gedung-2.png";
+import gedung1 from "../images/foto-gedung-1.jpg";
 
 const news = [
   {
