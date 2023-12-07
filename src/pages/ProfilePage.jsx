@@ -5,6 +5,7 @@ const ProfilePage = () => {
     { title: "Pengantar", current: true },
     { title: "Visi dan Misi", current: false },
     { title: "Struktur Organisasi", current: false },
+    { title: "Denah Sekolah", current: false },
   ];
 
   return (
@@ -18,6 +19,7 @@ const ProfilePage = () => {
 
       <div className="mx-auto my-12 flex max-w-7xl flex-col-reverse gap-8 px-4 leading-6 sm:grid sm:grid-cols-[60fr_40fr] sm:gap-0 lg:px-6">
         <div>
+          <h1 className="py-2 text-2xl font-semibold">Pengantar</h1>
           <article>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat
             eaque consequatur adipisci vitae sint ex maiores perferendis quam
