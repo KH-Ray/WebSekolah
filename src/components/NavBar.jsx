@@ -40,7 +40,7 @@ export default function NavBar() {
                 </div>
               </div>
               <div className="absolute inset-y-0 left-0 flex w-full items-center justify-between sm:static sm:inset-auto">
-                <div className="flex items-center gap-4 hover:cursor-pointer">
+                <div className="flex items-center gap-4">
                   <img
                     className="w-16"
                     src={logo}

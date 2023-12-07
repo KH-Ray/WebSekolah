@@ -1,6 +1,6 @@
 import { classNames } from "../helper";
 
-const ProfilePage = () => {
+const LearningPage = () => {
   const sections = [
     { title: "Pengantar", current: true },
     { title: "Visi dan Misi", current: false },
@@ -12,8 +12,10 @@ const ProfilePage = () => {
     <main className="font-poppins">
       <div className="bg-main-gray">
         <div className="mx-auto flex h-96 max-w-7xl flex-col items-start justify-center gap-4 px-4 lg:px-6">
-          <h1 className="text-6xl font-semibold uppercase">profil sekolah</h1>
-          <p className="text-xl">Beranda - Staff Pengajar</p>
+          <h1 className="text-6xl font-semibold uppercase">
+            pengorganisasian pembelajaran
+          </h1>
+          <p className="text-xl">Beranda - Pengorganisasian Pembelajaran</p>
         </div>
       </div>
 
@@ -80,4 +82,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default LearningPage;

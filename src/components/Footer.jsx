@@ -34,11 +34,11 @@ const [description, links, contact] = [...footerContent];
 const Footer = () => {
   return (
     <footer className="bg-main-blue font-poppins">
-      <div className="mx-auto max-w-7xl">
-        <div className="grid grid-cols-1 gap-8 py-6 text-justify md:scale-90 md:grid-cols-[auto_auto_auto] md:py-6 md:text-left lg:max-w-7xl lg:py-12 lg:pr-40">
-          <div className="flex flex-col items-center justify-between gap-4 md:items-start">
+      <div className="mx-auto max-w-7xl lg:px-6">
+        <div className="grid grid-cols-1 gap-8 py-6 text-justify md:scale-90 md:grid-cols-3 md:py-6 md:text-left lg:max-w-7xl lg:py-12 xl:pr-52">
+          <div className="flex flex-col items-center justify-between gap-4 sm:gap-0 md:items-start">
             <img className="w-32" src={logo} alt="Logo Sekolah Bakti Idhata" />
-            <p className="px-4 leading-6 md:px-0">{description.content}</p>
+            <p className="w-64 px-4 leading-6 md:px-0">{description.content}</p>
           </div>
           <div className="flex flex-col items-center justify-between md:items-start">
             <p className="mb-8 text-4xl font-extrabold md:mb-12">

@@ -12,13 +12,14 @@ const TeachersPage = () => {
     { name: "Nama Guru", role: "Guru Bidang" },
     { name: "Nama Guru", role: "Guru Bidang" },
     { name: "Nama Guru", role: "Guru Bidang" },
-    { name: "Nama Guru", role: "Guru Bidang" },
-    { name: "Nama Guru", role: "Guru Bidang" },
-    { name: "Nama Guru", role: "Guru Bidang" },
-    { name: "Nama Guru", role: "Guru Bidang" },
-    { name: "Nama Guru", role: "Guru Bidang" },
-    { name: "Nama Guru", role: "Guru Bidang" },
-    { name: "Nama Guru", role: "Guru Bidang" },
+    { name: "Nama Staff", role: "Staff Bidang" },
+    { name: "Nama Staff", role: "Staff Bidang" },
+    { name: "Nama Staff", role: "Staff Bidang" },
+    { name: "Nama Staff", role: "Staff Bidang" },
+    { name: "Nama Staff", role: "Staff Bidang" },
+    { name: "Nama Staff", role: "Staff Bidang" },
+    { name: "Nama Staff", role: "Staff Bidang" },
+    { name: "Nama Staff", role: "Staff Bidang" },
   ];
 
   return (

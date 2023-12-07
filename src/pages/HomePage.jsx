@@ -57,7 +57,7 @@ const notices = [
 const HomePage = () => {
   return (
     <main className="font-poppins">
-      <Carousel className="overflow-hidden">
+      <Carousel className="h-[153px] overflow-hidden md:h-[306px] lg:h-[408px] xl:h-[612px]">
         <img className="w-full" src={gedung1} />
         <img className="w-full" src={gedung1} />
         <img className="w-full" src={gedung1} />
