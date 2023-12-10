@@ -21,23 +21,23 @@ const LoginPage = () => {
           />
         </div>
 
-        <div className="flex w-1/2 flex-col gap-2">
-          <label htmlFor="password">Password</label>
+        <div className="mb-6 flex w-1/2 flex-col gap-2">
+          <label htmlFor="nisn">NISN</label>
           <input
             type="password"
-            id="password"
-            name="password"
+            id="nisn"
+            name="nisn"
             className="rounded border-gray-400"
           />
         </div>
-      </form>
 
-      <Button
-        variant="outlined"
-        className="w-36 border-2 border-main-blue text-base capitalize"
-      >
-        Login
-      </Button>
+        <Button
+          variant="outlined"
+          className="w-36 border-2 border-main-blue text-base capitalize"
+        >
+          Login
+        </Button>
+      </form>
     </main>
   );
 };

@@ -12,10 +12,12 @@ const LearningPage = () => {
     <main className="font-poppins">
       <div className="bg-main-gray">
         <div className="mx-auto flex h-96 max-w-7xl flex-col items-start justify-center gap-4 px-4 lg:px-6">
-          <h1 className="text-6xl font-semibold uppercase">
+          <h1 className="text-3xl font-semibold uppercase md:text-6xl">
             pengorganisasian pembelajaran
           </h1>
-          <p className="text-xl">Beranda - Pengorganisasian Pembelajaran</p>
+          <p className="text-lg md:text-xl">
+            Beranda - Pengorganisasian Pembelajaran
+          </p>
         </div>
       </div>
 
