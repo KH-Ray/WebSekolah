@@ -8,7 +8,7 @@ const navigation = [
   { name: "Beranda", link: "/" },
   { name: "Profile", link: "/profile" },
   { name: "Data", link: "#" },
-  { name: "Berita", link: "/news" },
+  { name: "Berita", link: "/berita" },
   { name: "Kegiatan", link: "#" },
   { name: "Gallery", link: "#" },
   { name: "Kontak", link: "#" },

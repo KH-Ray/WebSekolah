@@ -31,7 +31,7 @@ const NewsPage = () => {
           </div>
 
           <div className="">
-            <Pagination count={10} variant="outlined" shape="rounded" />
+            <Pagination count={4} variant="outlined" shape="rounded" />
           </div>
         </div>
 
