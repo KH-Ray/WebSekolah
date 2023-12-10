@@ -7,6 +7,7 @@ import TeachersPage from "./pages/TeachersPage";
 import LearningPage from "./pages/LearningPage";
 import LoginPage from "./pages/LoginPage";
 import NewsPage from "./pages/NewsPage";
+import ExtracurricularPage from "./pages/ExtracurricularPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/teachers" element={<TeachersPage />} />
         <Route path="/learning" element={<LearningPage />} />
         <Route path="/news" element={<NewsPage />} />
+        <Route path="/extracuricullar" element={<ExtracurricularPage />} />
       </Routes>
 
       <Footer />
