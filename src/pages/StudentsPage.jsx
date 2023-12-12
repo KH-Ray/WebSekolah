@@ -15,7 +15,7 @@ const StudentsPage = () => {
     <main className="font-poppins">
       <div className="bg-main-gray">
         <div className="mx-auto flex h-96 max-w-7xl flex-col items-start justify-center gap-4 px-4 lg:px-6">
-          <h1 className="text-4xl font-semibold uppercase lg:text-6xl">
+          <h1 className="text-4xl font-semibold uppercase md:text-5xl lg:text-6xl">
             peserta didik
           </h1>
           <p className="text-lg lg:text-xl">Beranda - Peserta Didik</p>

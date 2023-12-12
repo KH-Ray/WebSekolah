@@ -56,7 +56,7 @@ export default function NavBar() {
 
                 <div className="relative inset-y-0 items-center md:hidden">
                   {/* Mobile menu button*/}
-                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-dark-gray hover:bg-gray-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-dark-gray hover:bg-main-gray hover:outline-none hover:ring-2 hover:ring-inset hover:ring-dark-gray focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dark-gray">
                     <span className="absolute -inset-0.5" />
                     <span className="sr-only">Open main menu</span>
                     {open ? (
@@ -71,13 +71,13 @@ export default function NavBar() {
           </div>
 
           <Disclosure.Panel className="md:hidden">
-            <div className="space-y-1 bg-main-gray px-2 pb-3 pt-2">
+            <div className="space-y-1 bg-white px-2 pb-3 pt-2">
               {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
                   as="a"
                   href={item.link}
-                  className="block cursor-pointer rounded-md px-3 py-2 text-base font-medium hover:bg-gray-300"
+                  className="block cursor-pointer rounded-md px-3 py-2 text-base font-medium hover:bg-gray-200/75"
                 >
                   {item.name}
                 </Disclosure.Button>
