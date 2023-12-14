@@ -40,17 +40,20 @@ const notices = [
   {
     title: "Headline Pengumuman",
     date: "14 Jan 2024",
-    subtitle: "Detail Pengumumuman",
+    subtitle:
+      "Detail Pengumumuman -  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut eleifend risus, quis fermentum felis. Aenean lacinia a leo vel volutpat. Donec eu felis augue. Maecenas mattis at justo imperdiet auctor.",
   },
   {
     title: "Headline Pengumuman",
     date: "14 Jan 2024",
-    subtitle: "Detail Pengumumuman",
+    subtitle:
+      "Detail Pengumumuman -  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut eleifend risus, quis fermentum felis. Aenean lacinia a leo vel volutpat. Donec eu felis augue. Maecenas mattis at justo imperdiet auctor.",
   },
   {
     title: "Headline Pengumuman",
     date: "14 Jan 2024",
-    subtitle: "Detail Pengumumuman",
+    subtitle:
+      "Detail Pengumumuman -  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut eleifend risus, quis fermentum felis. Aenean lacinia a leo vel volutpat. Donec eu felis augue. Maecenas mattis at justo imperdiet auctor.",
   },
 ];
 

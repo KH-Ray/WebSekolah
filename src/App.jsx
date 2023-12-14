@@ -17,6 +17,10 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import AdminHeader from "./components/AdminHeader";
 import AdminNav from "./components/AdminNav";
 import AdminHome from "./pages/admin/AdminHome";
+import AdminLearning from "./pages/admin/AdminLearning";
+import AdminRabuCeria from "./pages/admin/AdminRabuCeria";
+import AdminActivities from "./pages/admin/AdminActivities";
+import AdminProfile from "./pages/admin/AdminProfile";
 
 const MainPage = (page) => {
   return (
@@ -64,6 +68,19 @@ const App = () => {
 
         <Route path="/admin" element={AdminPage(<AdminLogin />, false)} />
         <Route path="/admin/beranda" element={AdminPage(<AdminHome />)} />
+        <Route path="/admin/profil" element={AdminPage(<AdminProfile />)} />
+        <Route
+          path="/admin/organisasi"
+          element={AdminPage(<AdminLearning />)}
+        />
+        <Route
+          path="/admin/rabuceria"
+          element={AdminPage(<AdminRabuCeria />)}
+        />
+        <Route
+          path="/admin/kegiatan"
+          element={AdminPage(<AdminActivities />)}
+        />
       </Routes>
     </Router>
   );

@@ -10,7 +10,7 @@ const Notice = (props) => {
       </Box>
 
       <div className="flex flex-col gap-2">
-        <h3 className="text-xl sm:text-4xl">{props.title}</h3>
+        <h3 className="text-xl sm:text-2xl">{props.title}</h3>
         <p className="flex items-center gap-4 sm:text-xl">
           <img
             className="h-4 w-4 sm:h-6 sm:w-6"
@@ -19,7 +19,7 @@ const Notice = (props) => {
           />
           {props.date}
         </p>
-        <p className="text-gray-500 sm:text-xl">{props.subtitle}</p>
+        <p className="leading-6 text-gray-500">{props.subtitle}</p>
       </div>
     </div>
   );
