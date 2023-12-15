@@ -4,8 +4,8 @@ import calendar from "../images/icons/calendar-icon.svg";
 
 const Notice = (props) => {
   return (
-    <div className="flex h-52 items-center gap-4 md:gap-12">
-      <Box styles="w-36 h-36 flex items-center justify-center">
+    <div className="flex h-full items-center gap-4 py-4 md:gap-12">
+      <Box styles="sm:w-36 h-36 sm:flex items-center justify-center grow-0 shrink-0 basis-36 hidden">
         <img className="h-20 w-20" src={megaphone} alt="Notice logo" />
       </Box>
 
@@ -19,7 +19,9 @@ const Notice = (props) => {
           />
           {props.date}
         </p>
-        <p className="leading-6 text-gray-500">{props.subtitle}</p>
+        <p className="text-justify leading-6 text-gray-500 sm:text-left">
+          {props.subtitle}
+        </p>
       </div>
     </div>
   );

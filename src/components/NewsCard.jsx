@@ -3,7 +3,7 @@ import { Card } from "flowbite-react";
 const NewsCard = (props) => {
   return (
     <Card
-      className="w-full sm:max-w-sm"
+      className="w-full border border-solid border-gray-400 shadow-none sm:max-w-sm"
       imgAlt={props.imgAlt}
       imgSrc={props.imgSrc}
     >

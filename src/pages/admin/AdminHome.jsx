@@ -41,17 +41,20 @@ const notices = [
   {
     title: "Headline Pengumuman",
     date: "14 Jan 2024",
-    subtitle: "Detail Pengumumuman",
+    subtitle:
+      "Detail Pengumumuman -  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut eleifend risus, quis fermentum felis. Aenean lacinia a leo vel volutpat. Donec eu felis augue. Maecenas mattis at justo imperdiet auctor.",
   },
   {
     title: "Headline Pengumuman",
     date: "14 Jan 2024",
-    subtitle: "Detail Pengumumuman",
+    subtitle:
+      "Detail Pengumumuman -  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut eleifend risus, quis fermentum felis. Aenean lacinia a leo vel volutpat. Donec eu felis augue. Maecenas mattis at justo imperdiet auctor.",
   },
   {
     title: "Headline Pengumuman",
     date: "14 Jan 2024",
-    subtitle: "Detail Pengumumuman",
+    subtitle:
+      "Detail Pengumumuman -  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut eleifend risus, quis fermentum felis. Aenean lacinia a leo vel volutpat. Donec eu felis augue. Maecenas mattis at justo imperdiet auctor.",
   },
 ];
 
@@ -59,13 +62,13 @@ const AdminHome = () => {
   return (
     <main className="p-6 font-poppins">
       <div>
-        <Carousel className="mb-4 h-[153px] w-full overflow-hidden md:h-[306px] lg:h-[408px] xl:h-[612px]">
+        <Carousel className="mb-4 h-[76px] w-full overflow-hidden md:h-[153px] lg:h-[306px] xl:h-[408px]">
           <img className="w-full" src={gedung1} />
           <img className="w-full" src={gedung1} />
           <img className="w-full" src={gedung1} />
         </Carousel>
 
-        <p className="flex items-center gap-4 font-medium text-dark-blue hover:cursor-pointer">
+        <p className="flex items-center gap-4 font-medium text-blue-800 hover:cursor-pointer">
           {<PlusIcon className="h-6 w-6" />} Tambahkan Gambar
         </p>
       </div>

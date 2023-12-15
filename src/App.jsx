@@ -21,6 +21,10 @@ import AdminLearning from "./pages/admin/AdminLearning";
 import AdminRabuCeria from "./pages/admin/AdminRabuCeria";
 import AdminActivities from "./pages/admin/AdminActivities";
 import AdminProfile from "./pages/admin/AdminProfile";
+import AdminTeachers from "./pages/admin/AdminTeachers";
+import AdminNews from "./pages/admin/AdminNews";
+import AdminExtracurricular from "./pages/admin/AdminExtracurricular";
+import AdminStudents from "./pages/admin/AdminStudents";
 
 const MainPage = (page) => {
   return (
@@ -69,10 +73,17 @@ const App = () => {
         <Route path="/admin" element={AdminPage(<AdminLogin />, false)} />
         <Route path="/admin/beranda" element={AdminPage(<AdminHome />)} />
         <Route path="/admin/profil" element={AdminPage(<AdminProfile />)} />
+        <Route path="/admin/guru" element={AdminPage(<AdminTeachers />)} />
         <Route
           path="/admin/organisasi"
           element={AdminPage(<AdminLearning />)}
         />
+        <Route path="/admin/berita" element={AdminPage(<AdminNews />)} />
+        <Route
+          path="/admin/extrakurikuler"
+          element={AdminPage(<AdminExtracurricular />)}
+        />
+        <Route path="/admin/siswa" element={AdminPage(<AdminStudents />)} />
         <Route
           path="/admin/rabuceria"
           element={AdminPage(<AdminRabuCeria />)}
