@@ -23,6 +23,7 @@ import AdminActivities from "./pages/admin/AdminActivities";
 import AdminProfile from "./pages/admin/AdminProfile";
 import AdminTeachers from "./pages/admin/AdminTeachers";
 import AdminNews from "./pages/admin/AdminNews";
+import AdminAnnouncement from "./pages/admin/AdminAnnouncement";
 import AdminExtracurricular from "./pages/admin/AdminExtracurricular";
 import AdminStudents from "./pages/admin/AdminStudents";
 
@@ -41,7 +42,7 @@ const AdminPage = (page, showNav = true) => {
     <>
       <AdminHeader />
       {showNav ? (
-        <div className="grid grid-cols-[1fr_2fr] md:grid-cols-[300px_1fr]">
+        <div className="grid grid-cols-[1fr_2fr] md:grid-cols-[250px_1fr] xl:grid-cols-[300px_1fr]">
           <AdminNav />
           {page}
         </div>
@@ -79,6 +80,14 @@ const App = () => {
           element={AdminPage(<AdminLearning />)}
         />
         <Route path="/admin/berita" element={AdminPage(<AdminNews />)} />
+        <Route
+          path="/admin/pengumuman"
+          element={AdminPage(<AdminAnnouncement />)}
+        />
+        <Route
+          path="/admin/ekstrakurikuler"
+          element={AdminPage(<AdminExtracurricular />)}
+        />
         <Route
           path="/admin/extrakurikuler"
           element={AdminPage(<AdminExtracurricular />)}

@@ -2,14 +2,24 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Input } from "@material-tailwind/react";
 import { Pagination } from "@mui/material";
 import Box from "../components/PhotoBox";
+import { useQuery } from "@tanstack/react-query";
+import studentServices from "../services/students";
+import { Spinner } from "flowbite-react";
 
 const StudentsPage = () => {
-  const students = [
-    { name: "Faza Rama Nugraha", class: "VII A" },
-    { name: "Muhamad Bagas Prasetio", class: "VII A" },
-    { name: "Muhammad Raid", class: "VII A" },
-    { name: "Khanza Arrayyan", class: "VII A" },
-  ];
+  const students = useQuery({
+    queryKey: ["students"],
+    queryFn: () => studentServices.getAllStudents(),
+  });
+
+  if (students.isLoading)
+    return (
+      <main className="flex h-screen items-center justify-center">
+        <div>
+          <Spinner size="xl" />
+        </div>
+      </main>
+    );
 
   return (
     <main className="font-poppins">
@@ -47,7 +57,7 @@ const StudentsPage = () => {
           <hr className="mb-2 border-t border-gray-400" />
 
           <div className="flex flex-col gap-2">
-            {students.map((s, i) => {
+            {students.data.map((s, i) => {
               return (
                 <Box
                   key={i}

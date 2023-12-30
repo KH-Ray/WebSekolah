@@ -1,69 +1,45 @@
 import PhotoBox from "../components/PhotoBox";
 import NewsCard from "../components/NewsCard";
 
-import { Button, Flowbite } from "flowbite-react";
+import { Button, Flowbite, Spinner } from "flowbite-react";
 import { customButtonTheme } from "../themes/flowbiteThemes";
 import { Carousel } from "@material-tailwind/react";
 import Notice from "../components/Notice";
 
-import placeholder from "../images/placeholder.png";
 import gedung1 from "../images/foto-gedung-1.jpg";
 
-const news = [
-  {
-    title: "Headline #1",
-    subtitle: "Sub-Headline",
-    imgSrc: placeholder,
-    imgAlt: "placeholder image",
-  },
-  {
-    title: "Headline #2",
-    subtitle: "Sub-Headline",
-    imgSrc: placeholder,
-    imgAlt: "placeholder image",
-  },
-  {
-    title: "Headline #3",
-    subtitle: "Sub-Headline",
-    imgSrc: placeholder,
-    imgAlt: "placeholder image",
-  },
-  {
-    title: "Headline #4",
-    subtitle: "Sub-Headline",
-    imgSrc: placeholder,
-    imgAlt: "placeholder image",
-  },
-];
-
-const notices = [
-  {
-    title: "Headline Pengumuman",
-    date: "14 Jan 2024",
-    subtitle:
-      "Detail Pengumumuman -  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut eleifend risus, quis fermentum felis. Aenean lacinia a leo vel volutpat. Donec eu felis augue. Maecenas mattis at justo imperdiet auctor.",
-  },
-  {
-    title: "Headline Pengumuman",
-    date: "14 Jan 2024",
-    subtitle:
-      "Detail Pengumumuman -  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut eleifend risus, quis fermentum felis. Aenean lacinia a leo vel volutpat. Donec eu felis augue. Maecenas mattis at justo imperdiet auctor.",
-  },
-  {
-    title: "Headline Pengumuman",
-    date: "14 Jan 2024",
-    subtitle:
-      "Detail Pengumumuman -  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut eleifend risus, quis fermentum felis. Aenean lacinia a leo vel volutpat. Donec eu felis augue. Maecenas mattis at justo imperdiet auctor.",
-  },
-];
+import annoucementServices from "../services/announcements";
+import newsServices from "../services/news";
+import { useQuery } from "@tanstack/react-query";
 
 const HomePage = () => {
+  const news = useQuery({
+    queryKey: ["news"],
+    queryFn: () => newsServices.getAllNews(),
+  });
+
+  const annoucements = useQuery({
+    queryKey: ["annoucements"],
+    queryFn: () => annoucementServices.getAllAnnoucement(),
+  });
+
+  if (annoucements.isLoading || news.isLoading)
+    return (
+      <main className="flex h-screen items-center justify-center">
+        <div>
+          <Spinner size="xl" />
+        </div>
+      </main>
+    );
+
   return (
     <main className="font-poppins">
       <Carousel className="h-[153px] overflow-hidden md:h-[306px] lg:h-[408px] xl:h-[612px]">
-        <img className="w-full" src={gedung1} />
-        <img className="w-full" src={gedung1} />
-        <img className="w-full" src={gedung1} />
+        {Array(3)
+          .fill(0)
+          .map((_, i) => (
+            <img key={i} className="w-full" src={gedung1} />
+          ))}
       </Carousel>
 
       <div className="space-y-32">
@@ -93,9 +69,9 @@ const HomePage = () => {
             </div>
 
             <div className="mx-auto flex flex-col items-center gap-6 md:grid md:grid-cols-2 lg:grid-cols-4">
-              {news.map((n, i) => (
+              {news.data.map((n) => (
                 <NewsCard
-                  key={i}
+                  key={n.id}
                   title={n.title}
                   subtitle={n.subtitle}
                   imgSrc={n.imgSrc}
@@ -121,12 +97,12 @@ const HomePage = () => {
             </div>
 
             <div className="divide-y divide-solid divide-gray-400">
-              {notices.map((notice, i) => (
+              {annoucements.data.map((a) => (
                 <Notice
-                  key={i}
-                  title={notice.title}
-                  date={notice.date}
-                  subtitle={notice.subtitle}
+                  key={a.id}
+                  title={a.title}
+                  date={a.date}
+                  subtitle={a.subtitle}
                 />
               ))}
             </div>

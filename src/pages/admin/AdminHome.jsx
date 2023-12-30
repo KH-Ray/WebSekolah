@@ -1,71 +1,53 @@
 import PhotoBox from "../../components/PhotoBox";
 import NewsCard from "../../components/NewsCard";
-
-import { Button, Flowbite } from "flowbite-react";
-import { customButtonTheme } from "../../themes/flowbiteThemes";
-import { Carousel } from "@material-tailwind/react";
 import Notice from "../../components/Notice";
 
-import placeholder from "../../images/placeholder.png";
-import gedung1 from "../../images/foto-gedung-1.jpg";
+import { Button, Flowbite, Spinner } from "flowbite-react";
+import { customButtonTheme } from "../../themes/flowbiteThemes";
+import { Carousel } from "@material-tailwind/react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
-const news = [
-  {
-    title: "Headline #1",
-    subtitle: "Sub-Headline",
-    imgSrc: placeholder,
-    imgAlt: "placeholder image",
-  },
-  {
-    title: "Headline #2",
-    subtitle: "Sub-Headline",
-    imgSrc: placeholder,
-    imgAlt: "placeholder image",
-  },
-  {
-    title: "Headline #3",
-    subtitle: "Sub-Headline",
-    imgSrc: placeholder,
-    imgAlt: "placeholder image",
-  },
-  {
-    title: "Headline #4",
-    subtitle: "Sub-Headline",
-    imgSrc: placeholder,
-    imgAlt: "placeholder image",
-  },
-];
-
-const notices = [
-  {
-    title: "Headline Pengumuman",
-    date: "14 Jan 2024",
-    subtitle:
-      "Detail Pengumumuman -  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut eleifend risus, quis fermentum felis. Aenean lacinia a leo vel volutpat. Donec eu felis augue. Maecenas mattis at justo imperdiet auctor.",
-  },
-  {
-    title: "Headline Pengumuman",
-    date: "14 Jan 2024",
-    subtitle:
-      "Detail Pengumumuman -  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut eleifend risus, quis fermentum felis. Aenean lacinia a leo vel volutpat. Donec eu felis augue. Maecenas mattis at justo imperdiet auctor.",
-  },
-  {
-    title: "Headline Pengumuman",
-    date: "14 Jan 2024",
-    subtitle:
-      "Detail Pengumumuman -  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut eleifend risus, quis fermentum felis. Aenean lacinia a leo vel volutpat. Donec eu felis augue. Maecenas mattis at justo imperdiet auctor.",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import annoucementServices from "../../services/announcements";
+import newsServices from "../../services/news";
+import pictureServices from "../../services/pictures";
 
 const AdminHome = () => {
+  const news = useQuery({
+    queryKey: ["news"],
+    queryFn: () => newsServices.getAllNews(),
+  });
+
+  const announcements = useQuery({
+    queryKey: ["annoucements"],
+    queryFn: () => annoucementServices.getAllAnnoucement(),
+  });
+
+  const pictures = useQuery({
+    queryKey: ["picture"],
+    queryFn: () => pictureServices.getAllPicture(),
+  });
+
+  if (announcements.isLoading || news.isLoading || pictures.isLoading)
+    return (
+      <main className="flex h-screen items-center justify-center">
+        <div>
+          <Spinner size="xl" />
+        </div>
+      </main>
+    );
+
   return (
     <main className="p-6 font-poppins">
       <div>
+        <h1 className="mb-8 block text-4xl font-semibold">Halaman Berita</h1>
+
         <Carousel className="mb-4 h-[76px] w-full overflow-hidden md:h-[153px] lg:h-[306px] xl:h-[408px]">
-          <img className="w-full" src={gedung1} />
-          <img className="w-full" src={gedung1} />
-          <img className="w-full" src={gedung1} />
+          {Array(3)
+            .fill(0)
+            .map((_, i) => (
+              <img key={i} className="w-full" src={pictures.data[0].src} />
+            ))}
         </Carousel>
 
         <p className="flex items-center gap-4 font-medium text-blue-800 hover:cursor-pointer">
@@ -115,9 +97,9 @@ const AdminHome = () => {
             </div>
 
             <div className="mx-auto flex flex-col items-center gap-6 md:grid md:grid-cols-2 xl:grid-cols-4">
-              {news.map((n, i) => (
+              {news.data.map((n) => (
                 <NewsCard
-                  key={i}
+                  key={n.id}
                   title={n.title}
                   subtitle={n.subtitle}
                   imgSrc={n.imgSrc}
@@ -143,12 +125,12 @@ const AdminHome = () => {
             </div>
 
             <div className="divide-y divide-solid divide-gray-400">
-              {notices.map((notice, i) => (
+              {announcements.data.map((a) => (
                 <Notice
-                  key={i}
-                  title={notice.title}
-                  date={notice.date}
-                  subtitle={notice.subtitle}
+                  key={a.id}
+                  title={a.title}
+                  date={a.date}
+                  subtitle={a.subtitle}
                 />
               ))}
             </div>
