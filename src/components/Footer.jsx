@@ -1,6 +1,5 @@
 import logo from "../images/cropped-bakdhatlogo.svg";
-import phone from "../images/icons/phone-flip.svg";
-import envelope from "../images/icons/envelope.svg";
+import { PhoneIcon, EnvelopeIcon, MapIcon } from "@heroicons/react/24/outline";
 
 const pageLinks = [
   "Halaman #1",
@@ -57,12 +56,23 @@ const Footer = () => {
             <div className="flex flex-col gap-6 px-4 md:px-0">
               <p className="leading-6">{contact.content}</p>
               <p className="flex items-center gap-4">
-                <img src={envelope} alt="Envelope icon" />
+                <EnvelopeIcon className="h-7 w-7 fill-black stroke-main-blue" />{" "}
                 SekolahXX@address.com
               </p>
               <p className="flex items-center gap-4">
-                <img src={phone} alt="Phone icon" />
+                <PhoneIcon className="h-7 w-7 fill-black" />
                 (021) XXXXXXX
+              </p>
+              <p className="flex items-center gap-4">
+                <MapIcon className="h-7 w-7 fill-black stroke-main-blue" />
+                <a
+                  href="https://maps.app.goo.gl/k52QLnhq5A1bwjgK6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-900 hover:underline"
+                >
+                  Bakti Idhata
+                </a>
               </p>
             </div>
           </div>

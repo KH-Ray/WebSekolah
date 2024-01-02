@@ -10,6 +10,7 @@ import ExtracurricularPage from "./pages/ExtracurricularPage";
 import StudentsPage from "./pages/StudentsPage";
 import RabuCeria from "./pages/RabuCeria";
 import ActivitiesPage from "./pages/ActivitiesPage";
+
 import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
 
@@ -26,6 +27,7 @@ import AdminNews from "./pages/admin/AdminNews";
 import AdminAnnouncement from "./pages/admin/AdminAnnouncement";
 import AdminExtracurricular from "./pages/admin/AdminExtracurricular";
 import AdminStudents from "./pages/admin/AdminStudents";
+import NewPage from "./pages/NewPage";
 
 const MainPage = (page) => {
   return (
@@ -63,6 +65,7 @@ const App = () => {
         <Route path="/guru" element={MainPage(<TeachersPage />)} />
         <Route path="/organisasi" element={MainPage(<LearningPage />)} />
         <Route path="/berita" element={MainPage(<NewsPage />)} />
+        <Route path="/berita/:id" element={MainPage(<NewPage />)} />
         <Route
           path="/extrakurikuler"
           element={MainPage(<ExtracurricularPage />)}

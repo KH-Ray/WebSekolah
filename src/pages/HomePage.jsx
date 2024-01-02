@@ -1,14 +1,11 @@
-import PhotoBox from "../components/PhotoBox";
 import NewsCard from "../components/NewsCard";
-
 import { Button, Flowbite, Spinner } from "flowbite-react";
 import { customButtonTheme } from "../themes/flowbiteThemes";
 import { Carousel } from "@material-tailwind/react";
 import Notice from "../components/Notice";
-
-import gedung1 from "../images/foto-gedung-1.jpg";
-
+import teacherServices from "../services/teachers";
 import annoucementServices from "../services/announcements";
+import pictureServices from "../services/pictures";
 import newsServices from "../services/news";
 import { useQuery } from "@tanstack/react-query";
 
@@ -23,7 +20,22 @@ const HomePage = () => {
     queryFn: () => annoucementServices.getAllAnnoucement(),
   });
 
-  if (annoucements.isLoading || news.isLoading)
+  const pictures = useQuery({
+    queryKey: ["picture"],
+    queryFn: () => pictureServices.getAllPicture(),
+  });
+
+  const teacher = useQuery({
+    queryKey: ["teachers"],
+    queryFn: () => teacherServices.getAllTeachers(),
+  });
+
+  if (
+    annoucements.isLoading ||
+    news.isLoading ||
+    pictures.isLoading ||
+    teacher.isLoading
+  )
     return (
       <main className="flex h-screen items-center justify-center">
         <div>
@@ -32,25 +44,59 @@ const HomePage = () => {
       </main>
     );
 
+  const headmaster = teacher.data[0];
+
   return (
     <main className="font-poppins">
       <Carousel className="h-[153px] overflow-hidden md:h-[306px] lg:h-[408px] xl:h-[612px]">
-        {Array(3)
-          .fill(0)
-          .map((_, i) => (
-            <img key={i} className="w-full" src={gedung1} />
-          ))}
+        {pictures.data.map((p) => (
+          <img key={p.id} src={p.src} alt="Carousel image" className="w-full" />
+        ))}
       </Carousel>
 
       <div className="space-y-32">
         <div className="max-w-7xl space-y-32 px-12 pt-12 lg:mx-auto">
-          <div className="grid h-96 grid-cols-1 gap-8 lg:grid-cols-[1fr_2fr]">
-            <PhotoBox styles="text-white text-3xl flex items-center justify-center">
-              Foto Kepala Sekolah
-            </PhotoBox>
-            <PhotoBox styles="text-white text-3xl flex items-center justify-center">
-              Sambutan Selamat Datang
-            </PhotoBox>
+          <div className="grid h-full grid-cols-1 justify-center gap-8 sm:grid-rows-[384px] md:grid-cols-[384px_1fr]">
+            <div className="relative">
+              <img
+                src={headmaster.image}
+                alt="Kepala Sekolah"
+                className="h-full w-full"
+              />
+              <div className="absolute bottom-0 z-10 flex w-full flex-col items-center gap-2 rounded-b-xl bg-light-blue p-4">
+                <p className="text-xl font-semibold">{headmaster.name}</p>
+                <p>{headmaster.role}</p>
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <div className="z-10 flex w-full drop-shadow sm:w-1/2">
+                <div className="w-full whitespace-nowrap rounded-t-xl bg-light-blue px-8 py-4 text-xl font-semibold sm:rounded-t-none sm:rounded-tl-xl">
+                  SMP Bakti Idhata
+                </div>
+                <div className="hidden w-full bg-light-blue px-8 py-4 sm:block sm:rounded-tr-full"></div>
+              </div>
+              <div className="h-96 overflow-auto rounded-b-xl bg-main-blue px-8 py-4 leading-6 sm:h-full sm:rounded-tr-xl">
+                Memiliki anak cerdas dan siap menjadi generasi emas berkarakter
+                merupakan dambaan setiap orang tua. SMP Bakti Idhata berada
+                dibawah naungan Yayasan Bakti Idhata, Dharma Wanita Persatuan
+                Kementerian Pendidikan, Kebudayaan, Riset dan Teknologi Republik
+                Indonesia, siap mewadahinya. Dengan sarana prasarana yang cukup
+                baik disertai tenaga kependidikan yang berkualitas menjadi
+                pondasi bagi kami untuk melakukan transformasi pembelajaran yang
+                berpusat pada peserta didik. Selain itu, membangun masyarakat
+                belajar sepanjang hayat yang beriman dan bertakwa pada Tuhan
+                YME, berakhlak mulia, serta menjaga keseimbangan kebinekaan
+                menjadi pijakan SMP Bakti Idhata untuk melakukan kegiatan
+                pendidikan. Hal ini selaras dengan Visi sekolah kami:
+                mengintegrasikan proses pendidikan sehingga terwujudnya peserta
+                didik yang berakhlak mulia, kreatif, berkepribadian tangguh,
+                mandiri, dan menjunjung tinggi budaya bangsa. Saat ini SMP Bakti
+                Idhata terus meningkatkan pelayanan bagi masyarakat yang
+                menitipkan putra/putrinya di sekolah kami. Berbagai kegiatan
+                yang mengedukasi dikemas sesuai dengan kebutuhan dan
+                perkembangan peserta didik.
+              </div>
+            </div>
           </div>
 
           <div>
@@ -84,9 +130,9 @@ const HomePage = () => {
           <div className="!mb-40">
             <div className="mb-24 flex h-14 flex-col justify-between gap-4 sm:mb-10 sm:flex-row">
               <h2 className="flex flex-col justify-between text-3xl font-bold">
-                Berita
+                Pengumuman
                 <span className="hid text-sm font-normal text-gray-500 sm:text-base">
-                  Berita dan informasi terbaru
+                  Pengumuman untuk peserta didik
                 </span>
               </h2>
               <Flowbite theme={{ theme: customButtonTheme }}>
