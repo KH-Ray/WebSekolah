@@ -1,16 +1,29 @@
 import { Input } from "@material-tailwind/react";
 import { Pagination } from "@mui/material";
-import FotoGedung from "../images/foto-gedung-2.jpg";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-
-const news = [
-  { title: "Headline Berita #1" },
-  { title: "Headline Berita #2" },
-  { title: "Headline Berita #3" },
-  { title: "Headline Berita #4" },
-];
+import newsServices from "../services/news";
+import { useQuery } from "@tanstack/react-query";
+import { Spinner } from "flowbite-react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const NewsPage = () => {
+  const [search, setSearch] = useState("");
+
+  const news = useQuery({
+    queryKey: ["news"],
+    queryFn: () => newsServices.getAllNews(),
+  });
+
+  if (news.isLoading)
+    return (
+      <main className="flex h-screen items-center justify-center">
+        <div>
+          <Spinner size="xl" />
+        </div>
+      </main>
+    );
+
   return (
     <main className="font-poppins">
       <div className="bg-main-gray">
@@ -27,26 +40,34 @@ const NewsPage = () => {
               label="Cari Berita"
               color="blue"
               icon={<MagnifyingGlassIcon />}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
 
-          <div className="">
-            <Pagination count={4} variant="outlined" shape="rounded" />
+          <div>
+            <Pagination count={1} variant="outlined" shape="rounded" />
           </div>
         </div>
 
         <div className="flex flex-col gap-4">
-          {news.map((n, i) => (
-            <div
-              key={i}
-              className="relative h-48 w-full overflow-hidden rounded-xl"
-            >
-              <img src={FotoGedung} alt="Foto Gedung" />
-              <p className="absolute bottom-5 left-5 text-3xl font-bold text-white">
-                {n.title}
-              </p>
-            </div>
-          ))}
+          {news.data
+            .filter((n) => n.title.toLowerCase().includes(search))
+            .map((n) => (
+              <Link
+                key={n.id}
+                to={`/berita/${n.id}`}
+                className="relative h-48 w-full overflow-hidden rounded-xl"
+              >
+                <img
+                  className="h-full w-full object-cover"
+                  src={n.imgSrc}
+                  alt={n.imgAlt}
+                />
+                <p className="absolute bottom-5 left-5 text-3xl font-bold text-white">
+                  {n.title}
+                </p>
+              </Link>
+            ))}
         </div>
       </div>
     </main>

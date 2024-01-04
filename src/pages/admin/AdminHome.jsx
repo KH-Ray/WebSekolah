@@ -2,15 +2,12 @@ import PhotoBox from "../../components/PhotoBox";
 import NewsCard from "../../components/NewsCard";
 import React from "react";
 import Notice from "../../components/Notice";
-import { useState} from "react";
+import { useState, useEffect} from "react";
 
 import { Button, Flowbite, Spinner } from "flowbite-react";
 import { customButtonTheme } from "../../themes/flowbiteThemes";
 import { Carousel} from "@material-tailwind/react";
 import { PlusIcon } from "@heroicons/react/24/outline";
-
-import { useQuery } from "@tanstack/react-query";
-import pictureServices from "../../services/pictures";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -19,57 +16,64 @@ const AdminHome = () => {
 
   const [bHeadImg, setbHeadImg] = useState('');
   const [kImg, setKimg] = useState('');
-  const [desc, setDesc] = useState('');
+  const [description, setDescription] = useState('');
   const [msg, setMsg] = useState('');
-  
+
+  const [home, setHome] = useState([])
   const [news, setNews] = useState([])
   const [notice, setNotice] = useState([])
 
-
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const homeResponse = await axios.get("http://localhost:8080");
+        setHome(homeResponse.data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+    fetchData();
+    
+    
+    axios.get('http://localhost:8080/berita')
+      .then(res => setNews(res.data))
+      .catch(err => console.log(err));
+    
+    axios.get('http://localhost:8080/pengumuman')
+      .then(res => setNotice(res.data))
+      .catch(err => console.log(err));
+  }, [])
  
   const navigate = useNavigate();
 
-  const pictures = useQuery({
-    queryKey: ["picture"],
-    queryFn: () => pictureServices.getAllPicture(),
-  });
-
-  // const home = { bHeadImg: '', kImg: '', desc: '' };
-  // const [inputHome, setInputHome] = useState(home)
-
-  // const handleData = (e) => {
-  //   setImage(e.target.files[0])
-  //   setInputHome({ ...inputHome, [e.target.name]: e.target.value });
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   axios.post('http://localhost:8080/', inputHome)
-  //     .then((res) => {
-  //       console.log(res)
-  //     })
-  // }
-
   const handleSubmit = async (e) => {
-    const formdata = new FormData();
-    formdata.append('bHeadImg', bHeadImg)
-    formdata.append('kImg', kImg)
-    formdata.append('desc', desc)
-    await axios.post('http://localhost:8080/', formdata)
-      .then(res => {
-        console.log(res);
-        if (res.data.Status == 'Success') {
-          navigate('/')
-          setMsg("File Successfully Uploaded");
-        } else {
-          setMsg("Error");
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('bHeadImg', bHeadImg);
+    formData.append('kImg', kImg);
+    formData.append('description', description);
+
+    try {
+      const response = await axios.post('http://localhost:8080/admin/beranda', formData);
+
+      console.log(response.data);
+
+      if (response.data.Status === 'Success') {
+        navigate('/');
+        setMsg('File Successfully Uploaded');
+      } else {
+        setMsg('Error');
       }
-      }).catch(er => console.log(er))
-    };
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      setMsg('Error');
+    }
+  };
 
   
 
-  if (pictures.isLoading)
+  if (home.isLoading)
     return (
       <main className="flex h-screen items-center justify-center">
         <div>
@@ -81,19 +85,18 @@ const AdminHome = () => {
   return (
     <main className="form p-6 font-poppins" >
 
-      <form onSubmit={(e) => {
-        e.preventDefault()
-        handleSubmit()}}>
+      <form onSubmit={handleSubmit}>
         <div>
           <h1 className="mb-8 block text-4xl font-semibold">Halaman Beranda</h1>
             <Carousel
-              className="mb-4 h-[76px] w-full overflow-hidden md:h-[153px] lg:h-[306px] xl:h-[408px]">
-            
-            {Array(3)
-              .fill(0)
-              .map((_, i) => (
-                <img key={i} className="w-full" src={pictures.data[0].src} />
-              ))}
+            className="mb-4 h-[76px] w-full overflow-hidden md:h-[153px] lg:h-[306px] xl:h-[408px]">
+              {
+              home.map((homeItem) =>
+                <div key={homeItem.ID}>
+                  <img src={`http://localhost:8080/${homeItem.bHeadImg}`} alt="" />
+                </div>
+                )
+              }
             </Carousel>
 
           <p className="flex items-center gap-4 font-medium text-blue-800 hover:cursor-pointer">
@@ -113,6 +116,13 @@ const AdminHome = () => {
                 <PhotoBox  
                     styles="text-white xl:text-3xl text-xl flex items-center justify-center"
                 >
+                  {
+                  home.map((homeItem) =>
+                    <div key={homeItem.ID}>
+                      <img src={`http://localhost:8080/${homeItem.kImg}`} alt="" />
+                    </div>
+                    )
+                  }
                   <input className="text-black xl:text-sm text-sm flex items-center justify-center"
                     type="file"
                     onChange={(e) => setKimg(e.target.files[0])}
@@ -122,8 +132,8 @@ const AdminHome = () => {
                   <input
                     className="h-full w-full resize-none rounded-xl focus:border-main-blue"
                     placeholder="Sambutan Selamat Datang"
-                    onChange={(e) => setDesc(e.target.name)}
-                    name="desc"
+                    onChange={(e) => setDescription(e.target.value)}
+                    name="description"
                     type="text"
                   ></input>
                 </div>

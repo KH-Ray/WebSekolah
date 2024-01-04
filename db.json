@@ -22,31 +22,31 @@
   "news": [
     {
       "id": 1,
-      "title": "Headline #1",
-      "subtitle": "Sub-Headline",
-      "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/310px-Placeholder_view_vector.svg.png",
-      "imgAlt": "placeholder image"
+      "title": "Bayu Saptaji Pemain Timnas Futsal Indonesia Berbagi Tips Bermain Futsal Di Ekstrakurikuler Futsal Smp Bakti Idhata",
+      "subtitle": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+      "imgSrc": "https://i.ibb.co/4PYdXxs/image-15.png",
+      "imgAlt": "Berita 1"
     },
     {
       "id": 2,
-      "title": "Headline #2",
-      "subtitle": "Sub-Headline",
-      "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/310px-Placeholder_view_vector.svg.png",
-      "imgAlt": "placeholder image"
+      "title": "Upacara Peringatan HUT ke-77 RI dengan Kegiatan Lomba",
+      "subtitle": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+      "imgSrc": "https://i.ibb.co/mDrjLmN/image-28.png",
+      "imgAlt": "Berita 2"
     },
     {
       "id": 3,
-      "title": "Headline #3",
-      "subtitle": "Sub-Headline",
-      "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/310px-Placeholder_view_vector.svg.png",
-      "imgAlt": "placeholder image"
+      "title": "Masa Pengenalan Lingkungan Sekolah",
+      "subtitle": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+      "imgSrc": "https://i.ibb.co/2ZL1jCp/image-29.png",
+      "imgAlt": "Berita 3"
     },
     {
       "id": 4,
-      "title": "Headline #4",
-      "subtitle": "Sub-Headline",
-      "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/310px-Placeholder_view_vector.svg.png",
-      "imgAlt": "placeholder image"
+      "title": "Latihan Dasar Kepemimpinan Siswa",
+      "subtitle": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+      "imgSrc": "https://i.ibb.co/hs441rx/image-32.png",
+      "imgAlt": "Berita 4"
     }
   ],
   "students": [
@@ -92,7 +92,12 @@
     }
   ],
   "teachers": [
-    { "id": 1, "name": "Nama Kepala Sekolah", "role": "Kepala Sekolah" },
+    {
+      "id": 1,
+      "name": "Puji Yulianti, M.Pd.",
+      "role": "Kepala Sekolah",
+      "image": "https://i.ibb.co/hHDfWGf/guru1.png"
+    },
     {
       "id": 2,
       "name": "Nama Wakil Kepala Sekolah",
@@ -119,15 +124,34 @@
   ],
   "extracurriculer": [
     {
-      "favorite": [{ "id": 1, "name": "teater" }],
+      "favorite": [
+        {
+          "id": 1,
+          "name": "teater",
+          "image": "https://i.ibb.co/xCZsSM4/yiran-ding-Tmv-SImv-V7v-A-unsplash-1.png"
+        }
+      ],
       "optional": [
-        { "id": 2, "name": "taekwondo" },
-        { "id": 3, "name": "al-quran" },
-        { "id": 4, "name": "silat lanjutan" },
-        { "id": 5, "name": "basket" },
-        { "id": 6, "name": "english club" },
-        { "id": 7, "name": "bulu tangkis" },
-        { "id": 8, "name": "futsal" }
+        {
+          "id": 2,
+          "name": "taekwondo",
+          "image": "https://i.ibb.co/8D6NNSt/uriel-soberanes-ngd2uo1ey-Zg-unsplash.png"
+        },
+        {
+          "id": 3,
+          "name": "al-quran",
+          "image": "https://i.ibb.co/VCq66fv/masjid-pogung-dalangan-wf-Sto-Jnoogw-unsplash.png"
+        },
+        {
+          "id": 4,
+          "name": "basket",
+          "image": "https://i.ibb.co/FqRTZG7/markus-spiske-o-XS1f0u-ZYV4-unsplash.png"
+        },
+        {
+          "id": 5,
+          "name": "english club",
+          "image": "https://i.ibb.co/6m2zLxD/austin-distel-rxp-Th-Owu-Vg-E-unsplash.png"
+        }
       ]
     }
   ],

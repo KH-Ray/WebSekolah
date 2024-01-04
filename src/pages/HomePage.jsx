@@ -11,31 +11,19 @@ import Notice from "../components/Notice";
 
 import gedung1 from "../images/foto-gedung-1.jpg";
 
-import annoucementServices from "../services/announcements";
-import newsServices from "../services/news";
-import { useQuery } from "@tanstack/react-query";
 
 const HomePage = () => {
-  const news1 = useQuery({
-    queryKey: ["news"],
-    queryFn: () => newsServices.getAllNews(),
-  });
-
-  const annoucements = useQuery({
-    queryKey: ["annoucements"],
-    queryFn: () => annoucementServices.getAllAnnoucement(),
-  });
-
+  
   const [home, setHome] = useState([])
   const [news, setNews] = useState([])
   const [notice, setNotice] = useState([])
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('http://localhost:8080');
-        setHome(res.data)
+        const homeResponse = await axios.get("http://localhost:8080");
+        setHome(homeResponse.data);
       } catch (err) {
-        console.log(err);
+        console.error("Error fetching data:", err);
       }
     };
     fetchData();
@@ -50,7 +38,7 @@ const HomePage = () => {
       .catch(err => console.log(err));
   }, [])
 
-  if (annoucements.isLoading || news.isLoading)
+  if (home.isLoading || news.isLoading)
     return (
       <main className="flex h-screen items-center justify-center">
         <div>
@@ -63,11 +51,9 @@ const HomePage = () => {
     <main className="font-poppins">
       <Carousel className="h-[153px] overflow-hidden md:h-[306px] lg:h-[408px] xl:h-[612px]">
         {
-            home.map((home) =>
-              <div key={home.i}>
-                <img src={home.bHeadImg} alt="" />
-                <img className="w-full" src={gedung1} />
-                <img className="w-full" src={gedung1} />
+            home.map((homeItem) =>
+              <div key={homeItem.ID}>
+                <img src={`http://localhost:8080/${homeItem.bHeadImg}`} alt="" />
               </div>
            
             )
@@ -79,18 +65,18 @@ const HomePage = () => {
           <div className="grid h-96 grid-cols-1 gap-8 lg:grid-cols-[1fr_2fr]">
             <PhotoBox styles="text-white text-3xl flex items-center justify-center">
               {
-              home.map((home, i) =>
+              home.map((homeItem, i) =>
                 <div key={i}>
-                  <div>{home.kImg}</div>
+                  <img src={`http://localhost:8080/${homeItem.kImg}`} alt="" />
                 </div>
                 )
               }
             </PhotoBox>
-            <PhotoBox styles="text-white text-3xl flex items-center justify-center">
+            <PhotoBox styles="text-white text-3xl p-5 flex items-center justify-center">
               {
               home.map((home, i) =>
                 <div key={i}>
-                  <div>{home.desc}</div>
+                  <div>{home.description}</div>
                 </div>
                 )
               }

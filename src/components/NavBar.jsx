@@ -7,7 +7,14 @@ import { Link } from "react-router-dom";
 const navigation = [
   { name: "Beranda", link: "/" },
   { name: "Profile", link: "/profile" },
-  { name: "Data", link: "#" },
+  {
+    name: "Data",
+    link: null,
+    subLinks: [
+      { name: "Staff Pengajar", link: "/pengajar" },
+      { name: "Peserta Didik", link: "/peserta" },
+    ],
+  },
   { name: "Berita", link: "/berita" },
   { name: "Kegiatan", link: "#" },
   { name: "Gallery", link: "#" },
