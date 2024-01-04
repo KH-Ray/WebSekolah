@@ -1,7 +1,34 @@
 import { Button } from "@material-tailwind/react";
 import logo from "../../images/cropped-bakdhatlogo.svg";
 
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
+
 const AdminLogin = () => {
+  const history = useNavigate();
+  const [userName, setUsername] = useState('')
+  const [passWord, setPassword] = useState('')
+
+  async function submit(e) {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:8080/admin', {
+        userName,passWord
+      })
+      if (response.data.login) {
+          history("/admin/beranda", {state:{id:userName}})
+        } else if (response.data!="Failed") {
+            alert("Wrong username or password")
+        }
+
+    } catch (e) {
+      console.log(e)
+    }
+      
+  }
+
   return (
     <main className="flex h-[900px] flex-col items-center justify-center gap-16 py-12 font-antonio">
       <div className="flex flex-col items-center justify-center justify-items-center gap-4">
@@ -18,22 +45,25 @@ const AdminLogin = () => {
             id="username"
             name="username"
             className="rounded border-gray-400"
+            onChange={(e) => { setUsername(e.target.value) }}
           />
         </div>
 
         <div className="mb-6 flex w-1/2 flex-col gap-2">
-          <label htmlFor="nisn">Password</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
             name="password"
             className="rounded border-gray-400"
+            onChange={(e) => { setPassword(e.target.value) }}
           />
         </div>
 
         <Button
           variant="outlined"
           className="w-36 border-2 border-main-blue text-base capitalize"
+          onClick={submit}
         >
           Login
         </Button>
