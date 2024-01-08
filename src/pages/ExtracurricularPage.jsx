@@ -26,28 +26,16 @@ const extracurricularModal = (
           </h1>
 
           <div>
-            <p>Waktu : Hari Sabtu 09.00 - 10.30 WIB</p>
-            <p>Tempat: Ruang Audio Visual</p>
+            <p>Waktu : Hari {extracurricular.time}</p>
+            <p>Tempat: {extracurricular.room}</p>
           </div>
 
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur
-            dignissimos eum amet cum soluta id recusandae architecto! Ab labore
-            eos nulla magni omnis beatae fuga odio pariatur aspernatur fugiat
-            eveniet ipsa inventore atque totam officiis, maxime aliquid ea modi,
-            nisi voluptatibus itaque molestiae, cum sit odit. Quod earum minima
-            inventore, mollitia aspernatur esse architecto ipsum consequatur
-            similique odit fugiat doloremque maxime, pariatur voluptatum est
-            culpa officiis voluptas deleniti repellat exercitationem placeat ea
-            error vitae! Accusantium tempora repellat earum, assumenda inventore
-            atque, itaque suscipit, rerum ab porro praesentium non debitis quo
-            saepe soluta. Hic odio quod, adipisci nam nisi at quam?
-          </p>
+          <p>{extracurricular.description}</p>
 
           <div className="flex justify-center">
             <img
               className="h-48 w-64 rounded-lg"
-              src={extracurricular.image}
+              src={extracurricular.imageInModal}
               alt=""
             />
           </div>
@@ -88,7 +76,7 @@ const ExtracurricularPage = () => {
 
       <div className="bg-main-gray">
         <div className="mx-auto flex h-96 max-w-7xl flex-col items-start justify-center gap-4 px-4 lg:px-6">
-          <h1 className="text-4xl font-semibold uppercase lg:text-6xl">
+          <h1 className="whitespace-pre-wrap break-all text-6xl font-semibold uppercase">
             ekstrakurikuler
           </h1>
           <p className="text-lg lg:text-xl">Beranda - Ekstrakurikuler</p>

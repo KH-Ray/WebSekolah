@@ -100,6 +100,7 @@ const AdminHome = () => {
               {news.data.map((n) => (
                 <NewsCard
                   key={n.id}
+                  id={n.id}
                   title={n.title}
                   subtitle={n.subtitle}
                   imgSrc={n.imgSrc}

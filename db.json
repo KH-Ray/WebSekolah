@@ -22,7 +22,7 @@
   "news": [
     {
       "id": 1,
-      "title": "Bayu Saptaji Pemain Timnas Futsal Indonesia Berbagi Tips Bermain Futsal Di Ekstrakurikuler Futsal Smp Bakti Idhata",
+      "title": "Grahito Adje Pelatih Futsal SMP Bakti Idhata - Berbagai Tips Di Ekstrakurikuler Futsal",
       "subtitle": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
       "imgSrc": "https://i.ibb.co/4PYdXxs/image-15.png",
       "imgAlt": "Berita 1"
@@ -128,35 +128,59 @@
         {
           "id": 1,
           "name": "teater",
-          "image": "https://i.ibb.co/xCZsSM4/yiran-ding-Tmv-SImv-V7v-A-unsplash-1.png"
+          "image": "https://i.ibb.co/xCZsSM4/yiran-ding-Tmv-SImv-V7v-A-unsplash-1.png",
+          "imageInModal": "https://i.ibb.co/3BKN5Rf/teater2-1.png",
+          "time": "Sabtu 09.00 - 10.30 WIB",
+          "room": "Ruang Audio Visual",
+          "description": "Mewadahi minat peserta didik dan mengeksplorasi kemampuan dalam akting"
         }
       ],
       "optional": [
         {
           "id": 2,
           "name": "taekwondo",
-          "image": "https://i.ibb.co/8D6NNSt/uriel-soberanes-ngd2uo1ey-Zg-unsplash.png"
+          "image": "https://i.ibb.co/8D6NNSt/uriel-soberanes-ngd2uo1ey-Zg-unsplash.png",
+          "imageInModal": "https://i.ibb.co/X8yRHFn/4-1.png",
+          "time": "Senin 14.30 – 16.30 WIB",
+          "room": "Aula YBI",
+          "description": "Ekstrakurikuler Pilihan"
         },
         {
           "id": 3,
           "name": "al-quran",
-          "image": "https://i.ibb.co/VCq66fv/masjid-pogung-dalangan-wf-Sto-Jnoogw-unsplash.png"
+          "image": "https://i.ibb.co/VCq66fv/masjid-pogung-dalangan-wf-Sto-Jnoogw-unsplash.png",
+          "imageInModal": "https://i.ibb.co/X5kTZbV/11-1.png",
+          "time": "Senin 14.30 – 16.30 WIB",
+          "room": "Ruang Kelas",
+          "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est temporibus numquam, ipsam atque quasi corporis."
         },
         {
           "id": 4,
           "name": "basket",
-          "image": "https://i.ibb.co/FqRTZG7/markus-spiske-o-XS1f0u-ZYV4-unsplash.png"
+          "image": "https://i.ibb.co/FqRTZG7/markus-spiske-o-XS1f0u-ZYV4-unsplash.png",
+          "imageInModal": "https://i.ibb.co/zG4YbZ9/11-2.png",
+          "time": "Hari Jumat 13.00 - 14.30 WIB",
+          "room": "Lapangan Aspal",
+          "description": "Melatih kebugaran tubuh, strategi, dan kekompakan. Prinsip : Disiplin, Tekun, Kerjasama, Solid"
         },
         {
           "id": 5,
           "name": "english club",
-          "image": "https://i.ibb.co/6m2zLxD/austin-distel-rxp-Th-Owu-Vg-E-unsplash.png"
+          "image": "https://i.ibb.co/6m2zLxD/austin-distel-rxp-Th-Owu-Vg-E-unsplash.png",
+          "imageInModal": "https://i.ibb.co/3Bhpvy2/10-1.png",
+          "time": "Jumat 13.00 - 14.30 WIB",
+          "room": "Ruang Kelas",
+          "description": "Ekstrakurikuler pilihan banyak diminati"
         }
       ]
     }
   ],
   "picture": [
-    { "id": 1, "src": "https://i.ibb.co/rGNgCJR/foto-gedung-1.jpg" },
-    { "id": 2, "src": "https://i.ibb.co/6tKXXbV/foto-gedung-2.jpg" }
+    { "id": 1, "src": "https://i.ibb.co/6tKXXbV/foto-gedung-2.jpg" },
+    { "id": 2, "src": "https://i.ibb.co/rGNgCJR/foto-gedung-1.jpg" },
+    {
+      "id": 3,
+      "src": "https://i.ibb.co/hWSfYmk/12-tampak-samping-ged-sekolah.jpg"
+    }
   ]
 }

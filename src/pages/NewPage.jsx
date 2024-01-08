@@ -139,12 +139,14 @@ const NewPage = () => {
           src={currentNew.imgSrc}
           alt={currentNew.imgAlt}
         />
-        <h1 className="absolute bottom-5 left-5 text-3xl font-bold text-white">
-          {currentNew.title}
-        </h1>
+        <div className="relative mx-auto max-w-7xl px-4 lg:px-6">
+          <h1 className="absolute bottom-5 text-3xl font-bold text-white">
+            {currentNew.title}
+          </h1>
+        </div>
       </div>
 
-      <article className="mx-auto my-12 flex max-w-7xl flex-col gap-6 px-4 leading-6 lg:px-6">
+      <article className="mx-auto my-12 flex max-w-7xl flex-col gap-6 px-4 text-justify leading-6 lg:px-6">
         {currentNewContent()}
       </article>
     </main>

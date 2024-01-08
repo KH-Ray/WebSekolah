@@ -110,12 +110,31 @@ const visionAndMission = () => {
       </div>
 
       <div>
-        <h1 className="mb-2 text-xl font-semibold">Visi SMP Bakti Idhata</h1>
+        <h1 className="mb-2 text-xl font-semibold">Tujuan SMP Bakti Idhata</h1>
         <p>
-          Mengintegrasikan proses pendidikan sehingga terwujudnya peserta didik
-          yang berakhlak mulia, berkepribadian tangguh, mandiri, kreatif,
-          inovatif, dan menjunjung tinggi budaya bangsa.
+          Tujuan besar pendidikan SMP Bakti Idhata adalah mewujudkan visi dan
+          melaksanakan misi agar tercapai lulusan yang berkualitas. Adapun
+          ekspektasi dalam jangka waktu tertentu sebagai berikut.
         </p>
+        <ol className="ms-4 list-outside list-decimal">
+          <li>
+            Terbentuknya sikap peserta didik yang bertakwa dan berakhlak mulia.
+          </li>
+          <li>
+            Terbentuknya karakter peserta didik yang berkerpibadian tangguh dan
+            mandiri dalam menghadapi tantangan dan menyelesaikan persoalan.
+          </li>
+          <li>
+            Terwujudnya gagasan orisinal sebagai bagian dari ide kreatif dan
+            inovatif peserta didik.
+          </li>
+          <li>Terciptanya iklim keamanan sekolah.</li>
+          <li>Terciptanya iklim kebinekaan sekolah.</li>
+          <li>
+            Tercapainya mutu lulusan yang mampu menghargai dan menjunjung tinggi
+            kearifan budaya lokal.
+          </li>
+        </ol>
       </div>
     </>
   );
@@ -165,7 +184,7 @@ const ProfilePage = () => {
       <div className="bg-main-gray">
         <div className="mx-auto flex h-96 max-w-7xl flex-col items-start justify-center gap-4 px-4 lg:px-6">
           <h1 className="text-6xl font-semibold uppercase">profil sekolah</h1>
-          <p className="text-xl">Beranda - Staff Pengajar</p>
+          <p className="text-xl">Beranda - Profil Sekolah</p>
         </div>
       </div>
 
@@ -175,7 +194,7 @@ const ProfilePage = () => {
             <h1 className="mb-2 py-2 text-2xl font-semibold uppercase">
               {currentPage.title}
             </h1>
-            <article className="flex flex-col gap-6">
+            <article className="flex flex-col gap-6 text-justify">
               {currentPage.content}
             </article>
           </div>
@@ -208,7 +227,7 @@ const ProfilePage = () => {
           </aside>
         </div>
       ) : (
-        <div className="my-12 max-w-7xl px-4 lg:px-6">
+        <div className="mx-auto my-12 max-w-7xl px-4 lg:px-6">
           <div className="mb-8 text-gray-blue">
             <button
               className="flex items-center gap-4 hover:cursor-pointer"

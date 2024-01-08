@@ -8,6 +8,7 @@ import annoucementServices from "../services/announcements";
 import pictureServices from "../services/pictures";
 import newsServices from "../services/news";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const news = useQuery({
@@ -61,7 +62,7 @@ const HomePage = () => {
               <img
                 src={headmaster.image}
                 alt="Kepala Sekolah"
-                className="h-full w-full"
+                className="h-full w-full rounded-b-xl"
               />
               <div className="absolute bottom-0 z-10 flex w-full flex-col items-center gap-2 rounded-b-xl bg-light-blue p-4">
                 <p className="text-xl font-semibold">{headmaster.name}</p>
@@ -107,17 +108,20 @@ const HomePage = () => {
                   Berita dan informasi terbaru
                 </span>
               </h2>
-              <Flowbite theme={{ theme: customButtonTheme }}>
-                <Button color="dark-gray" size="lg">
-                  Lihat Semua
-                </Button>
-              </Flowbite>
+              <Link to="/berita">
+                <Flowbite theme={{ theme: customButtonTheme }}>
+                  <Button color="dark-gray" size="lg">
+                    Lihat Semua
+                  </Button>
+                </Flowbite>
+              </Link>
             </div>
 
             <div className="mx-auto flex flex-col items-center gap-6 md:grid md:grid-cols-2 lg:grid-cols-4">
               {news.data.map((n) => (
                 <NewsCard
                   key={n.id}
+                  id={n.id}
                   title={n.title}
                   subtitle={n.subtitle}
                   imgSrc={n.imgSrc}
@@ -135,11 +139,13 @@ const HomePage = () => {
                   Pengumuman untuk peserta didik
                 </span>
               </h2>
-              <Flowbite theme={{ theme: customButtonTheme }}>
-                <Button color="dark-gray" size="lg">
-                  Lihat Semua
-                </Button>
-              </Flowbite>
+              <Link to="/pengumuman">
+                <Flowbite theme={{ theme: customButtonTheme }}>
+                  <Button color="dark-gray" size="lg">
+                    Lihat Semua
+                  </Button>
+                </Flowbite>
+              </Link>
             </div>
 
             <div className="divide-y divide-solid divide-gray-400">

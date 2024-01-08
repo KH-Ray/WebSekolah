@@ -1,4 +1,5 @@
 import { Card } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 const NewsCard = (props) => {
   return (
@@ -16,12 +17,12 @@ const NewsCard = (props) => {
       <p className="text-sm font-normal text-gray-700 dark:text-gray-400">
         {props.subtitle}
       </p>
-      <a
+      <Link
         className="mt-auto text-sm font-semibold text-deep-purple-600"
-        href="#"
+        to={`/berita/${props.id}`}
       >
         See more &gt;
-      </a>
+      </Link>
     </Card>
   );
 };

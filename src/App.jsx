@@ -28,6 +28,7 @@ import AdminAnnouncement from "./pages/admin/AdminAnnouncement";
 import AdminExtracurricular from "./pages/admin/AdminExtracurricular";
 import AdminStudents from "./pages/admin/AdminStudents";
 import NewPage from "./pages/NewPage";
+import AnnoucementPage from "./pages/AnnoucementPage";
 
 const MainPage = (page) => {
   return (
@@ -66,8 +67,9 @@ const App = () => {
         <Route path="/organisasi" element={MainPage(<LearningPage />)} />
         <Route path="/berita" element={MainPage(<NewsPage />)} />
         <Route path="/berita/:id" element={MainPage(<NewPage />)} />
+        <Route path="/pengumuman" element={MainPage(<AnnoucementPage />)} />
         <Route
-          path="/extrakurikuler"
+          path="/ekstrakurikuler"
           element={MainPage(<ExtracurricularPage />)}
         />
         <Route path="/siswa" element={MainPage(<StudentsPage />)} />
