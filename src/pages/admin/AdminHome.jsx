@@ -104,7 +104,7 @@ const AdminHome = () => {
             <input
               type="file"
               name="bHeadImg"
-            onChange={(e) => setbHeadImg(e.target.files[0])}/>
+              onChange={(e) => setbHeadImg(e.target.files[0])}/>
           </p>
         </div>
           
@@ -143,10 +143,9 @@ const AdminHome = () => {
                 <div className="ml-auto">
                   <Flowbite theme={{ theme: customButtonTheme }}>
                   <Button color="dark-gray" size="lg"
-                    type="submit"
+                      type="submit"
                     >
                       Simpan
-                      <h1 style={{ fontSize: '15px', textAlign: 'center', marginTop: '20px' }}>{msg}</h1>
                     </Button>
                     
                   </Flowbite>

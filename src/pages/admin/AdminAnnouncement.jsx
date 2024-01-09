@@ -7,7 +7,39 @@ import { useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import fileServices from "../../services/files";
 
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const addAnnoucementPage = (files, setAddAnnouncement) => {
+const [descNotice, setDescNotice] = useState('');
+  const [document, setDocument] = useState('');
+  const [msg, setMsg] = useState('');
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('descNotice', descNotice);
+    formData.append('document', document);
+
+    try {
+      const response = await axios.post('http://localhost:8080/admin/pengumuman', formData);
+
+      console.log(response.data);
+
+      if (response.data.Status === 'Success') {
+        navigate('/profile');
+        setMsg('File Successfully Uploaded');
+      } else {
+        setMsg('Error');
+      }
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      setMsg('Error' + error.message);
+    }
+  };
   return (
     <main className="h-screen overflow-auto px-24 py-6 font-poppins">
       <div className="flex flex-col gap-8">
@@ -20,7 +52,7 @@ const addAnnoucementPage = (files, setAddAnnouncement) => {
           </button>
         </div>
 
-        <form className="flex flex-col gap-8">
+        <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4">
             <label
               className="text-2xl font-medium"
@@ -30,7 +62,7 @@ const addAnnoucementPage = (files, setAddAnnouncement) => {
             </label>
             <Editor
               id="announcement content"
-              name="announcement content"
+              name="descNotice"
               apiKey="o0pzftir0e6adwmb92z8ig9705xxtb5i7kurqh1a3j7q41qe"
               init={{
                 plugins:
@@ -50,6 +82,7 @@ const addAnnoucementPage = (files, setAddAnnouncement) => {
                     Promise.reject("See docs to implement AI Assistant"),
                   ),
               }}
+              onEditorChange={setDescNotice}
             />
           </div>
 
@@ -75,7 +108,7 @@ const addAnnoucementPage = (files, setAddAnnouncement) => {
             </div>
 
             <label className="flex h-16 w-64 items-center justify-center gap-2 rounded bg-gray-400 text-lg text-white hover:cursor-pointer hover:bg-gray-500">
-              <input type="file" className="hidden" />
+              <input type="file" className="hidden" onChange={(e) => setDocument(e.target.files[0])}/>
               <PlusIcon className="h-8 w-8" /> Pilih Dokumen
             </label>
           </div>

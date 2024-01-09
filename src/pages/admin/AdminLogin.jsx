@@ -3,30 +3,31 @@ import logo from "../../images/cropped-bakdhatlogo.svg";
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
 
 const AdminLogin = () => {
   const history = useNavigate();
-  const [userName, setUsername] = useState('')
-  const [passWord, setPassword] = useState('')
+  const [userName, setUsername] = useState("");
+  const [passWord, setPassword] = useState("");
 
   async function submit(e) {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/admin', {
-        userName,passWord
-      })
-      if (response.data.login) {
-          history("/admin/beranda", {state:{id:userName}})
-        } else if (response.data!="Failed") {
-            alert("Wrong username or password")
-        }
+      const hashedPassword = await bcrypt.hash(passWord, 10);
 
-    } catch (e) {
-      console.log(e)
+      const response = await axios.post("http://localhost:8080/admin", {
+        userName,
+        passWord: hashedPassword,
+      });
+
+      if (response.data.login) {
+        history("/admin/beranda", { state: { id: userName } });
+      } else if (response.data !== "Failed") {
+        alert("Wrong username or password");
+      }
+    } catch (error) {
+      console.log(error);
     }
-      
   }
 
   return (
@@ -45,7 +46,9 @@ const AdminLogin = () => {
             id="username"
             name="username"
             className="rounded border-gray-400"
-            onChange={(e) => { setUsername(e.target.value) }}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
           />
         </div>
 
@@ -56,7 +59,9 @@ const AdminLogin = () => {
             id="password"
             name="password"
             className="rounded border-gray-400"
-            onChange={(e) => { setPassword(e.target.value) }}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
           />
         </div>
 
@@ -72,4 +77,4 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default AdminLogin;

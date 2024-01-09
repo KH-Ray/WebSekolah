@@ -7,7 +7,41 @@ import { useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { customButtonTheme } from "../../themes/flowbiteThemes";
 
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const addNewsPage = (setAddNews) => {
+  const [sampul, setSampul] = useState('');
+  const [judulBerita, setJudulBerita] = useState('');
+  const [isiBerita, setIsiBerita] = useState('');
+  const [msg, setMsg] = useState('');
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('sampul', sampul);
+    formData.append('judulBerita', judulBerita);
+    formData.append('isiBerita', isiBerita);
+
+    try {
+      const response = await axios.post('http://localhost:8080/admin/berita', formData);
+
+      console.log(response.data);
+
+      if (response.data.Status === 'Success') {
+        navigate('/profile');
+        setMsg('File Successfully Uploaded');
+      } else {
+        setMsg('Error');
+      }
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      setMsg('Error' + error.message);
+    }
+  };
   return (
     <main className="h-screen overflow-auto px-24 py-6 font-poppins">
       <div className="flex flex-col gap-8">
@@ -20,12 +54,14 @@ const addNewsPage = (setAddNews) => {
           </button>
         </div>
 
-        <form className="flex flex-col gap-12">
+        <form className="flex flex-col gap-12" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4">
             <p className="text-2xl font-medium">Gambar Sampul</p>
             <label className="flex h-40 w-full items-center justify-center gap-4 rounded-xl border border-solid border-gray-500 text-3xl text-blue-800 hover:cursor-pointer">
               <input
                 type="file"
+                name="sampul"
+                onChange={(e) => setSampul(e.target.files[0])}
                 accept="image/png, image/jpeg"
                 className="hidden"
               />
@@ -39,7 +75,8 @@ const addNewsPage = (setAddNews) => {
             </label>
             <input
               type="text"
-              name="news title"
+              name="judulBerita"
+              onChange={(e) => setJudulBerita(e.target.value)}
               id="news title"
               className="rounded-xl border border-solid border-gray-500"
             />
@@ -51,7 +88,7 @@ const addNewsPage = (setAddNews) => {
             </label>
             <Editor
               id="news content"
-              name="news content"
+              name="isiBerita"
               apiKey="o0pzftir0e6adwmb92z8ig9705xxtb5i7kurqh1a3j7q41qe"
               init={{
                 plugins:
@@ -71,6 +108,7 @@ const addNewsPage = (setAddNews) => {
                     Promise.reject("See docs to implement AI Assistant"),
                   ),
               }}
+              onEditorChange={setIsiBerita}
             />
           </div>
 
