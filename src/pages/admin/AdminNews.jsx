@@ -10,14 +10,16 @@ import { customButtonTheme } from "../../themes/flowbiteThemes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const addNewsPage = (setAddNews) => {
-  const [sampul, setSampul] = useState('');
-  const [judulBerita, setJudulBerita] = useState('');
-  const [isiBerita, setIsiBerita] = useState('');
-  const [msg, setMsg] = useState('');
-
-  const navigate = useNavigate();
-
+const addNewsPage = (
+  setAddNews,
+  sampul,
+  isiBerita,
+  judulBerita,
+  setIsiBerita,
+  setJudulBerita,
+  setSampul,
+  setMsg,
+  navigate) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -32,7 +34,7 @@ const addNewsPage = (setAddNews) => {
       console.log(response.data);
 
       if (response.data.Status === 'Success') {
-        navigate('/profile');
+        navigate('/berita');
         setMsg('File Successfully Uploaded');
       } else {
         setMsg('Error');
@@ -89,7 +91,7 @@ const addNewsPage = (setAddNews) => {
             <Editor
               id="news content"
               name="isiBerita"
-              apiKey="o0pzftir0e6adwmb92z8ig9705xxtb5i7kurqh1a3j7q41qe"
+              apiKey="hmjkmqo8ghn49src4q3ywlysr8iepj4xq2pumlshqma4ahx2"
               init={{
                 plugins:
                   "tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
@@ -125,6 +127,12 @@ const addNewsPage = (setAddNews) => {
 
 const AdminNews = () => {
   const [addNews, setAddNews] = useState(false);
+  const [sampul, setSampul] = useState('');
+  const [judulBerita, setJudulBerita] = useState('');
+  const [isiBerita, setIsiBerita] = useState('');
+  const [msg, setMsg] = useState('');
+
+  const navigate = useNavigate();
 
   const news = useQuery({
     queryKey: ["news"],
@@ -141,7 +149,7 @@ const AdminNews = () => {
     );
 
   if (addNews) {
-    return addNewsPage(setAddNews);
+    return addNewsPage(setAddNews, sampul, isiBerita, judulBerita,  setIsiBerita, setJudulBerita, setSampul, setMsg, navigate);
   }
 
   return (

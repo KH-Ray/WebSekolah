@@ -1,4 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
+import { Button, Flowbite } from "flowbite-react";
+import { customButtonTheme } from "../../themes/flowbiteThemes";
 import annoucementServices from "../../services/announcements";
 import Notice from "../../components/Notice";
 import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
@@ -10,12 +12,16 @@ import fileServices from "../../services/files";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const addAnnoucementPage = (files, setAddAnnouncement) => {
-const [descNotice, setDescNotice] = useState('');
-  const [document, setDocument] = useState('');
-  const [msg, setMsg] = useState('');
-
-  const navigate = useNavigate();
+const addAnnoucementPage = (
+  files,
+  setAddAnnouncement,
+  descNotice,
+  setDescNotice,
+  document,
+  setDocument,
+  setMsg,
+  navigate,
+) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,7 +69,7 @@ const [descNotice, setDescNotice] = useState('');
             <Editor
               id="announcement content"
               name="descNotice"
-              apiKey="o0pzftir0e6adwmb92z8ig9705xxtb5i7kurqh1a3j7q41qe"
+              apiKey="hmjkmqo8ghn49src4q3ywlysr8iepj4xq2pumlshqma4ahx2"
               init={{
                 plugins:
                   "tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
@@ -111,6 +117,13 @@ const [descNotice, setDescNotice] = useState('');
               <input type="file" className="hidden" onChange={(e) => setDocument(e.target.files[0])}/>
               <PlusIcon className="h-8 w-8" /> Pilih Dokumen
             </label>
+            <div className="ml-auto pb-6">
+            <Flowbite theme={{ theme: customButtonTheme }}>
+              <Button color="dark-gray" size="lg" type="submit">
+                Simpan
+              </Button>
+            </Flowbite>
+          </div>
           </div>
         </form>
       </div>
@@ -120,6 +133,11 @@ const [descNotice, setDescNotice] = useState('');
 
 const AdminAnnouncement = () => {
   const [addAnnoucement, setAddAnnouncement] = useState(false);
+  const [descNotice, setDescNotice] = useState('');
+  const [document, setDocument] = useState('');
+  const [msg, setMsg] = useState('');
+
+  const navigate = useNavigate();
 
   const annoucements = useQuery({
     queryKey: ["annoucements"],
@@ -141,7 +159,16 @@ const AdminAnnouncement = () => {
     );
 
   if (addAnnoucement) {
-    return addAnnoucementPage(files, setAddAnnouncement);
+    return addAnnoucementPage(
+      files,
+      setAddAnnouncement,
+      descNotice,
+      setDescNotice,
+      document,
+      setDocument,
+      setMsg,
+      navigate,
+    );
   }
 
   return (

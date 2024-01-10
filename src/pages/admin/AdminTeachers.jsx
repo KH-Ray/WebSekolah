@@ -10,28 +10,26 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const adminTeacherModal = (
-  teacherData,
   setTeacher,
+  teacher,
   openModal,
   setOpenModal,
+  name,
+  position,
+  education,
+  achievement,
+  fotoGuru,
+  setName,
+  setPosition,
+  setEducation,
+  setAchievement,
+  setFotoGuru,
+  setMsg,
+  navigate
 ) => {
-
-  const [name, setName] = useState('');
-  const [position, setPosition] = useState('');
-  const [education, setEducation] = useState('');
-  const [achievement, setAchievement] = useState('');
-  const [fotoGuru, setFotoGuru] = useState('');
-  const [msg, setMsg] = useState('');
-
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!fotoGuru) {
-    setMsg('Please select a file');
-    return;
-  }
 
     const formData = new FormData();
     formData.append('name', name);
@@ -135,6 +133,14 @@ const adminTeacherModal = (
 const AdminTeachers = () => {
   const [openModal, setOpenModal] = useState(false);
   const [teacher, setTeacher] = useState("");
+  const [name, setName] = useState('');
+  const [position, setPosition] = useState('');
+  const [education, setEducation] = useState('');
+  const [achievement, setAchievement] = useState('');
+  const [fotoGuru, setFotoGuru] = useState('');
+  const [msg, setMsg] = useState('');
+
+  const navigate = useNavigate();
 
   const teachers = useQuery({
     queryKey: ["teachers"],
@@ -149,6 +155,27 @@ const AdminTeachers = () => {
         </div>
       </main>
     );
+  if (openModal) {
+    return adminTeacherModal
+      (
+        setOpenModal,
+        teacher,
+        setTeacher,
+        openModal,
+        name,
+        position,
+        education,
+        achievement,
+        fotoGuru,
+        setName,
+        setPosition,
+        setEducation,
+        setAchievement,
+        setFotoGuru,
+        setMsg,
+        navigate
+      );
+  }
 
   const teachersData = teachers.data;
 
