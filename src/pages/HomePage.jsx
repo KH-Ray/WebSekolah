@@ -9,8 +9,9 @@ import { customButtonTheme } from "../themes/flowbiteThemes";
 import { Carousel } from "@material-tailwind/react";
 import Notice from "../components/Notice";
 
-import gedung1 from "../images/foto-gedung-1.jpg";
-
+function stripTags(html) {
+  return html.replace(/<\/?[^>]+(>|$)/g, "");
+}
 
 const HomePage = () => {
   
@@ -99,12 +100,12 @@ const HomePage = () => {
             </div>
 
             <div className="mx-auto flex flex-col items-center gap-6 md:grid md:grid-cols-2 lg:grid-cols-4">
-              {news.map((news, i) => (
+              {news.map((newsItem) => (
                 <NewsCard              
-                  key={i}
-                  title={news.head}
-                  subtitle={news.subHead}
-                  imgSrc={news.headImg}
+                  key={newsItem.ID}
+                  title={newsItem.judulBerita}
+                  subtitle={stripTags(newsItem.isiBerita)}
+                  imgSrc={`http://localhost:8080/${newsItem.sampul}`}
                   imgAlt="Loading..."
                 />
               ))}
@@ -114,9 +115,9 @@ const HomePage = () => {
           <div className="!mb-40">
             <div className="mb-24 flex h-14 flex-col justify-between gap-4 sm:mb-10 sm:flex-row">
               <h2 className="flex flex-col justify-between text-3xl font-bold">
-                Berita
+                Pengmuman
                 <span className="hid text-sm font-normal text-gray-500 sm:text-base">
-                  Berita dan informasi terbaru
+                  Pengmuman dan informasi terbaru
                 </span>
               </h2>
               <Flowbite theme={{ theme: customButtonTheme }}>

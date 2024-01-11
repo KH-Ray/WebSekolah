@@ -1,19 +1,25 @@
 import { Input } from "@material-tailwind/react";
 import { Pagination } from "@mui/material";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import newsServices from "../services/news";
-import { useQuery } from "@tanstack/react-query";
 import { Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const NewsPage = () => {
   const [search, setSearch] = useState("");
-
-  const news = useQuery({
-    queryKey: ["news"],
-    queryFn: () => newsServices.getAllNews(),
-  });
+  const [news, setNews] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const newsResponse = await axios.get("http://localhost:8080/berita");
+        setNews(newsResponse.data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+    fetchData();
+  }, []);
 
   if (news.isLoading)
     return (
@@ -45,26 +51,28 @@ const NewsPage = () => {
           </div>
 
           <div>
-            <Pagination count={1} variant="outlined" shape="rounded" />
+            <Pagination count={Math.ceil(news.data || 1)} variant="outlined" shape="rounded" />
           </div>
         </div>
 
         <div className="flex flex-col gap-4">
-          {news.data
-            .filter((n) => n.title.toLowerCase().includes(search))
-            .map((n) => (
+          {
+            news.map &&
+            news
+            .filter((newsItem) => newsItem.judulBerita.toLowerCase().includes(search))
+            .map((newsItem) => (
               <Link
-                key={n.id}
-                to={`/berita/${n.id}`}
+                key={newsItem.ID}
+                to={`/berita/${newsItem.ID}`}
                 className="relative h-48 w-full overflow-hidden rounded-xl"
               >
                 <img
                   className="h-full w-full object-cover"
-                  src={n.imgSrc}
-                  alt={n.imgAlt}
+                  src={`http://localhost:8080/${newsItem.sampul}`}
+                  alt="sampul berita"
                 />
                 <p className="absolute bottom-5 left-5 text-3xl font-bold text-white">
-                  {n.title}
+                  {newsItem.judulBerita}
                 </p>
               </Link>
             ))}
