@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import annoucementServices from "../../services/announcements";
 import newsServices from "../../services/news";
 import pictureServices from "../../services/pictures";
+import { Link } from "react-router-dom";
 
 const AdminHome = () => {
   const news = useQuery({
@@ -42,15 +43,18 @@ const AdminHome = () => {
       <div>
         <h1 className="mb-8 block text-4xl font-semibold">Halaman Berita</h1>
 
-        <Carousel className="mb-4 h-[76px] w-full overflow-hidden md:h-[153px] lg:h-[306px] xl:h-[408px]">
-          {Array(3)
-            .fill(0)
-            .map((_, i) => (
-              <img key={i} className="w-full" src={pictures.data[0].src} />
-            ))}
+        <Carousel className="h-[153px] overflow-hidden md:h-[306px] lg:h-[408px] xl:h-[612px]">
+          {pictures.data.map((p) => (
+            <img
+              key={p.id}
+              src={p.src}
+              alt="Carousel image"
+              className="h-[153px] w-full object-cover md:h-[306px] lg:h-[408px] xl:h-[612px]"
+            />
+          ))}
         </Carousel>
 
-        <p className="flex items-center gap-4 font-medium text-blue-800 hover:cursor-pointer">
+        <p className="mt-4 flex items-center gap-4 font-medium text-blue-800 hover:cursor-pointer">
           {<PlusIcon className="h-6 w-6" />} Tambahkan Gambar
         </p>
       </div>
@@ -73,7 +77,7 @@ const AdminHome = () => {
             <div className="flex">
               <div className="ml-auto">
                 <Flowbite theme={{ theme: customButtonTheme }}>
-                  <Button color="dark-gray" size="lg">
+                  <Button color="dark-green" size="lg">
                     Simpan
                   </Button>
                 </Flowbite>
@@ -89,11 +93,13 @@ const AdminHome = () => {
                   Berita dan informasi terbaru
                 </span>
               </h2>
-              <Flowbite theme={{ theme: customButtonTheme }}>
-                <Button color="dark-gray" size="lg">
-                  Lihat Semua
-                </Button>
-              </Flowbite>
+              <Link to="/berita">
+                <Flowbite theme={{ theme: customButtonTheme }}>
+                  <Button color="dark-green" size="lg">
+                    Lihat Semua
+                  </Button>
+                </Flowbite>
+              </Link>
             </div>
 
             <div className="mx-auto flex flex-col items-center gap-6 md:grid md:grid-cols-2 xl:grid-cols-4">
@@ -118,21 +124,26 @@ const AdminHome = () => {
                   Berita dan informasi terbaru
                 </span>
               </h2>
-              <Flowbite theme={{ theme: customButtonTheme }}>
-                <Button color="dark-gray" size="lg">
-                  Lihat Semua
-                </Button>
-              </Flowbite>
+              <Link to="/pengumuman">
+                <Flowbite theme={{ theme: customButtonTheme }}>
+                  <Button color="dark-green" size="lg">
+                    Lihat Semua
+                  </Button>
+                </Flowbite>
+              </Link>
             </div>
 
             <div className="divide-y divide-solid divide-gray-400">
               {announcements.data.map((a) => (
-                <Notice
-                  key={a.id}
-                  title={a.title}
-                  date={a.date}
-                  subtitle={a.subtitle}
-                />
+                <div key={a.id}>
+                  <Link to={`/pengumuman/${a.id}`}>
+                    <Notice
+                      title={a.title}
+                      date={a.date}
+                      subtitle={a.subtitle}
+                    />
+                  </Link>
+                </div>
               ))}
             </div>
           </div>

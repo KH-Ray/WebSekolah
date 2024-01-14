@@ -2,10 +2,9 @@ import { classNames } from "../helper";
 
 const LearningPage = () => {
   const sections = [
-    { title: "Pengantar", current: true },
-    { title: "Visi dan Misi", current: false },
-    { title: "Struktur Organisasi", current: false },
-    { title: "Denah Sekolah", current: false },
+    { title: "Intrakurikuler", current: true },
+    { title: "Ko - Kurikuler", current: false },
+    { title: "Ekstrakurikuler", current: false },
   ];
 
   return (
@@ -24,7 +23,7 @@ const LearningPage = () => {
       <div className="mx-auto my-12 flex max-w-7xl flex-col-reverse gap-8 px-4 leading-6 sm:grid sm:grid-cols-[60fr_40fr] sm:gap-0 lg:px-6">
         <div>
           <h1 className="py-2 text-2xl font-semibold uppercase">pengantar</h1>
-          <article>
+          <article className="text-justify">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat
             eaque consequatur adipisci vitae sint ex maiores perferendis quam
             laborum omnis, rem, exercitationem, inventore cumque fugit animi
@@ -65,12 +64,12 @@ const LearningPage = () => {
 
         <aside className="space-y-2 justify-self-center">
           {sections.map((section, i) => (
-            <div key={i} className="flex w-full flex-col">
+            <div key={i} className="flex w-64 flex-col">
               <button
                 className={classNames(
                   section.current
-                    ? "bg-main-blue font-semibold text-white"
-                    : "bg-light-blue text-black",
+                    ? "bg-dark-green font-semibold text-white"
+                    : "bg-light-green text-black",
                   "rounded-lg px-12 py-4",
                 )}
               >

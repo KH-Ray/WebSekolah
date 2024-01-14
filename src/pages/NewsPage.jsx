@@ -38,28 +38,28 @@ const NewsPage = () => {
           <div className="w-full sm:w-1/2">
             <Input
               label="Cari Berita"
-              color="blue"
+              color="teal"
               icon={<MagnifyingGlassIcon />}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
 
           <div>
-            <Pagination count={1} variant="outlined" shape="rounded" />
+            <Pagination count={4} variant="outlined" shape="rounded" />
           </div>
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col-reverse gap-4">
           {news.data
             .filter((n) => n.title.toLowerCase().includes(search))
             .map((n) => (
               <Link
                 key={n.id}
                 to={`/berita/${n.id}`}
-                className="relative h-48 w-full overflow-hidden rounded-xl"
+                className="relative h-full w-full overflow-hidden rounded-xl"
               >
                 <img
-                  className="h-full w-full object-cover"
+                  className="h-64 w-full object-cover"
                   src={n.imgSrc}
                   alt={n.imgAlt}
                 />

@@ -1,12 +1,10 @@
 import Box from "./PhotoBox";
-import megaphone from "../images/icons/megaphone.svg";
 import { CalendarDaysIcon, MegaphoneIcon } from "@heroicons/react/24/outline";
 
 const Notice = (props) => {
   return (
-    <div className="flex h-full items-center gap-4 py-4 md:gap-12">
-      <Box styles="sm:w-36 h-36 sm:flex items-center justify-center grow-0 shrink-0 basis-36 hidden">
-        {/* <img className="h-20 w-20" src={megaphone} alt="Notice logo" /> */}
+    <div className="flex h-full items-center gap-4 rounded-lg py-4 hover:cursor-pointer md:gap-12">
+      <Box styles="sm:w-36 h-36 sm:flex items-center justify-center grow-0 shrink-0 basis-36 hidden !bg-main-yellow">
         <MegaphoneIcon className="h-20 w-20" />
       </Box>
 

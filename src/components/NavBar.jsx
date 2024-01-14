@@ -44,7 +44,7 @@ const navigation = [
 
 const dropdownNavbarDesktop = (links, setOpenDropDown) => {
   return (
-    <div className="absolute flex h-11 w-40 -translate-x-1/4 translate-y-9 flex-col border-t-2 border-solid border-t-dark-blue">
+    <div className="absolute flex h-11 w-40 -translate-x-1/4 translate-y-9 flex-col border-t-2 border-solid border-t-dark-green">
       {links.map((l) => (
         <Link
           key={l.name}
@@ -88,7 +88,7 @@ export default function NavBar() {
   return (
     <Disclosure
       as="nav"
-      className="relative z-10 bg-gradient-to-r from-main-blue to-light-blue font-poppins drop-shadow-md"
+      className="bg-dark-seagreen relative z-10 font-poppins drop-shadow-md"
     >
       {({ open }) => (
         <>

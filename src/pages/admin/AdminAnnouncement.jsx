@@ -2,14 +2,55 @@ import { useQuery } from "@tanstack/react-query";
 import annoucementServices from "../../services/announcements";
 import Notice from "../../components/Notice";
 import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { Spinner } from "flowbite-react";
+import { Modal, Spinner } from "flowbite-react";
 import { useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import fileServices from "../../services/files";
+import { customButtonTheme } from "../../themes/flowbiteThemes";
+import { Button, Flowbite } from "flowbite-react";
 
-const addAnnoucementPage = (files, setAddAnnouncement) => {
+const modalValidation = (openModal, setOpenModal) => {
+  return (
+    <Modal
+      dismissible
+      show={openModal}
+      onClose={() => setOpenModal(false)}
+      size="md"
+    >
+      <Modal.Body>
+        <div className="px-8 py-2 font-poppins">
+          <p className="mb-6 text-center text-xl">
+            Apakah anda yakin mengisi dengan benar?
+          </p>
+          <div className="flex items-center justify-center gap-8">
+            <button className="bg-semi-green h-full w-full rounded-lg px-8 py-4 text-white">
+              Simpan
+            </button>
+            <button
+              className="h-full w-full rounded-lg border border-solid border-black px-8 py-4"
+              onClick={() => setOpenModal(false)}
+            >
+              Batal
+            </button>
+          </div>
+        </div>
+      </Modal.Body>
+    </Modal>
+  );
+};
+
+const addAnnoucementPage = (
+  files,
+  openModal,
+  setOpenModal,
+  setAddAnnouncement,
+) => {
   return (
     <main className="h-screen overflow-auto px-24 py-6 font-poppins">
+      <div className="focus-visible:border-none">
+        {modalValidation(openModal, setOpenModal)}
+      </div>
+
       <div className="flex flex-col gap-8">
         <div className="text-gray-blue">
           <button
@@ -62,10 +103,23 @@ const addAnnoucementPage = (files, setAddAnnouncement) => {
               })}
             </div>
 
-            <label className="flex h-16 w-64 items-center justify-center gap-2 rounded bg-gray-400 text-lg text-white hover:cursor-pointer hover:bg-gray-500">
+            <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
               <input type="file" className="hidden" />
               <PlusIcon className="h-8 w-8" /> Pilih Dokumen
             </label>
+
+            <Flowbite theme={{ theme: customButtonTheme }}>
+              <Button
+                color="border-semi-green"
+                size="lg"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenModal(true);
+                }}
+              >
+                Simpan
+              </Button>
+            </Flowbite>
           </div>
         </form>
       </div>
@@ -75,6 +129,7 @@ const addAnnoucementPage = (files, setAddAnnouncement) => {
 
 const AdminAnnouncement = () => {
   const [addAnnoucement, setAddAnnouncement] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const annoucements = useQuery({
     queryKey: ["annoucements"],
@@ -96,11 +151,18 @@ const AdminAnnouncement = () => {
     );
 
   if (addAnnoucement) {
-    return addAnnoucementPage(files, setAddAnnouncement);
+    return addAnnoucementPage(
+      files,
+      openModal,
+      setOpenModal,
+      setAddAnnouncement,
+    );
   }
 
   return (
     <main className="h-screen overflow-auto px-24 py-6 font-poppins">
+      <p className="mb-8 block text-4xl font-semibold">Halaman Pengumuman</p>
+
       <div
         className="flex h-40 w-full items-center justify-center gap-4 rounded-xl border border-solid border-gray-500 text-3xl text-blue-800 hover:cursor-pointer"
         onClick={() => setAddAnnouncement(true)}

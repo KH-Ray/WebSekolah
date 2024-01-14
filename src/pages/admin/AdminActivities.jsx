@@ -24,7 +24,7 @@ const AdminActivities = () => {
         <div className="flex">
           <div className="ml-auto">
             <Flowbite theme={{ theme: customButtonTheme }}>
-              <Button color="dark-gray" size="lg">
+              <Button color="border-semi-green-fixedWidth" size="lg">
                 Simpan
               </Button>
             </Flowbite>

@@ -43,7 +43,7 @@ const adminExtracurriculerModal = (
               </label>
               <input
                 className="rounded border-[1.5px] border-solid border-gray-400 px-2 py-1"
-                type="text"
+                type="date"
                 name="exracurricular schedule"
                 id="exracurricular schedule"
               />
@@ -99,7 +99,7 @@ const adminExtracurriculerModal = (
                 );
               })}
             </div>
-            <label className="flex h-16 w-64 items-center justify-center gap-2 rounded bg-gray-400 text-lg text-white hover:cursor-pointer hover:bg-gray-500">
+            <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
               <input type="file" className="hidden" />
               <PlusIcon className="h-8 w-8" /> Pilih Dokumen
             </label>

@@ -51,7 +51,12 @@ const HomePage = () => {
     <main className="font-poppins">
       <Carousel className="h-[153px] overflow-hidden md:h-[306px] lg:h-[408px] xl:h-[612px]">
         {pictures.data.map((p) => (
-          <img key={p.id} src={p.src} alt="Carousel image" className="w-full" />
+          <img
+            key={p.id}
+            src={p.src}
+            alt="Carousel image"
+            className="h-[153px] w-full object-cover md:h-[306px] lg:h-[408px] xl:h-[612px]"
+          />
         ))}
       </Carousel>
 
@@ -64,19 +69,19 @@ const HomePage = () => {
                 alt="Kepala Sekolah"
                 className="h-full w-full rounded-b-xl"
               />
-              <div className="absolute bottom-0 z-10 flex w-full flex-col items-center gap-2 rounded-b-xl bg-light-blue p-4">
+              <div className="bg-main-seagreen absolute bottom-0 z-10 flex w-full flex-col items-center gap-2 rounded-b-xl p-4">
                 <p className="text-xl font-semibold">{headmaster.name}</p>
                 <p>{headmaster.role}</p>
               </div>
             </div>
             <div className="flex flex-col">
               <div className="z-10 flex w-full drop-shadow sm:w-1/2">
-                <div className="w-full whitespace-nowrap rounded-t-xl bg-light-blue px-8 py-4 text-xl font-semibold sm:rounded-t-none sm:rounded-tl-xl">
+                <div className="bg-main-seagreen w-full whitespace-nowrap rounded-t-xl px-8 py-4 text-xl font-semibold sm:rounded-t-none sm:rounded-tl-xl">
                   SMP Bakti Idhata
                 </div>
-                <div className="hidden w-full bg-light-blue px-8 py-4 sm:block sm:rounded-tr-full"></div>
+                <div className="bg-main-seagreen hidden w-full px-8 py-4 sm:block sm:rounded-tr-full"></div>
               </div>
-              <div className="h-96 overflow-auto rounded-b-xl bg-main-blue px-8 py-4 leading-6 sm:h-full sm:rounded-tr-xl">
+              <div className="bg-light-green h-96 overflow-auto rounded-b-xl px-8 py-4 text-justify leading-6 sm:h-full sm:rounded-tr-xl">
                 Memiliki anak cerdas dan siap menjadi generasi emas berkarakter
                 merupakan dambaan setiap orang tua. SMP Bakti Idhata berada
                 dibawah naungan Yayasan Bakti Idhata, Dharma Wanita Persatuan
@@ -110,7 +115,7 @@ const HomePage = () => {
               </h2>
               <Link to="/berita">
                 <Flowbite theme={{ theme: customButtonTheme }}>
-                  <Button color="dark-gray" size="lg">
+                  <Button color="dark-green" size="lg">
                     Lihat Semua
                   </Button>
                 </Flowbite>
@@ -141,7 +146,7 @@ const HomePage = () => {
               </h2>
               <Link to="/pengumuman">
                 <Flowbite theme={{ theme: customButtonTheme }}>
-                  <Button color="dark-gray" size="lg">
+                  <Button color="dark-green" size="lg">
                     Lihat Semua
                   </Button>
                 </Flowbite>
@@ -150,12 +155,15 @@ const HomePage = () => {
 
             <div className="divide-y divide-solid divide-gray-400">
               {annoucements.data.map((a) => (
-                <Notice
-                  key={a.id}
-                  title={a.title}
-                  date={a.date}
-                  subtitle={a.subtitle}
-                />
+                <div key={a.id}>
+                  <Link to={`/pengumuman/${a.id}`}>
+                    <Notice
+                      title={a.title}
+                      date={a.date}
+                      subtitle={a.subtitle}
+                    />
+                  </Link>
+                </div>
               ))}
             </div>
           </div>

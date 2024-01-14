@@ -102,13 +102,13 @@ const studentPageView = (student, setStudentPage, files) => {
             })}
           </div>
 
-          <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-gray-400 text-lg text-white hover:cursor-pointer hover:bg-gray-500">
+          <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
             <input type="file" className="hidden" />
             <PlusIcon className="h-8 w-8" /> Pilih Dokumen
           </label>
 
           <Flowbite theme={{ theme: customButtonTheme }}>
-            <Button color="dark-blue" size="lg">
+            <Button color="dark-green" size="lg">
               Unggah
             </Button>
           </Flowbite>
@@ -165,7 +165,7 @@ const AdminStudents = () => {
           </div>
         </div>
         <div>
-          <Box styles="w-full h-12 px-6 mb-2 flex justify-between items-center">
+          <Box styles="w-full h-12 px-6 mb-2 flex justify-between items-center !bg-semi-green text-white">
             <p>No.</p>
             <p>Nama Siswa</p>
             <p>Kelas</p>
@@ -176,7 +176,7 @@ const AdminStudents = () => {
               return (
                 <Box
                   key={s.id}
-                  styles="w-full h-12 px-6 flex justify-between items-center hover:cursor-pointer"
+                  styles="w-full h-12 px-6 flex justify-between items-center !bg-main-seagreen hover:cursor-pointer"
                   onClick={() => {
                     setStudent(s);
                     setStudentPage(true);

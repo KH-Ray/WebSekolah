@@ -148,7 +148,7 @@ const structureOrganization = () => {
 
 const schoolGrounds = () => {
   return (
-    <Carousel className="h-[682px] w-full bg-main-blue">
+    <Carousel className="bg-light-gray-green h-[682px] w-full">
       <img
         src="https://i.ibb.co/9VcWzL4/bismillah-denah-sekolah-lantai-1-fix.png"
         alt="Denah Sekolah 1"
@@ -201,13 +201,13 @@ const ProfilePage = () => {
 
           <aside className="space-y-2 justify-self-center">
             {sections.map((section, i) => (
-              <div key={i} className="flex w-full flex-col">
+              <div key={i} className="flex w-64 flex-col">
                 <button
                   value={section.title}
                   className={classNames(
                     section.current
-                      ? "bg-main-blue font-semibold text-white"
-                      : "bg-light-blue text-black",
+                      ? "bg-semi-green font-semibold text-white"
+                      : "bg-light-green text-black",
                     "rounded-lg px-12 py-4",
                   )}
                   onClick={(e) => {

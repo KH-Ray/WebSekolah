@@ -17,7 +17,7 @@ const AdminNav = () => {
   ]);
 
   return (
-    <nav className="bg-gradient-to-b from-dark-blue to-main-blue font-poppins">
+    <nav className="to-main-seagreen bg-gradient-to-b from-dark-green font-poppins">
       <div className="flex flex-col gap-4 p-6">
         {navigations.map((nav, i) => (
           <Link key={i} to={`/admin${nav.link}`}>
@@ -34,7 +34,7 @@ const AdminNav = () => {
               }}
               className={classNames(
                 nav.current
-                  ? "bg-white font-semibold text-dark-blue"
+                  ? "bg-white font-semibold text-dark-green"
                   : "bg-main-gray/50 text-white",
                 "flex w-full items-center justify-center rounded-lg px-6 py-4 hover:cursor-pointer xl:px-12",
               )}

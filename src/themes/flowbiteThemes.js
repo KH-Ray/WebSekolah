@@ -15,12 +15,12 @@ const customCarouselTheme = {
 const customButtonTheme = {
   button: {
     color: {
-      "dark-gray":
-        "bg-gray-400 hover:bg-gray-500 text-white sm:w-36 w-full h-12",
-      "dark-gray-fullWidth":
-        "bg-gray-400 hover:bg-gray-500 text-white w-full h-12",
-      "dark-blue":
-        "bg-dark-blue hover:bg-dark-blue/75 text-white sm:w-36 w-full h-12",
+      "border-semi-green-fixedWidth":
+        "border border-solid rounded-lg border-semi-green text-white w-48 h-16 text-black",
+      "border-semi-green":
+        "border border-solid rounded-lg border-semi-green text-white w-full h-12 text-black",
+      "dark-green": "bg-dark-green text-white sm:w-36 w-full h-12",
+      "dark-green-fullWidth": "bg-dark-green text-white w-full h-12",
     },
     size: {
       md: "text-base px-4 py-2",

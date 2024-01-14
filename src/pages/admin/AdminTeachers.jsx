@@ -67,7 +67,7 @@ const adminTeacherModal = (
             </div>
 
             <Flowbite theme={{ theme: customButtonTheme }}>
-              <Button color="dark-gray-fullWidth" size="lg">
+              <Button color="border-semi-green" size="lg">
                 Simpan
               </Button>
             </Flowbite>
@@ -157,7 +157,7 @@ const AdminTeachers = () => {
               setOpenModal(true);
             }}
           >
-            <PlusIcon className="h-16 w-16 stroke-dark-blue" />
+            <PlusIcon className="h-16 w-16 stroke-blue-800" />
           </div>
         </div>
       </div>

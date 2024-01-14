@@ -129,6 +129,22 @@ const NewPage = () => {
   const currentNewContent = () => {
     if (Number(id) === 3) return newPage3();
     if (Number(id) === 4) return newPage4();
+
+    return (
+      <div>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam eum
+        facilis autem quisquam ea eos amet laborum voluptatibus? Unde deleniti
+        repudiandae odio consectetur fuga iusto reiciendis minus quasi sed
+        voluptatibus eos illum magni nihil nesciunt eligendi adipisci blanditiis
+        fugiat laborum, sit error aspernatur fugit quis consequuntur?
+        Perferendis distinctio sunt odio nihil ad dolore quos dignissimos
+        officia excepturi atque reprehenderit veritatis corporis ullam nostrum,
+        inventore minus explicabo? Vero voluptatem quos at iure animi inventore
+        autem omnis maxime eos! Iusto veniam ea earum nihil, labore illo eos
+        qui, provident veritatis autem aperiam. Atque iure iste officiis, vitae
+        nam corrupti ipsam debitis deleniti.
+      </div>
+    );
   };
 
   return (

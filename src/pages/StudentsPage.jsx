@@ -5,6 +5,7 @@ import Box from "../components/PhotoBox";
 import { useQuery } from "@tanstack/react-query";
 import studentServices from "../services/students";
 import { Spinner } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 const StudentsPage = () => {
   const students = useQuery({
@@ -37,18 +38,20 @@ const StudentsPage = () => {
           <div className="w-full sm:w-1/2">
             <Input
               label="Masukan Nama Siswa atau Kelas"
-              color="blue"
+              color="teal"
               icon={<MagnifyingGlassIcon />}
             />
           </div>
 
-          <div className="">
-            <Pagination count={4} variant="outlined" shape="rounded" />
-          </div>
+          <Link to="/login">
+            <button className="bg-semi-green rounded-lg px-8 py-3 text-white">
+              Lihat Profile Peserta Didik
+            </button>
+          </Link>
         </div>
 
         <div>
-          <Box styles="w-full h-12 px-6 mb-2 flex justify-between items-center">
+          <Box styles="w-full h-12 px-6 mb-2 flex justify-between items-center !bg-semi-green text-white">
             <p>No.</p>
             <p>Nama Siswa</p>
             <p>Kelas</p>
@@ -56,12 +59,12 @@ const StudentsPage = () => {
 
           <hr className="mb-2 border-t border-gray-400" />
 
-          <div className="flex flex-col gap-2">
+          <div className="mb-4 flex flex-col gap-2">
             {students.data.map((s, i) => {
               return (
                 <Box
                   key={i}
-                  styles="w-full h-12 px-6 flex justify-between items-center"
+                  styles="w-full h-12 px-6 flex justify-between items-center !bg-main-seagreen"
                 >
                   <p>{i + 1}.</p>
                   <p>{s.name}</p>
@@ -70,6 +73,11 @@ const StudentsPage = () => {
               );
             })}
           </div>
+        </div>
+
+        <div className="ml-auto flex">
+          <div className="mr-auto"></div>
+          <Pagination count={4} variant="outlined" shape="rounded" />
         </div>
       </div>
     </main>

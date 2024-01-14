@@ -1,15 +1,50 @@
 import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
-import FotoGedung from "../../images/foto-gedung-2.jpg";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Flowbite, Spinner } from "flowbite-react";
 import newsServices from "../../services/news";
 import { useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { customButtonTheme } from "../../themes/flowbiteThemes";
+import { Modal } from "flowbite-react";
+import { Link } from "react-router-dom";
 
-const addNewsPage = (setAddNews) => {
+const modalValidation = (openModal, setOpenModal) => {
+  return (
+    <Modal
+      dismissible
+      show={openModal}
+      onClose={() => setOpenModal(false)}
+      size="md"
+    >
+      <Modal.Body>
+        <div className="px-8 py-2 font-poppins">
+          <p className="mb-6 text-center text-xl">
+            Apakah anda yakin mengisi dengan benar?
+          </p>
+          <div className="flex items-center justify-center gap-8">
+            <button className="bg-semi-green h-full w-full rounded-lg px-8 py-4 text-white">
+              Simpan
+            </button>
+            <button
+              className="h-full w-full rounded-lg border border-solid border-black px-8 py-4"
+              onClick={() => setOpenModal(false)}
+            >
+              Batal
+            </button>
+          </div>
+        </div>
+      </Modal.Body>
+    </Modal>
+  );
+};
+
+const addNewsPage = (openModal, setAddNews, setOpenModal) => {
   return (
     <main className="h-screen overflow-auto px-24 py-6 font-poppins">
+      <div className="focus-visible:border-none">
+        {modalValidation(openModal, setOpenModal)}
+      </div>
+
       <div className="flex flex-col gap-8">
         <div className="text-gray-blue">
           <button
@@ -41,7 +76,19 @@ const addNewsPage = (setAddNews) => {
               type="text"
               name="news title"
               id="news title"
-              className="rounded-xl border border-solid border-gray-500"
+              className="rounded-lg border border-solid border-gray-500"
+            />
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <label htmlFor="date title" className="text-2xl font-medium">
+              Waktu Berita
+            </label>
+            <input
+              type="date"
+              name="date title"
+              id="date title"
+              className="rounded-lg border border-solid border-gray-500"
             />
           </div>
 
@@ -50,32 +97,28 @@ const addNewsPage = (setAddNews) => {
               Isi Berita
             </label>
             <Editor
-              id="news content"
-              name="news content"
               apiKey="o0pzftir0e6adwmb92z8ig9705xxtb5i7kurqh1a3j7q41qe"
               init={{
                 plugins:
-                  "tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
+                  "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
                 toolbar:
-                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-                tinycomments_mode: "embedded",
-                tinycomments_author: "Author name",
+                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
                 resize: false,
-                height: "550",
-                mergetags_list: [
-                  { value: "First.Name", title: "First Name" },
-                  { value: "Email", title: "Email" },
-                ],
-                ai_request: (request, respondWith) =>
-                  respondWith.string(() =>
-                    Promise.reject("See docs to implement AI Assistant"),
-                  ),
+                height: "500",
               }}
             />
           </div>
 
           <Flowbite theme={{ theme: customButtonTheme }}>
-            <Button color="dark-gray-fullWidth" size="lg" type="submit">
+            <Button
+              color="border-semi-green"
+              size="lg"
+              type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenModal(true);
+              }}
+            >
               Simpan
             </Button>
           </Flowbite>
@@ -87,6 +130,7 @@ const addNewsPage = (setAddNews) => {
 
 const AdminNews = () => {
   const [addNews, setAddNews] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const news = useQuery({
     queryKey: ["news"],
@@ -103,7 +147,7 @@ const AdminNews = () => {
     );
 
   if (addNews) {
-    return addNewsPage(setAddNews);
+    return addNewsPage(openModal, setAddNews, setOpenModal);
   }
 
   return (
@@ -112,15 +156,20 @@ const AdminNews = () => {
 
       <div className="flex flex-col-reverse gap-4">
         {news.data.map((n) => (
-          <div
+          <Link
+            to={`/berita/${n.id}`}
             key={n.id}
-            className="relative h-40 w-full overflow-hidden rounded-xl"
+            className="relative h-48 w-full overflow-hidden rounded-xl"
           >
-            <img src={FotoGedung} alt="Foto Gedung" />
+            <img
+              className="h-full w-full object-cover"
+              src={n.imgSrc}
+              alt={n.imgAlt}
+            />
             <p className="absolute bottom-5 left-5 text-3xl font-bold text-white">
               {n.title}
             </p>
-          </div>
+          </Link>
         ))}
 
         <div

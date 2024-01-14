@@ -18,10 +18,10 @@ const NewsCard = (props) => {
         {props.subtitle}
       </p>
       <Link
-        className="mt-auto text-sm font-semibold text-deep-purple-600"
+        className="mt-auto text-sm font-semibold text-dark-green"
         to={`/berita/${props.id}`}
       >
-        See more &gt;
+        Lihat selengkapnya &gt;
       </Link>
     </Card>
   );
