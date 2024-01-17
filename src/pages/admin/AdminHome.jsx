@@ -12,6 +12,10 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+function stripTags(html) {
+  return html.replace(/<\/?[^>]+(>|$)/g, "");
+}
+
 const AdminHome = () => {
 
   const [bHeadImg, setbHeadImg] = useState('');
@@ -170,15 +174,15 @@ const AdminHome = () => {
               </div>
 
               <div className="mx-auto flex flex-col items-center gap-6 md:grid md:grid-cols-2 xl:grid-cols-4">
-                {news.map((news, i) => (
-                  <NewsCard
-                    key={i}
-                    title={news.head}
-                    subtitle={news.subHead}
-                    imgSrc={news.headImg}
-                    imgAlt='Loading...'
-                  />
-                ))}
+                {news.map((newsItem) => (
+                <NewsCard              
+                  key={newsItem.ID}
+                  title={newsItem.judulBerita}
+                  subtitle={stripTags(newsItem.isiBerita)}
+                  imgSrc={`http://localhost:8080/${newsItem.sampul}`}
+                  imgAlt="Loading..."
+                />
+              ))}
               </div>
             </div>
 
@@ -199,13 +203,11 @@ const AdminHome = () => {
 
               <div className="divide-y divide-solid divide-gray-400">
                 {
-                notice.map((notice, i) => (
-                  <Notice
-                    key={i}
-                    title={notice.headNotice}
-                    date={notice.date}
-                    subtitle={notice.descNotice}
-                  />
+                  notice.map((notice, i) => (
+                    <Notice
+                      key={i}
+                      subtitle={stripTags(notice.descNotice)}
+                    />
                 ))}
               </div>
             </div>

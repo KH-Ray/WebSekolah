@@ -14,6 +14,8 @@ import { useState } from "react";
 import { customButtonTheme } from "../../themes/flowbiteThemes";
 
 const studentPageView = (student, setStudentPage, files) => {
+
+  
   return (
     <main className="h-screen overflow-auto font-poppins">
       <div className="mx-auto my-12 flex max-w-7xl flex-col gap-8 px-4 lg:px-6">

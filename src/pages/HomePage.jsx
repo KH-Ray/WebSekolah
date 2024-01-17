@@ -132,9 +132,7 @@ const HomePage = () => {
               notice.map((notice, i) => (
                 <Notice
                   key={i}
-                  title={notice.headNotice}
-                  date={notice.date}
-                  subtitle={notice.descNotice}
+                  subtitle={stripTags(notice.descNotice)}
                 />
               ))}
             </div>

@@ -36,7 +36,7 @@ const addAnnoucementPage = (
       console.log(response.data);
 
       if (response.data.Status === 'Success') {
-        navigate('/profile');
+        navigate('/pengumuman');
         setMsg('File Successfully Uploaded');
       } else {
         setMsg('Error');

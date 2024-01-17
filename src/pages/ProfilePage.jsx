@@ -1,130 +1,65 @@
-import { useState } from "react";
 import { classNames } from "../helper";
 import { Carousel } from "flowbite-react";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
-const introduction = () => {
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
+function stripTags(html) {
+  return html.replace(/<\/?[^>]+(>|$)/g, "");
+}
+
+const introduction = (profil) => {
   return (
     <>
-      <p>
-        Tantangan pendidikan di SMP Bakti Idhata saat ini adalah bagaimana
-        sekolah mampu melakukan tata kelola pendidikan yang terencana, terarah,
-        dan berkelanjutan. Hal utama yang harus dilakukan adalah menumbuhkan
-        pola pikir positif terkait dengan sebuah perubahan. Pola pikir yang
-        positif akan mendukung akses perubahan ke arah hasil pendidikan yang
-        bermutu.
-      </p>
-
-      <p>
-        Terencana. Pendidikan di SMP Bakti Idhata perlu melakukan perencanaan
-        yang disesuaikan dengan kebijakan pendidikan. Beberapa kebijakan
-        pendidikan mengarah pada Merdeka Belajar, seperti implementasi
-        kurikulum, pemanfaatan Platform Merdeka Mengajar (PMM), sekolah
-        komunits, dan komunitas belajar.
-      </p>
-
-      <p>
-        SMP Bakti Idhata berupaya menyiapkan akses pendukung dan penyesuaiannya.
-        Akses pendukung berupa kesiapan sumber daya manusia, sarana prasarana,
-        kualitas pembelajaran, dan pembiayaan. Selanjutnya sekolah harus
-        memutuskan strategi pengelolaan pendidikan dengan mempertimbangkan tahap
-        perkembangan, tingkat pencapaian, kebutuhan belajar, dan karakteristik
-        peserta didik. Terdapat lima aspek utama untuk mendukung hal tersebut,
-        yakni adanya potensi diri, pemberdayaan diri, peningkatan diri,
-        pemahaman diri, dan peran sosial. Kelima aspek utama itu diselenggarakan
-        dalam proses belajar yang interaktif, inspiratif, menyenangkan,
-        menantang, dan memotivasi. Selain itu, sekolah memberikan ruang yang
-        cukup bagi prakarsa, kreativitas, kemandirian sesuai dengan bakat,
-        minat, dan perkembangan fisik, serta psikologis peserta didik.
-      </p>
-
-      <p>
-        Delapan Standar Kompetensi Lulusan (SKL) SMP merupakan core yang
-        pemenuhannya dapat diimplementasikan melalui program- program sekolah.
-        Karakteristik utama dalam upaya pencapaian tersebut adalah kegiatan-
-        kegiatan yang mencerminkan karakteristik profil pelajar Pancasila,
-        literasi, dan numerasi.
-      </p>
-
       <div>
-        <ol className="ms-4 list-outside list-decimal">
-          <li>
-            Pembelajaran berbasis projek untuk pengembangan soft skills dan
-            karakter sesuai profil Pelajar Pancasila (P3).
-          </li>
-          <li>
-            Fokus pada materi esensial sehingga ada waktu cukup untuk
-            pembelajaran yang mendalam bagi kompetensi dasar seperti literasi
-            dan numerasi.
-          </li>
-          <li>
-            Fleksibilitas guru untuk melakukan pembelajaran yang berdiferensiasi
-            sesuai dengan kemampuan peserta didik dan melakukan penyesuaian
-            dengan konteks dan muatan lokal.
-          </li>
-        </ol>
+        {
+          profil.map(introItem => (
+            <div key={introItem}>
+              <div>{stripTags(introItem.kataPen)}</div>
+            </div>
+            )
+          )
+        }
       </div>
     </>
   );
 };
 
-const visionAndMission = () => {
+const visionAndMission = (profil) => {
+
   return (
     <>
       <div>
-        <h1 className="mb-2 text-xl font-semibold">Visi SMP Bakti Idhata</h1>
-        <p>
-          Mengintegrasikan proses pendidikan sehingga terwujudnya peserta didik
-          yang berakhlak mulia, berkepribadian tangguh, mandiri, kreatif,
-          inovatif, dan menjunjung tinggi budaya bangsa.
-        </p>
+        <div>
+          {
+            profil.map(visimisiItem => (
+            <div key={visimisiItem}>
+              <div>{stripTags(visimisiItem.visimisi)}</div>
+            </div>
+            )
+            )
+          }
+        </div>
       </div>
 
-      <div>
-        <h1 className="mb-2 text-xl font-semibold">Misi SMP Bakti Idhata</h1>
-        <ol className="ms-4 list-outside list-decimal">
-          <li>
-            Menyelenggarakan pendidikan yang mencerminkan ketakwaan dan akhlak
-            mulia;
-          </li>
-          <li>
-            Membiasakan penanaman sikap yang mencirikan kepribadian tangguh;
-          </li>
-          <li>
-            Menyelenggarakan proses pembelajaran yang melatih peserta didik
-            untuk berjiwa mandiri;
-          </li>
-          <li>
-            Menciptakan lingkungan belajar yang mengembangkan kreativitas peseta
-            didik;
-          </li>
-          <li>
-            Mengoptimalkan kegiatan yang memotivasi peserta didik untuk
-            melakukan inovasi; dan
-          </li>
-          <li>
-            Menciptakan lingkungan sekolah yang dan menjunjung tinggi budaya
-            lokal.
-          </li>
-        </ol>
-      </div>
-
-      <div>
-        <h1 className="mb-2 text-xl font-semibold">Visi SMP Bakti Idhata</h1>
-        <p>
-          Mengintegrasikan proses pendidikan sehingga terwujudnya peserta didik
-          yang berakhlak mulia, berkepribadian tangguh, mandiri, kreatif,
-          inovatif, dan menjunjung tinggi budaya bangsa.
-        </p>
-      </div>
     </>
   );
 };
 
-const structureOrganization = () => {
+const structureOrganization = (profil) => {
+  
   return (
-    <img src="https://i.ibb.co/6H7WN7X/image-9.png" alt="Struktur Organisasi" />
+    <div>
+      {
+        profil.map(strukturItem => (
+        <div key={strukturItem}>
+          <img src={`http://localhost:8080/${strukturItem.struktur}`} alt="Struktur Organisasi" />
+        </div>
+        )
+        )
+      }
+    </div>
   );
 };
 
@@ -148,18 +83,35 @@ const schoolGrounds = () => {
 };
 
 const ProfilePage = () => {
+  const [profil, setprofil] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const profilResponse = await axios.get("http://localhost:8080/profil");
+        console.log("Profil Data:", profilResponse.data);
+        setprofil(profilResponse.data);
+
+
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+    fetchData();
+  }, []);
   const [sections, setSections] = useState([
-    { title: "Pengantar", current: true, content: introduction() },
-    { title: "Visi dan Misi", current: false, content: visionAndMission() },
+    { title: "Pengantar", current: true, content: introduction(profil) },
+    { title: "Visi dan Misi", current: false, content: visionAndMission(profil) },
     {
       title: "Struktur Organisasi",
       current: false,
-      content: structureOrganization(),
+      content: structureOrganization(profil),
     },
-    { title: "Denah Sekolah", current: false, content: schoolGrounds() },
+    { title: "Denah Sekolah", current: false, content: schoolGrounds(profil) },
   ]);
 
   const currentPage = sections.filter((s) => s.current)[0];
+  console.log(currentPage)
 
   return (
     <main className="font-poppins">
@@ -177,7 +129,9 @@ const ProfilePage = () => {
               {currentPage.title}
             </h1>
             <article className="flex flex-col gap-6">
-              {currentPage.content}
+              {currentPage.title === 'Pengantar' ? introduction(profil)
+                : currentPage.title === 'Visi dan Misi' ? visionAndMission(profil)
+                : structureOrganization(profil)}
             </article>
           </div>
 
@@ -218,22 +172,22 @@ const ProfilePage = () => {
                   {
                     title: "Pengantar",
                     current: true,
-                    content: introduction(),
+                    content: introduction(profil),
                   },
                   {
                     title: "Visi dan Misi",
                     current: false,
-                    content: visionAndMission(),
+                    content: visionAndMission(profil),
                   },
                   {
                     title: "Struktur Organisasi",
                     current: false,
-                    content: structureOrganization(),
+                    content: structureOrganization(profil),
                   },
                   {
                     title: "Denah Sekolah",
                     current: false,
-                    content: schoolGrounds(),
+                    content: schoolGrounds(profil),
                   },
                 ])
               }
