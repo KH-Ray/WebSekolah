@@ -14,10 +14,12 @@ const AdminNav = () => {
     { title: "Kegiatan", link: "/kegiatan", current: false },
     { title: "Peserta Didik", link: "/siswa", current: false },
     { title: "Rabu Ceria", link: "/rabuceria", current: false },
+    { title: "Dikmensi", link: "/dikmensi", current: false },
+    { title: "Galeri", link: "/galeri", current: false },
   ]);
 
   return (
-    <nav className="to-main-seagreen bg-gradient-to-b from-dark-green font-poppins">
+    <nav className="bg-gradient-to-b from-dark-green to-main-seagreen font-poppins">
       <div className="flex flex-col gap-4 p-6">
         {navigations.map((nav, i) => (
           <Link key={i} to={`/admin${nav.link}`}>

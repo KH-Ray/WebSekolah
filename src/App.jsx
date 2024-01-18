@@ -30,6 +30,10 @@ import AdminStudents from "./pages/admin/AdminStudents";
 import NewPage from "./pages/NewPage";
 import AnnoucementsPage from "./pages/AnnoucementsPage";
 import AnnoucementPage from "./pages/AnnoucementPage";
+import DimensionsPage from "./pages/DImensionsPage";
+import AdminDimensions from "./pages/admin/AdminDimensions";
+import GalleryPage from "./pages/GalleryPage";
+import AdminGallery from "./pages/admin/AdminGallery";
 
 const MainPage = (page) => {
   return (
@@ -77,6 +81,8 @@ const App = () => {
         <Route path="/siswa" element={MainPage(<StudentsPage />)} />
         <Route path="/rabuceria" element={MainPage(<RabuCeria />)} />
         <Route path="/kegiatan" element={MainPage(<ActivitiesPage />)} />
+        <Route path="/dikmensi" element={MainPage(<DimensionsPage />)} />
+        <Route path="/galeri" element={MainPage(<GalleryPage />)} />
 
         <Route path="/admin" element={AdminPage(<AdminLogin />, false)} />
         <Route path="/admin/beranda" element={AdminPage(<AdminHome />)} />
@@ -108,6 +114,11 @@ const App = () => {
           path="/admin/kegiatan"
           element={AdminPage(<AdminActivities />)}
         />
+        <Route
+          path="/admin/dikmensi"
+          element={AdminPage(<AdminDimensions />)}
+        />
+        <Route path="/admin/galeri" element={AdminPage(<AdminGallery />)} />
       </Routes>
     </Router>
   );

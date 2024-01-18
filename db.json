@@ -182,5 +182,13 @@
       "id": 3,
       "src": "https://i.ibb.co/hWSfYmk/12-tampak-samping-ged-sekolah.jpg"
     }
+  ],
+  "gallery": [
+    { "id": 1, "title": "Judul Galeri 1" },
+    { "id": 2, "title": "Judul Galeri 2" },
+    { "id": 3, "title": "Judul Galeri 3" },
+    { "id": 4, "title": "Judul Galeri 4" },
+    { "id": 5, "title": "Judul Galeri 5" },
+    { "id": 6, "title": "Judul Galeri 6" }
   ]
 }

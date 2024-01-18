@@ -34,11 +34,11 @@ const navigation = [
     link: null,
     subLinks: [
       { name: "Rabu Ceria", link: "/rabuceria" },
-      { name: "Dikmensi", link: "#" },
+      { name: "Dikmensi", link: "/dikmensi" },
       { name: "Ekstrakurikuler", link: "/ekstrakurikuler" },
     ],
   },
-  { name: "Gallery", link: "#" },
+  { name: "Gallery", link: "/galeri" },
   { name: "Kontak", link: null, scrollTo: "footer" },
 ];
 
@@ -88,7 +88,7 @@ export default function NavBar() {
   return (
     <Disclosure
       as="nav"
-      className="bg-dark-seagreen relative z-10 font-poppins drop-shadow-md"
+      className="relative z-10 bg-dark-seagreen font-poppins drop-shadow-md"
     >
       {({ open }) => (
         <>

@@ -230,7 +230,7 @@ const ProfilePage = () => {
         <div className="mx-auto my-12 max-w-7xl px-4 lg:px-6">
           <div className="mb-8 text-gray-blue">
             <button
-              className="flex items-center gap-4 hover:cursor-pointer"
+              className="flex items-center gap-4 text-gray-600 hover:cursor-pointer"
               onClick={() =>
                 setSections([
                   {

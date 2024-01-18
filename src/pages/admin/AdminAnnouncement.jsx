@@ -54,7 +54,7 @@ const addAnnoucementPage = (
       <div className="flex flex-col gap-8">
         <div className="text-gray-blue">
           <button
-            className="flex items-center gap-2 hover:cursor-pointer"
+            className="flex items-center gap-2 text-gray-600 hover:cursor-pointer"
             onClick={() => setAddAnnouncement(false)}
           >
             <ArrowLeftIcon className="h-6 w-6" /> Kembali

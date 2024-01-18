@@ -65,7 +65,7 @@ const [description, links, contact, social] = [...footerContent];
 
 const Footer = () => {
   return (
-    <footer className="bg-light-green whitespace-normal font-poppins">
+    <footer className="whitespace-normal bg-light-green font-poppins">
       <Element name="footer">
         <div className="mx-auto max-w-7xl lg:px-6">
           <div className="grid grid-cols-1 gap-8 py-6 text-justify md:scale-90 md:grid-cols-2 md:py-6 md:text-left lg:max-w-7xl lg:grid-cols-4 lg:py-12">
@@ -96,7 +96,7 @@ const Footer = () => {
                     <li key={i} className="text-lg">
                       <Link
                         to={link.linkTo}
-                        className="text-blue-900 hover:cursor-pointer hover:underline"
+                        className="text-blue-900 hover:cursor-pointer"
                       >
                         {link.linkName}
                       </Link>
@@ -113,21 +113,21 @@ const Footer = () => {
               <div className="flex flex-col gap-4 text-lg">
                 <p className="text-justify leading-7">{contact.content}</p>
                 <p className="flex items-center gap-4">
-                  <MapIcon className="stroke-light-green h-7 w-7 fill-black" />
+                  <MapIcon className="h-7 w-7 fill-black stroke-light-green" />
                   <a
                     href="https://maps.app.goo.gl/k52QLnhq5A1bwjgK6"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="whitespace-pre-wrap break-all text-blue-900 hover:underline"
+                    className="whitespace-pre-wrap break-all text-blue-900"
                   >
                     Bakti Idhata
                   </a>
                 </p>
                 <p className="flex items-center gap-4">
-                  <EnvelopeIcon className="stroke-light-green h-7 w-7 flex-none fill-black" />{" "}
+                  <EnvelopeIcon className="h-7 w-7 flex-none fill-black stroke-light-green" />{" "}
                   <a
                     href="mailto:smpbaktiidhata20106935@gmail.com"
-                    className="whitespace-pre-wrap break-all text-blue-900 hover:underline"
+                    className="whitespace-pre-wrap break-all text-blue-900"
                   >
                     smpbaktiidhata20106935@gmail.com
                   </a>
@@ -136,7 +136,7 @@ const Footer = () => {
                   <PhoneIcon className="h-7 w-7 fill-black" />
                   <a
                     href="https://wa.me/628118252530"
-                    className="whitespace-pre-wrap break-all text-blue-900 hover:underline"
+                    className="whitespace-pre-wrap break-all text-blue-900"
                   >
                     https://wa.me/628118252530
                   </a>
