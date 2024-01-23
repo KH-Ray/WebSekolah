@@ -3,13 +3,24 @@ import galleryServices from "../services/gallery";
 import Box from "../components/PhotoBox";
 import { Spinner } from "flowbite-react";
 
-const GalleryPage = () => {
-  const galleries = useQuery({
-    queryKey: ["gallery"],
-    queryFn: () => galleryServices.getAllGalleryPicture(),
-  });
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-  if (galleries.isLoading)
+const GalleryPage = () => {
+  const [galeri, setGaleri] = useState([]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const ekskulResponse = await axios.get("http://localhost:8080/galeri");
+        setGaleri(ekskulResponse.data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+    fetchData();
+  }, []);
+  if (galeri.isLoading)
     return (
       <main className="flex h-screen items-center justify-center">
         <div>
@@ -17,8 +28,6 @@ const GalleryPage = () => {
         </div>
       </main>
     );
-
-  console.log(galleries);
 
   return (
     <main className="font-poppins">
@@ -31,14 +40,17 @@ const GalleryPage = () => {
 
       <div className="mx-auto my-12 max-w-7xl px-4 lg:px-6">
         <div className="grid grid-cols-1 content-between gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {galleries.data.map((gallery) => {
+          {galeri.map((g, id) => {
             return (
               <div
-                key={gallery.id}
+                key={id}
                 className="flex flex-col items-center gap-4"
               >
-                <Box styles="h-64 w-64"></Box>
-                <p className="text-xl font-medium">{gallery.title}</p>
+                <Box styles="h-64 w-64 overflow-hidden">
+                  <img src={`http://localhost:8080/${g.docGal}`}
+                    alt="" />
+                </Box>
+                <p className="text-xl font-medium">{g.judulGal}</p>
               </div>
             );
           })}

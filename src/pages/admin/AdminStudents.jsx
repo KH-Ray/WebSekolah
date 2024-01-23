@@ -10,12 +10,62 @@ import studentServices from "../../services/students";
 import fileServices from "../../services/files";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Flowbite, Spinner, Table } from "flowbite-react";
-import { useState } from "react";
 import { customButtonTheme } from "../../themes/flowbiteThemes";
+import { useState, useEffect} from "react";
 
-const studentPageView = (student, setStudentPage, files) => {
+import axios from "axios";
+
+const studentPageView = (
+  student,
+  setStudentPage,
+  files,
+  siswa, 
+  setSiswa,
+  nama, setnama,
+  kelas, setkelas,
+  nis, setnis,
+  alamat, setalamat,
+  sakit, setsakit,
+  izin, setizin,
+  tanpaKet, settanpaKet,
+  dokumen, setdokumen,
+  fotoMurid, setfotoMurid,
+  msg, setMsg) => {
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('nama', nama);
+    formData.append('kelas', kelas);
+    formData.append('nis', nis);
+    formData.append('alamat', alamat);
+    formData.append('sakit', sakit);
+    formData.append('izin', izin);
+    formData.append('tanpaKet', tanpaKet);
+    formData.append('dokumen', dokumen);
+    formData.append('fotoMurid', fotoMurid);
+
+    try {
+      const response = await axios.post('http://localhost:8080/admin/siswa', formData);
+
+      console.log(response.data);
+
+      if (response.data.Status === 'Success') {
+        navigate('/');
+        setMsg('File Successfully Uploaded');
+      } else {
+        setMsg('Error');
+      }
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      setMsg('Error');
+    }
+  };
+  
   return (
     <main className="h-screen overflow-auto font-poppins">
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
       <div className="mx-auto my-12 flex max-w-7xl flex-col gap-8 px-4 lg:px-6">
         <div className="text-gray-blue">
           <button
@@ -32,7 +82,12 @@ const studentPageView = (student, setStudentPage, files) => {
 
         <div className="flex gap-4">
           <div>
-            <Box styles="w-52 h-52"></Box>
+            <Box styles="w-52 h-52">
+              <input
+                type="file"
+                name="fotoMurid"
+                onChange={(e) => setfotoMurid(e.target.files[0])}/>
+            </Box>
           </div>
 
           <div className="grid grid-cols-2">
@@ -44,13 +99,33 @@ const studentPageView = (student, setStudentPage, files) => {
             </div>
 
             <div className="flex flex-col gap-4 font-medium">
-              <p className="before:mr-1 before:content-[':']">{student.name}</p>
               <p className="before:mr-1 before:content-[':']">
-                {student.class}
+                <input
+                  type="text"
+                  name="nama"
+                  onChange={(e) => setnama(e.target.value)}
+                />
               </p>
-              <p className="before:mr-1 before:content-[':']">{student.NIS}</p>
+              <p className="before:mr-1 before:content-[':']">
+                <input
+                  type="text"
+                  name="kelas"
+                  onChange={(e) => setkelas(e.target.value)}
+                />
+              </p>
+              <p className="before:mr-1 before:content-[':']">
+                <input
+                  type="text"
+                  name="nis"
+                  onChange={(e) => setnis(e.target.value)}
+                />
+              </p>
               <p className="leading-6 before:mr-1 before:content-[':']">
-                {student.address}
+                <input
+                  type="text"
+                  name="alamat"
+                  onChange={(e) => setalamat(e.target.value)}
+                />
               </p>
             </div>
           </div>
@@ -71,17 +146,32 @@ const studentPageView = (student, setStudentPage, files) => {
             </Table.Head>
             <Table.Body className="divide-y">
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                <Table.Cell className="text-center">{student.sick}</Table.Cell>
-                <Table.Cell className="text-center">{student.leave}</Table.Cell>
                 <Table.Cell className="text-center">
-                  {student.absent}
+                   <input
+                      type="text"
+                      name="sakit"
+                      onChange={(e) => setsakit(e.target.value)}
+                    />
+                </Table.Cell>
+                <Table.Cell className="text-center">
+                  <input
+                    type="text"
+                    name="izin"
+                    onChange={(e) => setizin(e.target.value)}
+                  />
+                </Table.Cell>
+                <Table.Cell className="text-center">
+                  <input
+                    type="text"
+                    name="tanpaKet"
+                    onChange={(e) => settanpaKet(e.target.value)}
+                  />
                 </Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>
         </div>
 
-        <form className="flex flex-col gap-4">
           <p className="text-2xl font-medium">Unggah Dokumen</p>
 
           <div className="flex flex-wrap gap-8">
@@ -105,15 +195,20 @@ const studentPageView = (student, setStudentPage, files) => {
           <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
             <input type="file" className="hidden" />
             <PlusIcon className="h-8 w-8" /> Pilih Dokumen
+             <input
+                  type="file"
+                  name="dokumen"
+                  onChange={(e) => setdokumen(e.target.files[0])}
+                />
           </label>
 
           <Flowbite theme={{ theme: customButtonTheme }}>
-            <Button color="dark-green" size="lg">
+            <Button color="dark-green" size="lg" type="submit">
               Unggah
             </Button>
           </Flowbite>
-        </form>
-      </div>
+        </div>
+      </form>
     </main>
   );
 };
@@ -121,6 +216,30 @@ const studentPageView = (student, setStudentPage, files) => {
 const AdminStudents = () => {
   const [studentPage, setStudentPage] = useState(false);
   const [student, setStudent] = useState(null);
+  const [siswa, setSiswa] = useState([])
+  const [nama, setnama] = useState('')
+  const [kelas, setkelas] = useState('')
+  const [nis, setnis] = useState('')
+  const [alamat, setalamat] = useState('')
+  const [sakit, setsakit] = useState('')
+  const [izin, setizin] = useState('')
+  const [tanpaKet, settanpaKet] = useState('')
+  const [dokumen, setdokumen] = useState('')
+  const [fotoMurid, setfotoMurid] = useState('')
+  const [msg, setMsg] = useState('');
+  
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const siswwaResponse = await axios.get("http://localhost:8080/siswa");
+        setSiswa(siswwaResponse.data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+    fetchData();
+  }, [])
 
   const students = useQuery({
     queryKey: ["students"],
@@ -132,7 +251,7 @@ const AdminStudents = () => {
     queryFn: () => fileServices.getAllFile(),
   });
 
-  if (students.isLoading || files.isLoading)
+  if (siswa.isLoading || files.isLoading)
     return (
       <main className="flex h-screen items-center justify-center">
         <div>
@@ -142,7 +261,22 @@ const AdminStudents = () => {
     );
 
   if (studentPage) {
-    return studentPageView(student, setStudentPage, files);
+    return studentPageView(
+      student,
+      setStudentPage,
+      files,
+      siswa, 
+      setSiswa,
+      nama, setnama,
+      kelas, setkelas,
+      nis, setnis,
+      alamat, setalamat,
+      sakit, setsakit,
+      izin, setizin,
+      tanpaKet, settanpaKet,
+      dokumen, setdokumen,
+      fotoMurid, setfotoMurid,
+      msg, setMsg);
   }
 
   return (
@@ -172,10 +306,10 @@ const AdminStudents = () => {
           </Box>
           <hr className="mb-2 border-t border-gray-400" />
           <div className="flex flex-col gap-2">
-            {students.data.map((s, i) => {
+            {siswa.map((s, i) => {
               return (
                 <Box
-                  key={s.id}
+                  key={i}
                   styles="w-full h-12 px-6 flex justify-between items-center !bg-main-seagreen hover:cursor-pointer"
                   onClick={() => {
                     setStudent(s);
@@ -183,8 +317,8 @@ const AdminStudents = () => {
                   }}
                 >
                   <p>{i + 1}.</p>
-                  <p>{s.name}</p>
-                  <p>{s.class}</p>
+                  <p>{s.nama}</p>
+                  <p>{s.kelas}</p>
                 </Box>
               );
             })}

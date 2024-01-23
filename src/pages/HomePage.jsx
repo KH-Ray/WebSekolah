@@ -3,39 +3,54 @@ import { Button, Flowbite, Spinner } from "flowbite-react";
 import { customButtonTheme } from "../themes/flowbiteThemes";
 import { Carousel } from "@material-tailwind/react";
 import Notice from "../components/Notice";
-import teacherServices from "../services/teachers";
-import annoucementServices from "../services/announcements";
-import pictureServices from "../services/pictures";
-import newsServices from "../services/news";
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+
+function stripTags(html) {
+  return html.replace(/<\/?[^>]+(>|$)/g, "");
+}
 
 const HomePage = () => {
-  const news = useQuery({
-    queryKey: ["news"],
-    queryFn: () => newsServices.getAllNews(),
-  });
+  const [home, setHome] = useState([])
+  const [news, setNews] = useState([])
+  const [notice, setNotice] = useState([])
+  const [guru, setGuru] = useState([])
+  const [isLoading, setIsloadingg] = useState(false)
 
-  const annoucements = useQuery({
-    queryKey: ["annoucements"],
-    queryFn: () => annoucementServices.getAllAnnoucement(),
-  });
-
-  const pictures = useQuery({
-    queryKey: ["picture"],
-    queryFn: () => pictureServices.getAllPicture(),
-  });
-
-  const teacher = useQuery({
-    queryKey: ["teachers"],
-    queryFn: () => teacherServices.getAllTeachers(),
-  });
+  useEffect(() => {
+    setIsloadingg(true);
+    const fetchData = async () => {
+      try {
+        const homeResponse = await axios.get("http://localhost:8080/");
+        setHome(homeResponse.data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+    fetchData();
+    
+    axios.get('http://localhost:8080/berita/:id')
+      .then(res => setNews(res.data))
+      .catch(err => console.log(err));
+    
+    axios.get('http://localhost:8080/pengumuman/:id')
+      .then(res => setNotice(res.data))
+      .catch(err => console.log(err));
+    
+    axios.get('http://localhost:8080/guru/')
+      .then(res => setGuru(res.data))
+      .catch(err => console.log(err));
+    
+    setIsloadingg(false)
+  }, [])
 
   if (
-    annoucements.isLoading ||
+    notice.isLoading ||
     news.isLoading ||
-    pictures.isLoading ||
-    teacher.isLoading
+    home.isLoading ||
+    isLoading
   )
     return (
       <main className="flex h-screen items-center justify-center">
@@ -45,15 +60,13 @@ const HomePage = () => {
       </main>
     );
 
-  const headmaster = teacher.data[0];
-
   return (
     <main className="font-poppins">
       <Carousel className="h-[153px] overflow-hidden md:h-[306px] lg:h-[408px] xl:h-[612px]">
-        {pictures.data.map((p) => (
+        {home.map((homeItem, id) => (
           <img
-            key={p.id}
-            src={p.src}
+            key={id}
+            src={`http://localhost:8080/${homeItem.bHeadImg}`}
             alt="Carousel image"
             className="h-[153px] w-full object-cover md:h-[306px] lg:h-[408px] xl:h-[612px]"
           />
@@ -64,14 +77,14 @@ const HomePage = () => {
         <div className="max-w-7xl space-y-32 px-12 pt-12 lg:mx-auto">
           <div className="grid h-full grid-cols-1 justify-center gap-8 sm:grid-rows-[384px] md:grid-cols-[384px_1fr]">
             <div className="relative">
-              <img
-                src={headmaster.image}
+                <img
+                src={`http://localhost:8080/${home[0]?.kImg}`}
                 alt="Kepala Sekolah"
                 className="h-full w-full rounded-b-xl"
               />
               <div className="bg-main-seagreen absolute bottom-0 z-10 flex w-full flex-col items-center gap-2 rounded-b-xl p-4">
-                <p className="text-xl font-semibold">{headmaster.name}</p>
-                <p>{headmaster.role}</p>
+                <p className="text-xl font-semibold">{guru[0]?.name}</p>
+                <p>{guru[0]?.position}</p>
               </div>
             </div>
             <div className="flex flex-col">
@@ -81,26 +94,8 @@ const HomePage = () => {
                 </div>
                 <div className="bg-main-seagreen hidden w-full px-8 py-4 sm:block sm:rounded-tr-full"></div>
               </div>
-              <div className="bg-light-green h-96 overflow-auto rounded-b-xl px-8 py-4 text-justify leading-6 sm:h-full sm:rounded-tr-xl">
-                Memiliki anak cerdas dan siap menjadi generasi emas berkarakter
-                merupakan dambaan setiap orang tua. SMP Bakti Idhata berada
-                dibawah naungan Yayasan Bakti Idhata, Dharma Wanita Persatuan
-                Kementerian Pendidikan, Kebudayaan, Riset dan Teknologi Republik
-                Indonesia, siap mewadahinya. Dengan sarana prasarana yang cukup
-                baik disertai tenaga kependidikan yang berkualitas menjadi
-                pondasi bagi kami untuk melakukan transformasi pembelajaran yang
-                berpusat pada peserta didik. Selain itu, membangun masyarakat
-                belajar sepanjang hayat yang beriman dan bertakwa pada Tuhan
-                YME, berakhlak mulia, serta menjaga keseimbangan kebinekaan
-                menjadi pijakan SMP Bakti Idhata untuk melakukan kegiatan
-                pendidikan. Hal ini selaras dengan Visi sekolah kami:
-                mengintegrasikan proses pendidikan sehingga terwujudnya peserta
-                didik yang berakhlak mulia, kreatif, berkepribadian tangguh,
-                mandiri, dan menjunjung tinggi budaya bangsa. Saat ini SMP Bakti
-                Idhata terus meningkatkan pelayanan bagi masyarakat yang
-                menitipkan putra/putrinya di sekolah kami. Berbagai kegiatan
-                yang mengedukasi dikemas sesuai dengan kebutuhan dan
-                perkembangan peserta didik.
+              <div className="bg-light-green h-96 overflow-auto rounded-b-xl px-8 py-4 text-justify leading-6 sm:h-full sm:rounded-tr-xl whitespace-pre-wrap break-all">
+                { home[0]?.description }
               </div>
             </div>
           </div>
@@ -123,15 +118,14 @@ const HomePage = () => {
             </div>
 
             <div className="mx-auto flex flex-col items-center gap-6 md:grid md:grid-cols-2 lg:grid-cols-4">
-              {news.data.map((n) => (
+              {news.map((n, id) => (
                 <NewsCard
-                  key={n.id}
-                  id={n.id}
-                  title={n.title}
-                  subtitle={n.subtitle}
-                  imgSrc={n.imgSrc}
-                  imgAlt={n.imgAlt}
-                />
+                  key={id}
+                  title={n.judulBerita}
+                  subtitle={stripTags(n.isiBerita)}
+                  imgSrc={`http://localhost:8080/${n.sampul}`}
+                  imgAlt=""
+              />
               ))}
             </div>
           </div>
@@ -154,13 +148,11 @@ const HomePage = () => {
             </div>
 
             <div className="divide-y divide-solid divide-gray-400">
-              {annoucements.data.map((a) => (
-                <div key={a.id}>
+              {notice.map((a, id) => (
+                <div key={id}>
                   <Link to={`/pengumuman/${a.id}`}>
                     <Notice
-                      title={a.title}
-                      date={a.date}
-                      subtitle={a.subtitle}
+                      subtitle={stripTags(a.descNotice)}
                     />
                   </Link>
                 </div>

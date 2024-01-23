@@ -6,8 +6,24 @@ import { useQuery } from "@tanstack/react-query";
 import studentServices from "../services/students";
 import { Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
+import { useState, useEffect} from "react";
+
+import axios from "axios";
 
 const StudentsPage = () => {
+
+  const [siswa, setSiswa] = useState([])
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const siswwaResponse = await axios.get("http://localhost:8080/siswa");
+          setSiswa(siswwaResponse.data);
+        } catch (err) {
+          console.error("Error fetching data:", err);
+        }
+      };
+      fetchData();
+  }, [])
   const students = useQuery({
     queryKey: ["students"],
     queryFn: () => studentServices.getAllStudents(),
@@ -60,15 +76,15 @@ const StudentsPage = () => {
           <hr className="mb-2 border-t border-gray-400" />
 
           <div className="mb-4 flex flex-col gap-2">
-            {students.data.map((s, i) => {
+            {siswa.map((s, i) => {
               return (
                 <Box
                   key={i}
                   styles="w-full h-12 px-6 flex justify-between items-center !bg-main-seagreen"
                 >
                   <p>{i + 1}.</p>
-                  <p>{s.name}</p>
-                  <p>{s.class}</p>
+                  <p>{s.nama}</p>
+                  <p>{s.kelas}</p>
                 </Box>
               );
             })}

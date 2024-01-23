@@ -7,11 +7,26 @@ import { Pagination } from "@mui/material";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
-const AnnoucementPage = () => {
-  const annoucements = useQuery({
-    queryKey: ["annoucements"],
-    queryFn: () => annoucementServices.getAllAnnoucement(),
-  });
+import React, {useEffect, useState} from "react";
+import axios from "axios";
+
+function stripTags(html) {
+  return html.replace(/<\/?[^>]+(>|$)/g, "");
+}
+
+const AnnoucementsPage = () => {
+  const [annoucements, setAnnoucements] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const AnnoucementsResponse = await axios.get("http://localhost:8080/pengumuman/:id");
+        setAnnoucements(AnnoucementsResponse.data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+    fetchData();
+  }, []);
 
   if (annoucements.isLoading) {
     return (
@@ -44,14 +59,15 @@ const AnnoucementPage = () => {
             />
           </div>
           <div className="">
-            <Pagination count={4} variant="outlined" shape="rounded" />
+            <Pagination count={Math.ceil(annoucements.data || 1)} variant="outlined" shape="rounded" />
           </div>
         </div>
 
         <div className="divide-y divide-solid divide-gray-400">
-          {annoucements.data.map((a) => (
-            <Link key={a.id} to={`/pengumuman/${a.id}`}>
-              <Notice title={a.title} date={a.date} subtitle={a.subtitle} />
+          {annoucements.map((a, id) => (
+            <Link key={id} to={`/pengumuman/${a.id}`}>
+              <Notice
+                subtitle={stripTags(a.descNotice)} />
             </Link>
           ))}
         </div>
@@ -60,4 +76,4 @@ const AnnoucementPage = () => {
   );
 };
 
-export default AnnoucementPage;
+export default AnnoucementsPage;
