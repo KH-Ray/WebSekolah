@@ -1,9 +1,8 @@
 import { Button, Flowbite, Spinner } from "flowbite-react";
 import { customButtonTheme } from "../../themes/flowbiteThemes";
-import { PhotoIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { useQuery } from "@tanstack/react-query";
-import galleryServices from "../../services/gallery";
-import { useState, useEffect} from "react";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { useState, useEffect } from "react";
+import Box from "../../components/PhotoBox";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +13,20 @@ const AdminGallery = () => {
   const [msg, setMsg] = useState('');
 
   const navigate = useNavigate();
+
+  const [galeri, setGaleri] = useState([]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const ekskulResponse = await axios.get("http://localhost:8080/galeri");
+        setGaleri(ekskulResponse.data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,12 +52,7 @@ const AdminGallery = () => {
     }
   };
 
-  const galleries = useQuery({
-    queryKey: ["gallery"],
-    queryFn: () => galleryServices.getAllGalleryPicture(),
-  });
-
-  if (galleries.isLoading)
+  if (galeri.isLoading)
     return (
       <main className="flex h-screen items-center justify-center">
         <div>
@@ -74,18 +82,23 @@ const AdminGallery = () => {
               />
             </div>
 
-            <div className="flex flex-wrap gap-8">
-              {galleries.data.map((gallery) => {
-                return (
-                  <div
-                    key={gallery.id}
-                    className="flex h-44 w-64 flex-col items-center justify-center gap-2 rounded border border-solid border-black"
-                  >
-                    <PhotoIcon className="h-16 w-16" />
-                    <p className="capitalize">{gallery.title}</p>
-                  </div>
-                );
-              })}
+            <div className="mx my-12 max-w-7xl px-4 lg:px-6">
+              <div className="grid grid-cols-1 content-between gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {galeri.map((g, id) => {
+                  return (
+                    <div
+                      key={id}
+                      className="flex flex-col items-center gap-4"
+                    >
+                      <Box styles="h-64 w-64 overflow-hidden">
+                        <img src={`http://localhost:8080/${g.docGal}`}
+                          alt="" />
+                      </Box>
+                      <p className="text-xl font-medium">{g.judulGal}</p>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">

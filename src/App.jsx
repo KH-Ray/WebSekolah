@@ -86,13 +86,16 @@ const App = () => {
 
         <Route path="/admin" element={AdminPage(<AdminLogin />, false)} />
         <Route path="/admin/beranda" element={AdminPage(<AdminHome />)} />
+        <Route path="/admin/beranda/:id" element={AdminPage(<AdminHome />)} />
         <Route path="/admin/profil" element={AdminPage(<AdminProfile />)} />
+        <Route path="/admin/profil/:id" element={AdminPage(<AdminProfile />)} />
         <Route path="/admin/guru" element={AdminPage(<AdminTeachers />)} />
         <Route
           path="/admin/organisasi"
           element={AdminPage(<AdminLearning />)}
         />
         <Route path="/admin/berita" element={AdminPage(<AdminNews />)} />
+        <Route path="/admin/berita/:id" element={AdminPage(<AdminNews />)} />
         <Route
           path="/admin/pengumuman"
           element={AdminPage(<AdminAnnouncement />)}

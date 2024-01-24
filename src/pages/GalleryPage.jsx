@@ -1,5 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
-import galleryServices from "../services/gallery";
 import Box from "../components/PhotoBox";
 import { Spinner } from "flowbite-react";
 
