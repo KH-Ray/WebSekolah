@@ -7,60 +7,26 @@ import { customButtonTheme } from "../../themes/flowbiteThemes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const adminTeacherModal = (
-  setTeacher,
-  teacher,
+const AdminTeacherModal = ({
   openModal,
-  setguru,
-  guru,
-  setOpenModal,
+  onClose,
+  handleSubmit,
   name,
-  position,
-  education,
-  achievement,
-  fotoGuru,
   setName,
+  position,
   setPosition,
+  education,
   setEducation,
+  achievement,
   setAchievement,
+  fotoGuru,
   setFotoGuru,
   setMsg,
-  navigate
-) => {
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('position', position);
-    formData.append('education', education);
-    formData.append('achievement', achievement);
-    formData.append('fotoGuru', fotoGuru);
-
-    try {
-      const response = await axios.post('http://localhost:8080/admin/guru', formData);
-
-      console.log(response.data);
-
-      if (response.data.Status === 'Success') {
-        navigate('/guru');
-        setMsg('File Successfully Uploaded');
-      } else {
-        setMsg('Error');
-      }
-    } catch (error) {
-      console.error('Error submitting data:', error);
-      setMsg('Error' + error.message);
-    }
-  };
+  selectedGuruId
+}) => {
+  
   return (
-    <Modal
-      dismissible
-      show={openModal}
-      onClose={() => {
-        setOpenModal(false);
-      }}
-    >
+    <Modal dismissible show={openModal} onClose={onClose}>
       <form onSubmit={handleSubmit}>
         <Modal.Body>
           <div className="flex flex-col gap-4 font-poppins">
@@ -79,6 +45,7 @@ const adminTeacherModal = (
                 type="text"
                 name="name"
                 id="name"
+                value={name}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
@@ -90,6 +57,7 @@ const adminTeacherModal = (
                 type="text"
                 name="position"
                 id="position"
+                value={position}
                 onChange={(e) => setPosition(e.target.value)}
               />
             </div>
@@ -99,6 +67,7 @@ const adminTeacherModal = (
               <textarea
                 name="education"
                 id="education"
+                value={education}
                 onChange={(e) => setEducation(e.target.value)}
                 className="h-24 resize-none rounded border-[1.5px] border-solid border-gray-400 px-2 py-1"
               ></textarea>
@@ -109,6 +78,7 @@ const adminTeacherModal = (
               <textarea
                 name="achievement"
                 id="achievement"
+                value={achievement}
                 onChange={(e) => setAchievement(e.target.value)}
                 className="h-24 resize-none rounded border-[1.5px] border-solid border-gray-400 px-2 py-1"
               ></textarea>
@@ -133,14 +103,14 @@ const AdminTeachers = () => {
   const [education, setEducation] = useState('');
   const [achievement, setAchievement] = useState('');
   const [fotoGuru, setFotoGuru] = useState('');
+  const [selectedGuruId, setSelectedGuruId] = useState(null);
   const [msg, setMsg] = useState('');
-
-  const navigate = useNavigate();
-
   const [guru, setGuru] = useState({
     data: [],
     isLoading: true,
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -159,8 +129,53 @@ const AdminTeachers = () => {
       }
     };
     fetchData();
-  
-  }, [])
+  }, []);
+
+
+  const handleModalSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('position', position);
+    formData.append('education', education);
+    formData.append('achievement', achievement);
+    formData.append('fotoGuru', fotoGuru);
+
+    try {
+      if (selectedGuruId) {
+        const response = await axios.put(`http://localhost:8080/admin/guru/${selectedGuruId}`, formData);
+        if (response.data.Status === 'Success') {
+          setMsg('Data Successfully Updated');
+          setOpenModal(false);
+          setSelectedGuruId(null);
+        } else {
+          setMsg('Error updating data');
+        }
+      } else {
+        const response = await axios.post('http://localhost:8080/admin/guru', formData);
+        if (response.data.Status === 'Success') {
+          setMsg('Data Successfully Added');
+          setOpenModal(false);
+        } else {
+          setMsg('Error adding data');
+        }
+      }
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      setMsg('Error: ' + error.message);
+    }
+  };
+
+  const openEditModal = (teacher) => {
+    setName(teacher.name);
+    setPosition(teacher.position);
+    setEducation(teacher.education);
+    setAchievement(teacher.achievement);
+    setFotoGuru(teacher.fotoGuru);
+    setSelectedGuruId(teacher.ID);
+    setOpenModal(true);
+  };
 
   if (guru.isLoading)
     return (
@@ -170,37 +185,30 @@ const AdminTeachers = () => {
         </div>
       </main>
     );
-  
-  if (openModal) {
-    return adminTeacherModal
-      (
-        setTeacher,
-        teacher,
-        setOpenModal,
-        guru,
-        setGuru,
-        openModal,
-        name,
-        position,
-        education,
-        achievement,
-        fotoGuru,
-        setName,
-        setPosition,
-        setEducation,
-        setAchievement,
-        setFotoGuru,
-        setMsg,
-        navigate
-      );
-  }
-
-  const teachersData = guru.data.map((teacher) => teacher);
 
   return (
     <main className="overflow-auto font-poppins">
       <div className="focus-visible:border-none">
-        {adminTeacherModal(guru, setGuru, openModal, setOpenModal)}
+        <AdminTeacherModal
+          openModal={openModal}
+          onClose={() => {
+            setOpenModal(false);
+            setSelectedGuruId(null);
+          }}
+          handleSubmit={handleModalSubmit}
+          name={name}
+          setName={setName}
+          position={position}
+          setPosition={setPosition}
+          education={education}
+          setEducation={setEducation}
+          achievement={achievement}
+          setAchievement={setAchievement}
+          fotoGuru={fotoGuru}
+          setFotoGuru={setFotoGuru}
+          setMsg={setMsg}
+          selectedGuruId={selectedGuruId}
+        />
       </div>
 
       <div className="mx-auto my-12">
@@ -212,18 +220,18 @@ const AdminTeachers = () => {
               setOpenModal(true);
             }}
           >
-            <img src={`http://localhost:8080/${teachersData[0].fotoGuru}`} alt="" />
+            <img src={`http://localhost:8080/${guru.data[0]?.fotoGuru}`} alt="" />
             <button className="absolute right-2 top-2 hidden group-hover:inline">
               <XCircleIcon className="z-10 h-8 w-8 stroke-dark-gray hover:opacity-50" />
             </button>
           </Box>
           <p className="mb-2 text-lg font-bold">
-            <strong>{teachersData[0].name}</strong>
+            <strong>{guru.data[0]?.name}</strong>
           </p>
-          <p>{teachersData[0].position}</p>
+          <p>{guru.data[0]?.position}</p>
         </div>
         <div className="mx-auto flex flex-col justify-items-center gap-x-6 gap-y-12 sm:grid sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-0 lg:px-6 xl:grid-cols-4">
-          {teachersData.slice(1).map((guru) => (
+          {guru.data.slice(1).map((guru) => (
             <div
               key={guru.ID}
               className="flex flex-col items-center justify-center text-center"
@@ -231,8 +239,7 @@ const AdminTeachers = () => {
               <Box
                 styles="w-48 h-48 mb-2 relative group hover:cursor-pointer"
                 onClick={() => {
-                  setGuru("");
-                  setOpenModal(true);
+                  openEditModal(guru);
                 }}
               >
                 <img src={`http://localhost:8080/${guru.fotoGuru}`} alt="" />
