@@ -58,7 +58,8 @@
       "address": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "sick": 3,
       "leave": 2,
-      "absent": 0
+      "absent": 0,
+      "status": "aktif"
     },
     {
       "id": 2,
@@ -68,7 +69,8 @@
       "address": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "sick": 1,
       "leave": 2,
-      "absent": 0
+      "absent": 0,
+      "status": "Dropout"
     },
     {
       "id": 3,
@@ -78,7 +80,8 @@
       "address": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "sick": 6,
       "leave": 2,
-      "absent": 0
+      "absent": 0,
+      "status": "aktif"
     },
     {
       "id": 4,
@@ -88,7 +91,8 @@
       "address": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "sick": 1,
       "leave": 5,
-      "absent": 0
+      "absent": 0,
+      "status": "aktif"
     }
   ],
   "teachers": [
@@ -96,19 +100,66 @@
       "id": 1,
       "name": "Puji Yulianti, M.Pd.",
       "role": "Kepala Sekolah",
-      "image": "https://i.ibb.co/hHDfWGf/guru1.png"
+      "image": "https://i.ibb.co/hHDfWGf/guru1.png",
+      "education": "S2 Pendidikan Matematika UPI Bandung",
+      "achievement": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
     },
     {
       "id": 2,
       "name": "Nama Wakil Kepala Sekolah",
-      "role": "Wakil Kepala Sekolah"
+      "role": "Wakil Kepala Sekolah",
+      "image": "https://i.ibb.co/hHDfWGf/guru1.png",
+      "education": "S2 Pendidikan Matematika UPI Bandung",
+      "achievement": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
     },
-    { "id": 3, "name": "Nama Guru", "role": "Guru Bidang" },
-    { "id": 4, "name": "Nama Guru", "role": "Guru Bidang" },
-    { "id": 5, "name": "Nama Guru", "role": "Guru Bidang" },
-    { "id": 6, "name": "Nama Staff", "role": "Staff Bidang" },
-    { "id": 7, "name": "Nama Staff", "role": "Staff Bidang" },
-    { "id": 8, "name": "Nama Staff", "role": "Staff Bidang" }
+    {
+      "id": 3,
+      "name": "Nama Guru",
+      "role": "Guru Bidang",
+      "image": "https://i.ibb.co/hHDfWGf/guru1.png",
+      "education": "S2 Pendidikan Matematika UPI Bandung",
+      "achievement": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+    },
+    {
+      "id": 4,
+      "name": "Nama Guru",
+      "role": "Guru Bidang",
+      "image": "https://i.ibb.co/hHDfWGf/guru1.png",
+      "education": "S2 Pendidikan Matematika UPI Bandung",
+      "achievement": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+    },
+    {
+      "id": 5,
+      "name": "Nama Guru",
+      "role": "Guru Bidang",
+      "image": "https://i.ibb.co/hHDfWGf/guru1.png",
+      "education": "S2 Pendidikan Matematika UPI Bandung",
+      "achievement": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+    },
+    {
+      "id": 6,
+      "name": "Nama Staff",
+      "role": "Staff Bidang",
+      "image": "https://i.ibb.co/hHDfWGf/guru1.png",
+      "education": "S2 Pendidikan Matematika UPI Bandung",
+      "achievement": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+    },
+    {
+      "id": 7,
+      "name": "Nama Staff",
+      "role": "Staff Bidang",
+      "image": "https://i.ibb.co/hHDfWGf/guru1.png",
+      "education": "S2 Pendidikan Matematika UPI Bandung",
+      "achievement": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+    },
+    {
+      "id": 8,
+      "name": "Nama Staff",
+      "role": "Staff Bidang",
+      "image": "https://i.ibb.co/hHDfWGf/guru1.png",
+      "education": "S2 Pendidikan Matematika UPI Bandung",
+      "achievement": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+    }
   ],
   "file": [
     {

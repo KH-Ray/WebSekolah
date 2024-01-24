@@ -44,7 +44,7 @@ const StudentsPage = () => {
           </div>
 
           <Link to="/login">
-            <button className="bg-semi-green rounded-lg px-8 py-3 text-white">
+            <button className="rounded-lg bg-semi-green px-8 py-3 text-white">
               Lihat Profile Peserta Didik
             </button>
           </Link>

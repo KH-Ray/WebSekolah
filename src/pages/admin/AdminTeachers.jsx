@@ -122,6 +122,7 @@ const AdminTeachers = () => {
           </p>
           <p>{teachersData[0].role}</p>
         </div>
+
         <div className="mx-auto flex flex-col justify-items-center gap-x-6 gap-y-12 sm:grid sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-0 lg:px-6 xl:grid-cols-4">
           {teachersData.slice(1).map((teacher) => (
             <div

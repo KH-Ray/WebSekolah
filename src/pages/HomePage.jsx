@@ -69,19 +69,19 @@ const HomePage = () => {
                 alt="Kepala Sekolah"
                 className="h-full w-full rounded-b-xl"
               />
-              <div className="bg-main-seagreen absolute bottom-0 z-10 flex w-full flex-col items-center gap-2 rounded-b-xl p-4">
+              <div className="absolute bottom-0 z-10 flex w-full flex-col items-center gap-2 rounded-b-xl bg-main-seagreen p-4">
                 <p className="text-xl font-semibold">{headmaster.name}</p>
                 <p>{headmaster.role}</p>
               </div>
             </div>
             <div className="flex flex-col">
               <div className="z-10 flex w-full drop-shadow sm:w-1/2">
-                <div className="bg-main-seagreen w-full whitespace-nowrap rounded-t-xl px-8 py-4 text-xl font-semibold sm:rounded-t-none sm:rounded-tl-xl">
+                <div className="w-full whitespace-nowrap rounded-t-xl bg-main-seagreen px-8 py-4 text-xl font-semibold sm:rounded-t-none sm:rounded-tl-xl">
                   SMP Bakti Idhata
                 </div>
-                <div className="bg-main-seagreen hidden w-full px-8 py-4 sm:block sm:rounded-tr-full"></div>
+                <div className="hidden w-full bg-main-seagreen px-8 py-4 sm:block sm:rounded-tr-full"></div>
               </div>
-              <div className="bg-light-green h-96 overflow-auto rounded-b-xl px-8 py-4 text-justify leading-6 sm:h-full sm:rounded-tr-xl">
+              <div className="h-96 overflow-auto whitespace-pre-wrap break-all rounded-b-xl bg-light-green px-8 py-4 text-justify leading-6 sm:h-full sm:rounded-tr-xl">
                 Memiliki anak cerdas dan siap menjadi generasi emas berkarakter
                 merupakan dambaan setiap orang tua. SMP Bakti Idhata berada
                 dibawah naungan Yayasan Bakti Idhata, Dharma Wanita Persatuan
@@ -123,7 +123,7 @@ const HomePage = () => {
             </div>
 
             <div className="mx-auto flex flex-col items-center gap-6 md:grid md:grid-cols-2 lg:grid-cols-4">
-              {news.data.map((n) => (
+              {news.data.slice(0, 4).map((n) => (
                 <NewsCard
                   key={n.id}
                   id={n.id}
@@ -154,7 +154,7 @@ const HomePage = () => {
             </div>
 
             <div className="divide-y divide-solid divide-gray-400">
-              {annoucements.data.map((a) => (
+              {annoucements.data.slice(0, 3).map((a) => (
                 <div key={a.id}>
                   <Link to={`/pengumuman/${a.id}`}>
                     <Notice
