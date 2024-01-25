@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { customButtonTheme } from "../../themes/flowbiteThemes";
 
 const AdminNews = () => {
-  const [addNews, setAddNews] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [sampul, setSampul] = useState('');
   const [judulBerita, setJudulBerita] = useState('');
