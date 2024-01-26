@@ -122,7 +122,6 @@ const AdminNews = () => {
         </div>
       </div>
 
-      {/* Modal for editing/add news */}
       <Modal
         dismissible
         show={openModal}

@@ -28,4 +28,12 @@ const customButtonTheme = {
   },
 };
 
-export { customCarouselTheme, customButtonTheme };
+const customModalTheme = {
+  modal: {
+    content: {
+      base: "relative w-full p-4 h-auto",
+    },
+  },
+};
+
+export { customCarouselTheme, customButtonTheme, customModalTheme };

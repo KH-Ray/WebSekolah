@@ -43,6 +43,7 @@ const AdminRabuCeria = () => {
           </h1>
           <div className="mb-6">
             <Editor
+              
               textareaName="description"
               apiKey="o0pzftir0e6adwmb92z8ig9705xxtb5i7kurqh1a3j7q41qe"
               init={{

@@ -62,7 +62,7 @@ const AdminProfile = () => {
                   resize: false,
                   height: "500",
                 }}
-                value={setKataPen}
+                // initialValue={setKataPen}
                 onEditorChange={setKataPen}
               />
             </div>
@@ -83,7 +83,7 @@ const AdminProfile = () => {
                   resize: false,
                   height: "500",
                 }}
-                value={setKataPen}
+                // initialValue={setKataPen}
                 onEditorChange={setVisimisi}
               />
             </div>
