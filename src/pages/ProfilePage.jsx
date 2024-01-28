@@ -1,7 +1,12 @@
-import { useState } from "react";
-import { classNames } from "../helper";
+import { useEffect, useState } from "react";
+import { classNames, getFloorImages } from "../helper";
 import { Carousel } from "flowbite-react";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/24/outline";
+import places from "../places";
 
 const introduction = () => {
   return (
@@ -146,38 +151,166 @@ const structureOrganization = () => {
   );
 };
 
-const schoolGrounds = () => {
+const schoolGrounds = (currentSlide, setCurrentSlide, arrayAt, setArrayAt) => {
+  const placesObj = places[0];
+
   return (
-    <Carousel className="bg-light-gray-green h-[682px] w-full">
-      <img
-        src="https://i.ibb.co/9VcWzL4/bismillah-denah-sekolah-lantai-1-fix.png"
-        alt="Denah Sekolah 1"
-      />
-      <img
-        src="https://i.ibb.co/m6PJnWv/bismillah-denah-sekolah-lantai-2-fix.png"
-        alt="Denah Sekolah 2"
-      />
-      <img
-        src="https://i.ibb.co/t21VcXP/bismillah-denah-sekolah-lantai-3-fix-1.png"
-        alt="Denah Sekolah 3"
-      />
-    </Carousel>
+    <div>
+      <Carousel
+        className="h-[682px] w-full rounded-t-lg bg-light-gray-green"
+        indicators={false}
+        onSlideChange={(index) => {
+          setCurrentSlide(index);
+        }}
+        slide={false}
+      >
+        <img
+          className="scale-90"
+          src={getFloorImages().lantai1}
+          alt="Denah Sekolah 1"
+        />
+        <img
+          className="scale-90"
+          src={getFloorImages().lantai2}
+          alt="Denah Sekolah 2"
+        />
+        <img
+          className="scale-90"
+          src={getFloorImages().lantai3}
+          alt="Denah Sekolah 3"
+        />
+      </Carousel>
+      <div className="mb-4 flex w-full items-center justify-evenly rounded-b-lg bg-dark-seagreen py-8">
+        <img
+          className={classNames(
+            currentSlide === 0 ? "scale-125" : "scale-100",
+            "h-24 w-40",
+          )}
+          src={getFloorImages().lantai1NonLabel}
+          alt="Denah Sekolah 1 Non-Label"
+        />
+        <img
+          className={classNames(
+            currentSlide === 1 ? "scale-125" : "scale-100",
+            "h-24 w-40",
+          )}
+          src={getFloorImages().lantai2NonLabel}
+          alt="Denah Sekolah 2 Non-Label"
+        />
+        <img
+          className={classNames(
+            currentSlide === 2 ? "scale-125" : "scale-100",
+            "h-24 w-40",
+          )}
+          src={getFloorImages().lantai3NonLabel}
+          alt="Denah Sekolah 3 Non-Label"
+        />
+      </div>
+      <div
+        className={classNames(
+          currentSlide === 0 ? "justify-between" : "justify-evenly",
+          "flex items-center rounded-lg bg-light-gray-green px-12 py-8",
+        )}
+      >
+        {currentSlide === 0 && (
+          <ChevronLeftIcon
+            className="h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer"
+            onClick={() => {
+              if (arrayAt <= 0) return;
+              setArrayAt(Math.abs(arrayAt - 5));
+            }}
+          />
+        )}
+        {currentSlide === 0
+          ? placesObj.first.slice(arrayAt, arrayAt + 5).map((f, i) => (
+              <div
+                key={i}
+                className="rounded bg-dark-seagreen px-6 py-3 text-sm font-semibold tracking-wide text-white hover:cursor-pointer"
+              >
+                {f.title}
+              </div>
+            ))
+          : currentSlide === 1
+            ? placesObj.second.map((s, i) => (
+                <div
+                  key={i}
+                  className="rounded bg-dark-seagreen px-6 py-3 text-sm font-semibold tracking-wide text-white hover:cursor-pointer"
+                >
+                  {s.title}
+                </div>
+              ))
+            : placesObj.third.map((t, i) => (
+                <div
+                  key={i}
+                  className="rounded bg-dark-seagreen px-6 py-3 text-sm font-semibold tracking-wide text-white hover:cursor-pointer"
+                >
+                  {t.title}
+                </div>
+              ))}
+        {currentSlide === 0 && (
+          <ChevronRightIcon
+            className="h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer"
+            onClick={() => {
+              if (arrayAt >= 15) return;
+              setArrayAt(Math.abs(arrayAt + 5));
+            }}
+          />
+        )}
+      </div>
+    </div>
   );
 };
 
 const ProfilePage = () => {
+  const [arrayAt, setArrayAt] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [sections, setSections] = useState([
-    { title: "Pengantar", current: true, content: introduction() },
+    { title: "Pengantar", current: false, content: introduction() },
     { title: "Visi dan Misi", current: false, content: visionAndMission() },
     {
       title: "Struktur Organisasi",
       current: false,
       content: structureOrganization(),
     },
-    { title: "Denah Sekolah", current: false, content: schoolGrounds() },
+    {
+      title: "Denah Sekolah",
+      current: true,
+      content: schoolGrounds(
+        currentSlide,
+        setCurrentSlide,
+        arrayAt,
+        setArrayAt,
+      ),
+    },
   ]);
 
+  const handleSlideChange = (index) => {
+    setCurrentSlide(index);
+  };
+
+  const handleArrayChange = (index) => {
+    setArrayAt(index);
+  };
+
   const currentPage = sections.filter((s) => s.current)[0];
+
+  useEffect(() => {
+    setSections(
+      sections.map((s) => ({
+        ...s,
+        content:
+          s.title === "Denah Sekolah"
+            ? schoolGrounds(
+                currentSlide,
+                handleSlideChange,
+                arrayAt,
+                handleArrayChange,
+              )
+            : s.content,
+      })),
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentSlide, setCurrentSlide, arrayAt, setArrayAt]);
 
   return (
     <main className="font-poppins">
@@ -228,7 +361,7 @@ const ProfilePage = () => {
         </div>
       ) : (
         <div className="mx-auto my-12 max-w-7xl px-4 lg:px-6">
-          <div className="mb-8 text-gray-blue">
+          <div className="text-gray-blue mb-8">
             <button
               className="flex items-center gap-4 text-gray-600 hover:cursor-pointer"
               onClick={() =>
@@ -251,7 +384,12 @@ const ProfilePage = () => {
                   {
                     title: "Denah Sekolah",
                     current: false,
-                    content: schoolGrounds(),
+                    content: schoolGrounds(
+                      currentSlide,
+                      handleSlideChange,
+                      arrayAt,
+                      handleArrayChange,
+                    ),
                   },
                 ])
               }
