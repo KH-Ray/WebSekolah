@@ -5,10 +5,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const adminTeacherModal = (
-  setGuru,
-  teachersdata,
+  setViewguru,
   openModal,
-  setOpenModal,
+  guru, setGuru,
+  setOpenModal
 ) => {
   return (
     <Flowbite theme={{ theme: customModalTheme }}>
@@ -16,7 +16,10 @@ const adminTeacherModal = (
         dismissible
         show={openModal}
         onClose={() => {
-          setGuru("");
+          setGuru({
+            data: [],
+            isLoading: false,
+          });
           setOpenModal(false);
         }}
       >
@@ -24,26 +27,26 @@ const adminTeacherModal = (
           <div className="flex flex-col items-center gap-8 p-2 sm:flex-row sm:p-8">
             <div className="bottom-1/2 h-60 w-60 flex-none">
               <Box styles="h-60 w-60">
-                <img src={`http://localhost:8080/${teachersdata.fotoGuru}`} alt="" />
+                <img src={`http://localhost:8080/${guru?.fotoGuru}`} alt="" />
               </Box>
             </div>
 
             <div className="flex w-full flex-col justify-evenly gap-4 font-poppins">
               <div className="space-y-1">
                 <strong className="text-xl font-bold">
-                  {teachersdata.name}
+                  {guru?.name}
                 </strong>
-                <p className="leading-6">{teachersdata.position}</p>
+                <p className="leading-6">{guru?.position}</p>
               </div>
 
               <div className="space-y-1">
                 <strong className="font-bold">Pendidikan</strong>
-                <p className="leading-6">{teachersdata.education}</p>
+                <p className="leading-6">{guru?.education}</p>
               </div>
 
               <div className="space-y-1">
                 <strong className="font-bold">Prestasi</strong>
-                <p className="leading-6">{teachersdata.achievement}</p>
+                <p className="leading-6">{guru?.achievement}</p>
               </div>
             </div>
           </div>
@@ -54,6 +57,7 @@ const adminTeacherModal = (
 };
 
 const TeachersPage = () => {
+  const [viewGuru, setViewguru] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [guru, setGuru] = useState({
     data: [],
@@ -61,25 +65,26 @@ const TeachersPage = () => {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const guruResponse = await axios.get("http://localhost:8080/guru");
-        setGuru({
-            data: guruResponse.data,
-            isLoading: false,
-          });
-      } catch (err) {
-        console.error("Error fetching data:", err);
-        setGuru({
-            data: [],
-            isLoading: false,
-        });
-      }
-    };
-    fetchData();
-  }, []);
+  const fetchData = async () => {
+    try {
+      const guruResponse = await axios.get("http://localhost:8080/guru");
+      setGuru({
+        data: guruResponse.data,
+        isLoading: false,
+      });
+    } catch (err) {
+      console.error("Error fetching data:", err);
+      setGuru({
+        data: [],
+        isLoading: false,
+      });
+    }
+  };
 
-  const teachersdata = guru.data.map((guru) => guru)
+  fetchData();
+}, []);
+
+  // const teachersdata = guru.data.map((guru) => guru)
   
   if (guru.isLoading) {
     return (
@@ -91,10 +96,24 @@ const TeachersPage = () => {
     );
   }
 
+  if (viewGuru) {
+    return adminTeacherModal(
+      setViewguru,
+      openModal,
+      guru, setGuru,
+      setOpenModal
+    )
+  }
+
   return (
     <main className="font-poppins">
       <div className="flex focus-visible:border-none">
-        {adminTeacherModal(teachersdata, setGuru, openModal, setOpenModal)}
+        {adminTeacherModal(
+          setViewguru,
+          openModal,
+          guru, setGuru,
+          setOpenModal
+        )}
       </div>
       <div className=" bg-main-gray">
         <div className="mx-auto flex h-96 max-w-7xl flex-col items-start justify-center gap-4 px-4 lg:px-6">
@@ -104,37 +123,39 @@ const TeachersPage = () => {
       </div>
       
       <div className="mx-auto my-12 max-w-7xl">
-        <div className="mb-12 flex flex-col items-center justify-center text-center"
-          onClick={() => {
-              setOpenModal(true);
-              setGuru(guru.data[0]);
-            }}>
-          <Box styles="lg:w-64 lg:h-64 w-56 h-56 mb-2">
-            <img src={`http://localhost:8080/${teachersdata[0]?.fotoGuru}`} alt="" />
-          </Box>
-          <p className="mb-2 text-xl font-bold">
-            <strong>{teachersdata[0]?.name}</strong>
-          </p>
-          <p>{teachersdata[0]?.position}</p>
-        </div>
+        {guru.data?.length > 0 && (
+          <div className="mb-12 flex flex-col items-center justify-center text-center"
+            onClick={() => {
+                setOpenModal(true);
+                setGuru(guru.data[0]);
+              }}>
+            <Box styles="lg:w-64 lg:h-64 w-56 h-56 mb-2">
+              <img src={`http://localhost:8080/${guru.data[0]?.fotoGuru}`} alt="" />
+            </Box>
+            <p className="mb-2 text-xl font-bold">
+              <strong>{guru.data[0]?.name}</strong>
+            </p>
+            <p>{guru.data[0]?.position}</p>
+          </div>
+        )}
 
         <div className="mx-auto flex flex-col justify-items-center gap-x-6 gap-y-12 sm:grid sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-0 lg:gap-y-36 lg:px-6 xl:grid-cols-4">
-          {guru.data.slice(1).map((guru) => (
+          {guru.data?.slice(1).map((guruItem) => (
             <div
-              key={guru.ID}
+              key={guruItem.ID}
               className="flex flex-col items-center justify-center text-center"
               onClick={() => {
                 setOpenModal(true);
-                setGuru(guru);
+                setGuru(guruItem);
               }}
             >
               <Box styles="lg:w-64 lg:h-64 w-56 h-56 mb-2">
-                <img src={`http://localhost:8080/${guru.fotoGuru}`} alt="" />
+                <img src={`http://localhost:8080/${guruItem.fotoGuru}`} alt="" />
               </Box>
               <p className="mb-2 text-xl font-bold">
-                <strong>{guru.name}</strong>
+                <strong>{guruItem.name}</strong>
               </p>
-              <p>{guru.position}</p>
+              <p>{guruItem.position}</p>
             </div>
           ))}
         </div>

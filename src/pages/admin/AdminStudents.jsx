@@ -103,6 +103,7 @@ const studentPageView = (
                 <input
                   type="text"
                   name="nama"
+                  value={nama}
                   onChange={(e) => setnama(e.target.value)}
                 />
               </p>
@@ -110,6 +111,7 @@ const studentPageView = (
                 <input
                   type="text"
                   name="kelas"
+                  value={kelas}
                   onChange={(e) => setkelas(e.target.value)}
                 />
               </p>
@@ -117,6 +119,7 @@ const studentPageView = (
                 <input
                   type="text"
                   name="nis"
+                  value={nis}
                   onChange={(e) => setnis(e.target.value)}
                 />
               </p>
@@ -124,6 +127,7 @@ const studentPageView = (
                 <input
                   type="text"
                   name="alamat"
+                  value={alamat}
                   onChange={(e) => setalamat(e.target.value)}
                 />
               </p>
@@ -150,6 +154,7 @@ const studentPageView = (
                    <input
                       type="text"
                       name="sakit"
+                      value={sakit}
                       onChange={(e) => setsakit(e.target.value)}
                     />
                 </Table.Cell>
@@ -157,6 +162,7 @@ const studentPageView = (
                   <input
                     type="text"
                     name="izin"
+                    value={izin}
                     onChange={(e) => setizin(e.target.value)}
                   />
                 </Table.Cell>
@@ -164,6 +170,7 @@ const studentPageView = (
                   <input
                     type="text"
                     name="tanpaKet"
+                    value={tanpaKet}
                     onChange={(e) => settanpaKet(e.target.value)}
                   />
                 </Table.Cell>
@@ -196,10 +203,11 @@ const studentPageView = (
             <input type="file" className="hidden" />
             <PlusIcon className="h-8 w-8" /> Pilih Dokumen
              <input
-                  type="file"
-                  name="dokumen"
-                  onChange={(e) => setdokumen(e.target.files[0])}
-                />
+                type="file"
+                name="dokumen"
+                value={dokumen}
+                onChange={(e) => setdokumen(e.target.files[0])}
+              />
           </label>
 
           <Flowbite theme={{ theme: customButtonTheme }}>
