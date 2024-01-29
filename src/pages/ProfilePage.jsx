@@ -1,12 +1,44 @@
 import { useEffect, useState } from "react";
 import { classNames, getFloorImages } from "../helper";
-import { Carousel } from "flowbite-react";
+import { Carousel, Flowbite, Modal } from "flowbite-react";
 import {
   ArrowLeftIcon,
+  ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  ChevronUpIcon,
 } from "@heroicons/react/24/outline";
 import places from "../places";
+import { customModalTheme } from "../themes/flowbiteThemes";
+
+const schoolGroundsModal = (openModal, setOpenModal, place, setPlace) => {
+  return (
+    <Flowbite theme={{ theme: customModalTheme }}>
+      <Modal
+        dismissible
+        show={openModal}
+        size="3xl"
+        onClose={() => {
+          setPlace(null);
+          setOpenModal(false);
+        }}
+      >
+        <Modal.Body>
+          <div className="flex flex-col gap-4 p-4 font-poppins">
+            <p className="text-3xl font-bold">
+              <strong>{place?.title}</strong>
+            </p>
+            <p className="leading-6">{place?.content}</p>
+            <img
+              src="https://i.ibb.co/6tKXXbV/foto-gedung-2.jpg"
+              alt={`${place?.title} foto modal`}
+            />
+          </div>
+        </Modal.Body>
+      </Modal>
+    </Flowbite>
+  );
+};
 
 const introduction = () => {
   return (
@@ -151,13 +183,20 @@ const structureOrganization = () => {
   );
 };
 
-const schoolGrounds = (currentSlide, setCurrentSlide, arrayAt, setArrayAt) => {
+const schoolGrounds = (
+  currentSlide,
+  setCurrentSlide,
+  arrayAt,
+  setArrayAt,
+  setPlace,
+  setOpenModal,
+) => {
   const placesObj = places[0];
 
   return (
     <div>
       <Carousel
-        className="h-[682px] w-full rounded-t-lg bg-light-gray-green"
+        className="h-[341px] w-full rounded-t-lg bg-light-gray-green md:h-[682px]"
         indicators={false}
         onSlideChange={(index) => {
           setCurrentSlide(index);
@@ -183,7 +222,9 @@ const schoolGrounds = (currentSlide, setCurrentSlide, arrayAt, setArrayAt) => {
       <div className="mb-4 flex w-full items-center justify-evenly rounded-b-lg bg-dark-seagreen py-8">
         <img
           className={classNames(
-            currentSlide === 0 ? "scale-125" : "scale-100",
+            currentSlide === 0
+              ? "sm:scale-125"
+              : "hidden sm:block sm:scale-100",
             "h-24 w-40",
           )}
           src={getFloorImages().lantai1NonLabel}
@@ -191,7 +232,9 @@ const schoolGrounds = (currentSlide, setCurrentSlide, arrayAt, setArrayAt) => {
         />
         <img
           className={classNames(
-            currentSlide === 1 ? "scale-125" : "scale-100",
+            currentSlide === 1
+              ? "sm:scale-125"
+              : "hidden sm:block sm:scale-100",
             "h-24 w-40",
           )}
           src={getFloorImages().lantai2NonLabel}
@@ -199,7 +242,9 @@ const schoolGrounds = (currentSlide, setCurrentSlide, arrayAt, setArrayAt) => {
         />
         <img
           className={classNames(
-            currentSlide === 2 ? "scale-125" : "scale-100",
+            currentSlide === 2
+              ? "sm:scale-125"
+              : "hidden sm:block sm:scale-100",
             "h-24 w-40",
           )}
           src={getFloorImages().lantai3NonLabel}
@@ -209,23 +254,36 @@ const schoolGrounds = (currentSlide, setCurrentSlide, arrayAt, setArrayAt) => {
       <div
         className={classNames(
           currentSlide === 0 ? "justify-between" : "justify-evenly",
-          "flex items-center rounded-lg bg-light-gray-green px-12 py-8",
+          "flex flex-col items-center gap-2 rounded-lg bg-light-gray-green px-2 py-8 sm:gap-0 md:flex-row",
         )}
       >
         {currentSlide === 0 && (
-          <ChevronLeftIcon
-            className="h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer"
-            onClick={() => {
-              if (arrayAt <= 0) return;
-              setArrayAt(Math.abs(arrayAt - 5));
-            }}
-          />
+          <>
+            <ChevronUpIcon
+              className="h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer sm:hidden"
+              onClick={() => {
+                if (arrayAt <= 0) return;
+                setArrayAt(Math.abs(arrayAt - 5));
+              }}
+            />
+            <ChevronLeftIcon
+              className="hidden h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer sm:block"
+              onClick={() => {
+                if (arrayAt <= 0) return;
+                setArrayAt(Math.abs(arrayAt - 5));
+              }}
+            />
+          </>
         )}
         {currentSlide === 0
           ? placesObj.first.slice(arrayAt, arrayAt + 5).map((f, i) => (
               <div
                 key={i}
-                className="rounded bg-dark-seagreen px-6 py-3 text-sm font-semibold tracking-wide text-white hover:cursor-pointer"
+                className="w-full rounded bg-dark-seagreen px-6 py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer sm:w-auto"
+                onClick={() => {
+                  setPlace(f);
+                  setOpenModal(true);
+                }}
               >
                 {f.title}
               </div>
@@ -234,7 +292,11 @@ const schoolGrounds = (currentSlide, setCurrentSlide, arrayAt, setArrayAt) => {
             ? placesObj.second.map((s, i) => (
                 <div
                   key={i}
-                  className="rounded bg-dark-seagreen px-6 py-3 text-sm font-semibold tracking-wide text-white hover:cursor-pointer"
+                  className="w-full rounded bg-dark-seagreen px-6 py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer sm:w-auto"
+                  onClick={() => {
+                    setPlace(s);
+                    setOpenModal(true);
+                  }}
                 >
                   {s.title}
                 </div>
@@ -242,19 +304,32 @@ const schoolGrounds = (currentSlide, setCurrentSlide, arrayAt, setArrayAt) => {
             : placesObj.third.map((t, i) => (
                 <div
                   key={i}
-                  className="rounded bg-dark-seagreen px-6 py-3 text-sm font-semibold tracking-wide text-white hover:cursor-pointer"
+                  className="w-full rounded bg-dark-seagreen px-6 py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer sm:w-auto"
+                  onClick={() => {
+                    setPlace(t);
+                    setOpenModal(true);
+                  }}
                 >
                   {t.title}
                 </div>
               ))}
         {currentSlide === 0 && (
-          <ChevronRightIcon
-            className="h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer"
-            onClick={() => {
-              if (arrayAt >= 15) return;
-              setArrayAt(Math.abs(arrayAt + 5));
-            }}
-          />
+          <>
+            <ChevronDownIcon
+              className="h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer sm:hidden"
+              onClick={() => {
+                if (arrayAt >= 15) return;
+                setArrayAt(Math.abs(arrayAt + 5));
+              }}
+            />
+            <ChevronRightIcon
+              className="hidden h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer sm:block"
+              onClick={() => {
+                if (arrayAt >= 15) return;
+                setArrayAt(Math.abs(arrayAt + 5));
+              }}
+            />
+          </>
         )}
       </div>
     </div>
@@ -262,10 +337,12 @@ const schoolGrounds = (currentSlide, setCurrentSlide, arrayAt, setArrayAt) => {
 };
 
 const ProfilePage = () => {
+  const [openModal, setOpenModal] = useState(false);
+  const [place, setPlace] = useState(null);
   const [arrayAt, setArrayAt] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [sections, setSections] = useState([
-    { title: "Pengantar", current: false, content: introduction() },
+    { title: "Pengantar", current: true, content: introduction() },
     { title: "Visi dan Misi", current: false, content: visionAndMission() },
     {
       title: "Struktur Organisasi",
@@ -274,12 +351,14 @@ const ProfilePage = () => {
     },
     {
       title: "Denah Sekolah",
-      current: true,
+      current: false,
       content: schoolGrounds(
         currentSlide,
         setCurrentSlide,
         arrayAt,
         setArrayAt,
+        setPlace,
+        setOpenModal,
       ),
     },
   ]);
@@ -290,6 +369,14 @@ const ProfilePage = () => {
 
   const handleArrayChange = (index) => {
     setArrayAt(index);
+  };
+
+  const handlePlaceChange = (p) => {
+    setPlace(p);
+  };
+
+  const handleModalChange = (m) => {
+    setOpenModal(m);
   };
 
   const currentPage = sections.filter((s) => s.current)[0];
@@ -305,6 +392,8 @@ const ProfilePage = () => {
                 handleSlideChange,
                 arrayAt,
                 handleArrayChange,
+                handlePlaceChange,
+                handleModalChange,
               )
             : s.content,
       })),
@@ -314,6 +403,15 @@ const ProfilePage = () => {
 
   return (
     <main className="font-poppins">
+      <div className="focus-visible:border-none">
+        {schoolGroundsModal(
+          openModal,
+          handleModalChange,
+          place,
+          handlePlaceChange,
+        )}
+      </div>
+
       <div className="bg-main-gray">
         <div className="mx-auto flex h-96 max-w-7xl flex-col items-start justify-center gap-4 px-4 lg:px-6">
           <h1 className="text-6xl font-semibold uppercase">profil sekolah</h1>
@@ -334,14 +432,14 @@ const ProfilePage = () => {
 
           <aside className="space-y-2 justify-self-center">
             {sections.map((section, i) => (
-              <div key={i} className="flex w-64 flex-col">
+              <div key={i} className="flex w-full flex-col sm:w-64">
                 <button
                   value={section.title}
                   className={classNames(
                     section.current
                       ? "bg-semi-green font-semibold text-white"
                       : "bg-light-green text-black",
-                    "rounded-lg px-12 py-4",
+                    "w-full rounded-lg px-12 py-4",
                   )}
                   onClick={(e) => {
                     setSections(
@@ -389,6 +487,8 @@ const ProfilePage = () => {
                       handleSlideChange,
                       arrayAt,
                       handleArrayChange,
+                      handlePlaceChange,
+                      handleModalChange,
                     ),
                   },
                 ])

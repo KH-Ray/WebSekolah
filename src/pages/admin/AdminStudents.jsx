@@ -36,23 +36,19 @@ const studentPageView = (student, setStudentPage, files) => {
           </div>
 
           <div className="grid grid-cols-2">
-            <div className="grid grid-cols-2">
-              <p>Nama Peserta Didik</p>
-              <p className="before:mr-1 before:content-[':']">{student.name}</p>
+            <p>Nama Peserta Didik</p>
+            <p className="before:mr-1 before:content-[':']">{student.name}</p>
 
-              <p>Kelas Peserta Didik</p>
-              <p className="before:mr-1 before:content-[':']">
-                {student.class}
-              </p>
+            <p>Kelas Peserta Didik</p>
+            <p className="before:mr-1 before:content-[':']">{student.class}</p>
 
-              <p>NIS Peserta Didik</p>
-              <p className="before:mr-1 before:content-[':']">{student.NIS}</p>
+            <p>NIS Peserta Didik</p>
+            <p className="before:mr-1 before:content-[':']">{student.NIS}</p>
 
-              <p>Alamat</p>
-              <p className="leading-6 before:mr-1 before:content-[':']">
-                {student.address}
-              </p>
-            </div>
+            <p>Alamat</p>
+            <p className="leading-6 before:mr-1 before:content-[':']">
+              {student.address}
+            </p>
           </div>
         </div>
 

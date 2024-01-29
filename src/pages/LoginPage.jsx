@@ -147,6 +147,12 @@ const LoginPage = () => {
         className="flex w-full flex-col items-center justify-center gap-6 font-poppins"
         onSubmit={(e) => {
           e.preventDefault();
+
+          if (!findStudent) {
+            console.error("Student not found!");
+            return;
+          }
+
           setStudent(findStudent);
           setStudentPage(true);
         }}

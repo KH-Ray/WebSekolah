@@ -81,7 +81,7 @@ const HomePage = () => {
                 </div>
                 <div className="hidden w-full bg-main-seagreen px-8 py-4 sm:block sm:rounded-tr-full"></div>
               </div>
-              <div className="h-96 overflow-auto whitespace-pre-wrap break-all rounded-b-xl bg-light-green px-8 py-4 text-justify leading-6 sm:h-full sm:rounded-tr-xl">
+              <div className="h-96 overflow-auto rounded-b-xl bg-light-green px-8 py-4 text-justify leading-6 sm:h-full sm:rounded-tr-xl">
                 Memiliki anak cerdas dan siap menjadi generasi emas berkarakter
                 merupakan dambaan setiap orang tua. SMP Bakti Idhata berada
                 dibawah naungan Yayasan Bakti Idhata, Dharma Wanita Persatuan

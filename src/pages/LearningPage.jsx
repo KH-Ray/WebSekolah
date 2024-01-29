@@ -85,14 +85,14 @@ const LearningPage = () => {
         </div>
         <aside className="space-y-2 justify-self-center">
           {sections.map((section, i) => (
-            <div key={i} className="flex w-64 flex-col">
+            <div key={i} className="flex w-full flex-col sm:w-64">
               <button
                 value={section.title}
                 className={classNames(
                   section.current
                     ? "bg-semi-green font-semibold text-white"
                     : "bg-light-green text-black",
-                  "rounded-lg px-12 py-4",
+                  "w-full rounded-lg px-12 py-4",
                 )}
                 onClick={(e) => {
                   setSections(
