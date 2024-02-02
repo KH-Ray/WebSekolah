@@ -3,7 +3,6 @@ import { customButtonTheme } from "../../themes/flowbiteThemes";
 import { PhotoIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import galleryServices from "../../services/gallery";
-import Box from "../../components/PhotoBox";
 
 const addPicturePage = (galleries) => {
   return (
@@ -36,7 +35,7 @@ const addPicturePage = (galleries) => {
 
       <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
         <input type="file" className="hidden" />
-        <PlusIcon className="h-8 w-8" /> Pilih Gambar
+        <PlusIcon className="h-8 w-8" /> Pilih Dokumen
       </label>
 
       <div className="ml-auto">
