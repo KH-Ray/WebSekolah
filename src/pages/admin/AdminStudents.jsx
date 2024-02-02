@@ -17,12 +17,12 @@ const studentPageView = (student, setStudentPage, files) => {
   return (
     <main className="h-screen overflow-auto font-poppins">
       <div className="mx-auto my-12 flex max-w-7xl flex-col gap-8 px-4 lg:px-6">
-        <div className="text-gray-blue">
+        <div className="text-gray-blue text-dark-gray">
           <button
             className="flex items-center gap-2 hover:cursor-pointer"
             onClick={() => setStudentPage(false)}
           >
-            <ArrowLeftIcon className="h-6 w-6" /> Kembali
+            <ArrowLeftIcon className="h-6 w-6 fill-dark-gray" /> Kembali
           </button>
         </div>
 

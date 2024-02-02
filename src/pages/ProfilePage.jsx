@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { classNames, getFloorImages } from "../helper";
-import { Carousel, Flowbite, Modal } from "flowbite-react";
+import { Carousel, Flowbite, Modal, Spinner } from "flowbite-react";
 import {
   ArrowLeftIcon,
   ChevronDownIcon,
@@ -191,83 +191,91 @@ const schoolGrounds = (
   setPlace,
   setOpenModal,
 ) => {
-  const placesObj = places[0];
+  const placeObj = places[0];
 
   return (
     <div>
-      <Carousel
-        className="h-[341px] w-full rounded-t-lg bg-light-gray-green md:h-[682px]"
-        indicators={false}
-        onSlideChange={(index) => {
-          setCurrentSlide(index);
-        }}
-        slide={false}
-      >
-        <img
-          className="scale-90"
-          src={getFloorImages().lantai1}
-          alt="Denah Sekolah 1"
-        />
-        <img
-          className="scale-90"
-          src={getFloorImages().lantai2}
-          alt="Denah Sekolah 2"
-        />
-        <img
-          className="scale-90"
-          src={getFloorImages().lantai3}
-          alt="Denah Sekolah 3"
-        />
-      </Carousel>
-      <div className="mb-4 flex w-full items-center justify-evenly rounded-b-lg bg-dark-seagreen py-8">
-        <img
-          className={classNames(
-            currentSlide === 0
-              ? "sm:scale-125"
-              : "hidden sm:block sm:scale-100",
-            "h-24 w-40",
-          )}
-          src={getFloorImages().lantai1NonLabel}
-          alt="Denah Sekolah 1 Non-Label"
-        />
-        <img
-          className={classNames(
-            currentSlide === 1
-              ? "sm:scale-125"
-              : "hidden sm:block sm:scale-100",
-            "h-24 w-40",
-          )}
-          src={getFloorImages().lantai2NonLabel}
-          alt="Denah Sekolah 2 Non-Label"
-        />
-        <img
-          className={classNames(
-            currentSlide === 2
-              ? "sm:scale-125"
-              : "hidden sm:block sm:scale-100",
-            "h-24 w-40",
-          )}
-          src={getFloorImages().lantai3NonLabel}
-          alt="Denah Sekolah 3 Non-Label"
-        />
+      <div className="relative">
+        <p className="absolute left-1/2 top-8 z-10 -translate-x-1/2 text-xl font-bold text-dark-green">
+          Lantai {currentSlide + 1}
+        </p>
+
+        <Carousel
+          className="h-[341px] w-full rounded-t-lg bg-light-gray-green md:h-[682px]"
+          indicators={false}
+          onSlideChange={(index) => {
+            setCurrentSlide(index);
+          }}
+          slide={false}
+        >
+          <img
+            className="scale-75"
+            src={getFloorImages().lantai1}
+            alt="Denah Sekolah 1"
+          />
+          <img
+            className="scale-75"
+            src={getFloorImages().lantai2}
+            alt="Denah Sekolah 2"
+          />
+          <img
+            className="scale-75"
+            src={getFloorImages().lantai3}
+            alt="Denah Sekolah 3"
+          />
+        </Carousel>
+        <div className="mb-4 flex w-full items-center justify-evenly rounded-b-lg bg-dark-seagreen py-8">
+          <img
+            className={classNames(
+              currentSlide === 0
+                ? "sm:scale-125"
+                : "hidden sm:block sm:scale-100",
+              "h-24 w-40",
+            )}
+            src={getFloorImages().lantai1NonLabel}
+            alt="Denah Sekolah 1 Non-Label"
+          />
+          <img
+            className={classNames(
+              currentSlide === 1
+                ? "sm:scale-125"
+                : "hidden sm:block sm:scale-100",
+              "h-24 w-40",
+            )}
+            src={getFloorImages().lantai2NonLabel}
+            alt="Denah Sekolah 2 Non-Label"
+          />
+          <img
+            className={classNames(
+              currentSlide === 2
+                ? "sm:scale-125"
+                : "hidden sm:block sm:scale-100",
+              "h-24 w-40",
+            )}
+            src={getFloorImages().lantai3NonLabel}
+            alt="Denah Sekolah 3 Non-Label"
+          />
+        </div>
       </div>
       <div
         className={classNames(
-          currentSlide === 0 ? "justify-between" : "justify-evenly",
-          "flex flex-col items-center gap-2 rounded-lg bg-light-gray-green px-2 py-8 sm:gap-0 md:flex-row",
+          currentSlide === 0
+            ? "justify-between gap-2 lg:gap-0"
+            : "justify-center gap-2 lg:gap-20",
+          "flex flex-col items-center rounded-lg bg-light-gray-green px-4 py-4 lg:flex-row lg:px-2 lg:py-8",
         )}
       >
         {currentSlide === 0 && (
           <>
             <ChevronUpIcon
-              className="h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer sm:hidden"
+              className="h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer lg:hidden"
               onClick={() => {
                 if (arrayAt <= 0) return;
                 setArrayAt(Math.abs(arrayAt - 5));
               }}
             />
             <ChevronLeftIcon
-              className="hidden h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer sm:block"
+              className="hidden h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer lg:block"
               onClick={() => {
                 if (arrayAt <= 0) return;
                 setArrayAt(Math.abs(arrayAt - 5));
@@ -276,10 +284,10 @@ const schoolGrounds = (
           </>
         )}
         {currentSlide === 0
-          ? placesObj.first.slice(arrayAt, arrayAt + 5).map((f, i) => (
+          ? placeObj.first.slice(arrayAt, arrayAt + 5).map((f, i) => (
               <div
                 key={i}
-                className="w-full rounded bg-dark-seagreen px-6 py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer sm:w-auto"
+                className="w-full rounded bg-dark-seagreen px-6 py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer lg:w-auto"
                 onClick={() => {
                   setPlace(f);
                   setOpenModal(true);
@@ -289,10 +297,10 @@ const schoolGrounds = (
               </div>
             ))
           : currentSlide === 1
-            ? placesObj.second.map((s, i) => (
+            ? placeObj.second.map((s, i) => (
                 <div
                   key={i}
-                  className="w-full rounded bg-dark-seagreen px-6 py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer sm:w-auto"
+                  className="w-full rounded bg-dark-seagreen px-6 py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer lg:w-auto"
                   onClick={() => {
                     setPlace(s);
                     setOpenModal(true);
@@ -301,10 +309,10 @@ const schoolGrounds = (
                   {s.title}
                 </div>
               ))
-            : placesObj.third.map((t, i) => (
+            : placeObj.third.map((t, i) => (
                 <div
                   key={i}
-                  className="w-full rounded bg-dark-seagreen px-6 py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer sm:w-auto"
+                  className="w-full rounded bg-dark-seagreen px-6 py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer lg:w-auto"
                   onClick={() => {
                     setPlace(t);
                     setOpenModal(true);
@@ -316,14 +324,14 @@ const schoolGrounds = (
         {currentSlide === 0 && (
           <>
             <ChevronDownIcon
-              className="h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer sm:hidden"
+              className="h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer lg:hidden"
               onClick={() => {
                 if (arrayAt >= 15) return;
                 setArrayAt(Math.abs(arrayAt + 5));
               }}
             />
             <ChevronRightIcon
-              className="hidden h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer sm:block"
+              className="hidden h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer lg:block"
               onClick={() => {
                 if (arrayAt >= 15) return;
                 setArrayAt(Math.abs(arrayAt + 5));

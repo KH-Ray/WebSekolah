@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import galleryServices from "../services/gallery";
 import Box from "../components/PhotoBox";
 import { Spinner } from "flowbite-react";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 const GalleryPage = () => {
   const galleries = useQuery({
@@ -17,8 +18,6 @@ const GalleryPage = () => {
         </div>
       </main>
     );
-
-  console.log(galleries);
 
   return (
     <main className="font-poppins">

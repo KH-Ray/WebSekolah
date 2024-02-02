@@ -157,13 +157,13 @@ const LoginPage = () => {
           setStudentPage(true);
         }}
       >
-        <div className="text-gray-blue absolute left-4 top-12 font-poppins lg:left-6">
+        <div className="text-gray-blue absolute left-4 top-12 font-poppins text-dark-gray lg:left-6">
           <Link
             to="/siswa"
             className="flex items-center gap-2 hover:cursor-pointer"
             onClick={() => setStudentPage(false)}
           >
-            <ArrowLeftIcon className="h-6 w-6" /> Kembali
+            <ArrowLeftIcon className="h-6 w-6 fill-dark-gray" /> Kembali
           </Link>
         </div>
 

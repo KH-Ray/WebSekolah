@@ -34,6 +34,7 @@ import DimensionsPage from "./pages/DImensionsPage";
 import AdminDimensions from "./pages/admin/AdminDimensions";
 import GalleryPage from "./pages/GalleryPage";
 import AdminGallery from "./pages/admin/AdminGallery";
+import AdminSchoolGround from "./pages/admin/AdminSchoolGround";
 
 const MainPage = (page) => {
   return (
@@ -119,6 +120,7 @@ const App = () => {
           element={AdminPage(<AdminDimensions />)}
         />
         <Route path="/admin/galeri" element={AdminPage(<AdminGallery />)} />
+        <Route path="/admin/denah" element={AdminPage(<AdminSchoolGround />)} />
       </Routes>
     </Router>
   );

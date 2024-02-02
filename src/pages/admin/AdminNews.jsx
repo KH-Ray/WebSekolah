@@ -22,7 +22,7 @@ const modalValidation = (openModal, setOpenModal) => {
             Apakah anda yakin mengisi dengan benar?
           </p>
           <div className="flex items-center justify-center gap-8">
-            <button className="bg-semi-green h-full w-full rounded-lg px-8 py-4 text-white">
+            <button className="h-full w-full rounded-lg bg-semi-green px-8 py-4 text-white">
               Simpan
             </button>
             <button
@@ -46,12 +46,12 @@ const addNewsPage = (openModal, setAddNews, setOpenModal) => {
       </div>
 
       <div className="flex flex-col gap-8">
-        <div className="text-gray-blue">
+        <div>
           <button
-            className="flex items-center gap-4 text-gray-600 hover:cursor-pointer"
+            className="flex items-center gap-4 text-dark-gray hover:cursor-pointer"
             onClick={() => setAddNews(false)}
           >
-            <ArrowLeftIcon className="h-6 w-6" /> Kembali
+            <ArrowLeftIcon className="h-6 w-6 fill-dark-gray" /> Kembali
           </button>
         </div>
 

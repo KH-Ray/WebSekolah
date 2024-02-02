@@ -99,7 +99,7 @@ const AdminTeachers = () => {
   const teachersData = teachers.data;
 
   return (
-    <main className="overflow-auto font-poppins">
+    <main className="max-h-full min-h-screen overflow-auto font-poppins">
       <div className="focus-visible:border-none">
         {adminTeacherModal(teacher, setTeacher, openModal, setOpenModal)}
       </div>

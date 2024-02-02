@@ -126,7 +126,7 @@ const AdminExtracurricular = () => {
 
   if (extracurriculars.isLoading || files.isLoading)
     return (
-      <main className="flex h-screen items-center justify-center">
+      <main className="flex max-h-full min-h-screen items-center justify-center">
         <div>
           <Spinner size="xl" />
         </div>
@@ -134,7 +134,7 @@ const AdminExtracurricular = () => {
     );
 
   return (
-    <main className="font-poppins">
+    <main className="max-h-full min-h-screen font-poppins">
       <div className="focus-visible:border-none">
         {adminExtracurriculerModal(
           extracurricular,

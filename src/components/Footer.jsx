@@ -75,7 +75,7 @@ const Footer = () => {
                 src={logo}
                 alt="Logo Sekolah Bakti Idhata"
               />
-              <h1 className="mb-4 flex flex-col gap-1 text-center font-antonio text-3xl font-semibold uppercase sm:text-left">
+              <h1 className="mb-4 flex flex-col gap-1 text-center font-antonio text-3xl font-semibold uppercase md:text-left">
                 smp bakti idhata
                 <span className="text-base font-light">
                   cerdas terampil luhur
