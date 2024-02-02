@@ -58,7 +58,7 @@ const AnnoucementPage = () => {
         />
         <div className="relative mx-auto max-w-7xl px-4 lg:px-6">
           <h1 className="absolute bottom-5 text-3xl font-bold text-white">
-            
+            {currentAnnoucement.judul}
           </h1>
         </div>
       </div>
@@ -66,13 +66,13 @@ const AnnoucementPage = () => {
       <div className="mx-auto mb-12 mt-4 flex max-w-7xl flex-col gap-6 px-4 text-justify leading-6 lg:px-6">
         <div className="flex items-center gap-2 text-sm text-gray-700">
           <CalendarDaysIcon className="h-6 w-6" />
-          <div></div>
+          <div>{currentAnnoucement.date}</div>
         </div>
 
         {stripTags(currentAnnoucement.descNotice)}
 
         <div className="flex flex-wrap gap-8">
-          {files.data.map((f) => {
+          {notice.map((f) => {
             if (f.id !== 1) return;
 
             return (

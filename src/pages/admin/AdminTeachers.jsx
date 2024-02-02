@@ -161,6 +161,7 @@ const AdminTeachers = () => {
           setMsg('Error adding data');
         }
       }
+      window.location.reload();
     } catch (error) {
       console.error('Error submitting data:', error);
       setMsg('Error: ' + error.message);

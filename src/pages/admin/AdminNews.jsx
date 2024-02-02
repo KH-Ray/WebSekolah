@@ -14,7 +14,7 @@ const AdminNews = () => {
   const [isiBerita, setIsiBerita] = useState('');
   const [date, setDate] = useState('');
   const [msg, setMsg] = useState('');
-  const [selectedNewsId, setSelectedNewsId] = useState(null); // New state variable
+  const [selectedNewsId, setSelectedNewsId] = useState(null); 
   const navigate = useNavigate();
 
   const [news, setNews] = useState([]);
@@ -53,19 +53,15 @@ const AdminNews = () => {
       let response;
 
       if (selectedNewsId) {
-        // Editing an existing news item
         response = await axios.put(`http://localhost:8080/admin/berita/${selectedNewsId}`, formData);
       } else {
-        // Adding a new news item
         response = await axios.post('http://localhost:8080/admin/berita', formData);
       }
 
       if (response.data.Status === 'Success') {
         navigate('/admin/berita');
         setMsg('File Successfully Uploaded');
-        // Close the modal after successful submission
         setOpenModal(false);
-        // Clear the form data
         setSampul('');
         setJudulBerita('');
         setIsiBerita('');
@@ -74,6 +70,7 @@ const AdminNews = () => {
       } else {
         setMsg('Error');
       }
+      window.location.reload();
     } catch (error) {
       console.error('Error submitting data:', error);
       setMsg('Error' + error.message);
@@ -114,7 +111,7 @@ const AdminNews = () => {
         <div
           className="flex h-40 w-full items-center justify-center gap-4 rounded-xl border border-solid border-gray-500 text-3xl text-blue-800 hover:cursor-pointer"
           onClick={() => {
-            setSelectedNewsId(null); // Reset selected news ID for adding new news
+            setSelectedNewsId(null); 
             setOpenModal(true);
           }}
         >
@@ -129,6 +126,14 @@ const AdminNews = () => {
         size="full"
       >
         <Modal.Body>
+          <div className="text-gray-blue">
+          <button
+            className="flex items-center gap-2 text-gray-600 hover:cursor-pointer"
+            onClick={() => setOpenModal(false)}
+          >
+            <ArrowLeftIcon className="h-6 w-6" /> Kembali
+          </button>
+        </div>
           <form className="px-8 py-2 font-poppins" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-4">
               <p className="text-2xl font-medium">Gambar Sampul</p>

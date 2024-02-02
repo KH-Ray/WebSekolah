@@ -152,6 +152,8 @@ const HomePage = () => {
                 <div key={id}>
                   <Link to={`/pengumuman/${a.id}`}>
                     <Notice
+                      title={a.judul}
+                      date={a.date}
                       subtitle={stripTags(a.descNotice)}
                     />
                   </Link>

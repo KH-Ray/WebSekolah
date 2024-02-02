@@ -1,11 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import annoucementServices from "../../services/announcements";
 import Notice from "../../components/Notice";
 import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Modal, Spinner } from "flowbite-react";
 import { useState, useEffect } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import fileServices from "../../services/files";
 import { customButtonTheme } from "../../themes/flowbiteThemes";
 import { Button, Flowbite } from "flowbite-react";
 
@@ -17,7 +14,6 @@ function stripTags(html) {
 }
 
 const addAnnoucementPage = (
-  files,
   openModal,
   setOpenModal,
   setAddAnnouncement,
@@ -27,6 +23,8 @@ const addAnnoucementPage = (
   setDocument,
   setMsg,
   navigate,
+  judul, setjudul,
+  date, setdate
 ) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,6 +32,8 @@ const addAnnoucementPage = (
     const formData = new FormData();
     formData.append('descNotice', descNotice);
     formData.append('document', document);
+    formData.append('judul', judul);
+    formData.append('date', date);
 
     try {
       const response = await axios.post('http://localhost:8080/admin/pengumuman', formData);
@@ -46,6 +46,7 @@ const addAnnoucementPage = (
       } else {
         setMsg('Error');
       }
+      window.location.reload();
     } catch (error) {
       console.error('Error submitting data:', error);
       setMsg('Error' + error.message);
@@ -102,6 +103,30 @@ const addAnnoucementPage = (
 
         <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4">
+              <label htmlFor="judulBerita" className="text-2xl font-medium">
+                Judul Pengumuman
+              </label>
+              <input
+                type="text"
+                name="judul"
+                onChange={(e) => setjudul(e.target.value)}
+                id="news title"
+                className="rounded-lg border border-solid border-gray-500"
+              />
+          </div>
+          <div className="flex flex-col gap-4">
+              <label htmlFor="date" className="text-2xl font-medium">
+                Waktu Berita
+              </label>
+              <input
+                type="date"
+                name="date"
+                onChange={(e) => setdate(e.target.value)}
+                id="date"
+                className="rounded-lg border border-solid border-gray-500"
+              />
+            </div>
+          <div className="flex flex-col gap-4">
             <label
               className="text-2xl font-medium"
               htmlFor="announcement content"
@@ -119,6 +144,7 @@ const addAnnoucementPage = (
                 resize: false,
                 height: "500",
               }}
+              value={descNotice}
               onEditorChange={setDescNotice}
             />
           </div>
@@ -126,7 +152,7 @@ const addAnnoucementPage = (
           <div className="flex flex-col gap-4">
             <p className="text-2xl font-medium">Unggah Dokumen</p>
 
-            <div className="flex flex-wrap gap-8">
+            {/* <div className="flex flex-wrap gap-8">
               {files.data.map((f) => {
                 return (
                   <div
@@ -142,7 +168,7 @@ const addAnnoucementPage = (
                   </div>
                 );
               })}
-            </div>
+            </div> */}
 
             <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
               <input
@@ -176,6 +202,8 @@ const AdminAnnouncement = () => {
   const [openModal, setOpenModal] = useState(false);
   const [descNotice, setDescNotice] = useState('');
   const [document, setDocument] = useState('');
+  const [judul, setjudul] = useState('');
+  const [date, setdate] = useState('');
   const [msg, setMsg] = useState('');
 
   const navigate = useNavigate();
@@ -193,17 +221,7 @@ const AdminAnnouncement = () => {
     fetchData();
   }, []);
 
-  // const annoucements = useQuery({
-  //   queryKey: ["annoucements"],
-  //   queryFn: () => annoucementServices.getAllAnnoucement(),
-  // });
-
-  const files = useQuery({
-    queryKey: ["files"],
-    queryFn: () => fileServices.getAllFile(),
-  });
-
-  if (notice.isLoading || files.isLoading)
+  if (notice.isLoading)
     return (
       <main className="flex h-screen items-center justify-center">
         <div>
@@ -214,7 +232,6 @@ const AdminAnnouncement = () => {
 
   if (addAnnoucement) {
     return addAnnoucementPage(
-      files,
       openModal,
       setOpenModal,
       setAddAnnouncement,
@@ -224,6 +241,8 @@ const AdminAnnouncement = () => {
       setDocument,
       setMsg,
       navigate,
+      judul, setjudul,
+      date, setdate
     );
   }
 
@@ -242,6 +261,8 @@ const AdminAnnouncement = () => {
         {notice.map((a, id) => (
           <div key={id}>
             <Notice
+              title={a.judul}
+              date={a.date}
               subtitle={stripTags(a.descNotice)}
             />
           </div>

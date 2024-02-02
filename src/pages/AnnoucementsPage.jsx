@@ -1,5 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
-import annoucementServices from "../services/announcements";
 import Notice from "../components/Notice";
 import { Spinner } from "flowbite-react";
 import { Input } from "@material-tailwind/react";
@@ -67,6 +65,8 @@ const AnnoucementsPage = () => {
           {annoucements.map((a, id) => (
             <Link key={id} to={`/pengumuman/${a.id}`}>
               <Notice
+                title={a.judul}
+                date={a.date}
                 subtitle={stripTags(a.descNotice)} />
             </Link>
           ))}

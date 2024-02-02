@@ -101,16 +101,33 @@ const App = () => {
           element={AdminPage(<AdminAnnouncement />)}
         />
         <Route
+          path="/admin/pengumuman/:id"
+          element={AdminPage(<AdminAnnouncement />)}
+        />
+        <Route
           path="/admin/ekstrakurikuler"
           element={AdminPage(<AdminExtracurricular />)}
         />
         <Route
-          path="/admin/extrakurikuler"
+          path="/admin/ekstrakurikuler/:id"
+          element={AdminPage(<AdminExtracurricular />)}
+        />
+        <Route
+          path="/admin/ekstrakurikuler/favorite/:id"
+          element={AdminPage(<AdminExtracurricular />)}
+        />
+        <Route
+          path="/admin/ekstrakurikuler/pilihan/:id"
           element={AdminPage(<AdminExtracurricular />)}
         />
         <Route path="/admin/siswa" element={AdminPage(<AdminStudents />)} />
+        <Route path="/admin/siswa/:id" element={AdminPage(<AdminStudents />)} />
         <Route
           path="/admin/rabuceria"
+          element={AdminPage(<AdminRabuCeria />)}
+        />
+        <Route
+          path="/admin/rabuceria/:id"
           element={AdminPage(<AdminRabuCeria />)}
         />
         <Route
@@ -121,7 +138,12 @@ const App = () => {
           path="/admin/dikmensi"
           element={AdminPage(<AdminDimensions />)}
         />
+        <Route
+          path="/admin/dikmensi/:id"
+          element={AdminPage(<AdminDimensions />)}
+        />
         <Route path="/admin/galeri" element={AdminPage(<AdminGallery />)} />
+        <Route path="/admin/galeri/:id" element={AdminPage(<AdminGallery />)} />
       </Routes>
     </Router>
   );
