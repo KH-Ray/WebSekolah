@@ -1,21 +1,20 @@
 import { Link } from "react-router-dom";
-import { classNames } from "../helper";
 import { useState } from "react";
+import { classNames } from "../helper";
 
 const AdminNav = () => {
   const [navigations, setNavigations] = useState([
     { title: "Halaman Beranda", link: "/beranda", current: true },
     { title: "Profile Sekolah", link: "/profil", current: false },
     { title: "Staff Pengajar", link: "/guru", current: false },
-    { title: "Program Kerja", link: "/organisasi", current: false },
     { title: "Berita", link: "/berita", current: false },
     { title: "Pengumuman", link: "/pengumuman", current: false },
     { title: "Ekstrakurikuler", link: "/ekstrakurikuler", current: false },
-    { title: "Kegiatan", link: "/kegiatan", current: false },
     { title: "Peserta Didik", link: "/siswa", current: false },
     { title: "Rabu Ceria", link: "/rabuceria", current: false },
     { title: "Dikmensi", link: "/dikmensi", current: false },
     { title: "Galeri", link: "/galeri", current: false },
+    { title: "Denah", link: "/denah", current: false },
   ]);
 
   return (

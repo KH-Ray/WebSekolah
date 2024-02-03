@@ -1,5 +1,6 @@
 import Box from "../components/PhotoBox";
 import { Flowbite, Modal, Spinner } from "flowbite-react";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { customModalTheme } from "../themes/flowbiteThemes";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -24,6 +25,16 @@ const adminTeacherModal = (
         }}
       >
         <Modal.Body>
+          <button
+            className="flex items-center gap-2 text-gray-600 hover:cursor-pointer"
+            onClick={() => {
+              setOpenModal(false);
+              window.location.reload();
+            }}
+              
+          >
+            <ArrowLeftIcon className="h-6 w-6" /> Kembali
+          </button>
           <div className="flex flex-col items-center gap-8 p-2 sm:flex-row sm:p-8">
             <div className="bottom-1/2 h-60 w-60 flex-none">
               <Box styles="h-60 w-60">
@@ -83,8 +94,6 @@ const TeachersPage = () => {
 
   fetchData();
 }, []);
-
-  // const teachersdata = guru.data.map((guru) => guru)
   
   if (guru.isLoading) {
     return (

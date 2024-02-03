@@ -23,7 +23,7 @@ const StudentsPage = () => {
       fetchData();
   }, [])
 
-  if (students.isLoading)
+  if (siswa.isLoading)
     return (
       <main className="flex h-screen items-center justify-center">
         <div>

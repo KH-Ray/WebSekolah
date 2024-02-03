@@ -65,14 +65,6 @@ const AdminRabuCeria = () => {
     }
   };
 
-  // const handleEditorChange = (content, editor) => {
-  //   const currentCursorPosition = editor.selection.getCursor(content);
-  //   setDescription(content);
-  //   setTimeout(() => {
-  //     editor.selection.setCursorLocation(currentCursorPosition);
-  //   }, 100);
-  // };
-
   return (
     <main className="h-screen p-12 font-poppins">
       <form onSubmit={handleSubmit}>

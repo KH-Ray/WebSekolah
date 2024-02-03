@@ -151,25 +151,6 @@ const addAnnoucementPage = (
 
           <div className="flex flex-col gap-4">
             <p className="text-2xl font-medium">Unggah Dokumen</p>
-
-            {/* <div className="flex flex-wrap gap-8">
-              {files.data.map((f) => {
-                return (
-                  <div
-                    key={f.id}
-                    className="flex h-44 w-64 flex-col items-center justify-center gap-2 rounded border border-solid border-black"
-                  >
-                    <img
-                      src={f.type}
-                      alt="document image"
-                      className="h-20 w-20"
-                    />
-                    <p className="capitalize">{f.name}</p>
-                  </div>
-                );
-              })}
-            </div> */}
-
             <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
               <input
                 type="file"

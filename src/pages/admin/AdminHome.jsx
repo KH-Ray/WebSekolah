@@ -90,6 +90,7 @@ const AdminHome = () => {
       } else {
         setMsg('Error');
       }
+       window.location.reload();
     } catch (error) {
       console.error('Error submitting data:', error);
       setMsg('Error' + error.message);
@@ -105,8 +106,6 @@ const AdminHome = () => {
       </main>
     );
   
-  const homeUpdate = home.map((homeItem) => homeItem);
-
   return (
     <main className="p-6 font-poppins">
       <form onSubmit={handleSubmit}>
@@ -138,7 +137,7 @@ const AdminHome = () => {
 
         <div className="space-y-32">
           <div className="max-w-7xl space-y-32 px-12 pt-12 lg:mx-auto">
-            {home.map((homeItem) => (
+            {home.slice(0, 1).map((homeItem) => (
               <div
               key={homeItem.ID}>
                 <div className="grid h-full mb-5 grid-cols-1 justify-center gap-8 sm:grid-rows-[384px] md:grid-cols-[384px_1fr]">
@@ -182,8 +181,6 @@ const AdminHome = () => {
                         name="kImg"/>
                     </PhotoBox>
                   </label>
-
-                  
                   <div
                     className="h-full w-full">
                     <textarea
@@ -208,8 +205,6 @@ const AdminHome = () => {
               </div>
             ))}
             
-            
-
             <div>
               <div className="mb-24 flex h-14 flex-col justify-between gap-4 sm:mb-10 sm:flex-row">
                 <h2 className="flex flex-col justify-between text-3xl font-bold">
@@ -228,7 +223,7 @@ const AdminHome = () => {
               </div>
 
               <div className="mx-auto flex flex-col items-center gap-6 md:grid md:grid-cols-2 xl:grid-cols-4">
-                {news.map((n, id) => (
+                {news.slice(-4, news.length).reverse().map((n, id) => (
                   <NewsCard
                     key={id}
                     title={n.judulBerita}
@@ -258,10 +253,12 @@ const AdminHome = () => {
               </div>
 
               <div className="divide-y divide-solid divide-gray-400">
-                {notice.map((a, id) => (
+                {notice.slice(-3, notice.length).reverse().map((a, id) => (
                   <div key={id}>
                     <Link to={`/pengumuman/${a.id}`}>
                       <Notice
+                        title={a.judul}
+                        date={a.date}
                         subtitle={stripTags(a.descNotice)}
                       />
                     </Link>

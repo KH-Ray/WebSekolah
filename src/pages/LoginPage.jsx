@@ -3,14 +3,28 @@ import logo from "../images/cropped-bakdhatlogo.svg";
 import { Flowbite, Spinner, Table, Button as FlowButton } from "flowbite-react";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import studentServices from "../services/students";
 import fileServices from "../services/files";
 import { customButtonTheme } from "../themes/flowbiteThemes";
 import Box from "../components/PhotoBox";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 
-const studentPageView = (student, setStudentPage, files) => {
+const studentPageView = (
+      setStudentPage,
+      files,
+      siswa, 
+      setSiswa,
+      nama, setnama,
+      kelas, setkelas,
+      nis, setnis,
+      alamat, setalamat,
+      sakit, setsakit,
+      izin, setizin,
+      tanpaKet, settanpaKet,
+      dokumen, setdokumen,
+      fotoMurid, setfotoMurid,) => {
   return (
     <main className="h-full font-poppins">
       <div className="mx-auto my-12 flex max-w-7xl flex-col gap-8 px-4 lg:px-6">
@@ -20,27 +34,29 @@ const studentPageView = (student, setStudentPage, files) => {
 
         <div className="flex flex-col gap-4 sm:flex-row">
           <div className="flex items-center justify-center sm:block">
-            <Box styles="w-52 h-52"></Box>
+            <Box styles="w-52 h-52">
+              <img src={fotoMurid || logo} alt="" />
+            </Box>
           </div>
 
           <div className="grid grid-cols-2">
             <p>Nama Peserta Didik</p>
-            <p className="before:mr-1 before:content-[':']">{student.name}</p>
+            <p className="before:mr-1 before:content-[':']">{siswa.nama}</p>
 
             <p>Kelas Peserta Didik</p>
-            <p className="before:mr-1 before:content-[':']">{student.class}</p>
+            <p className="before:mr-1 before:content-[':']">{siswa.kelas}</p>
 
             <p>NIS Peserta Didik</p>
-            <p className="before:mr-1 before:content-[':']">{student.NIS}</p>
+            <p className="before:mr-1 before:content-[':']">{siswa.nis}</p>
 
             <p>Alamat</p>
             <p className="leading-6 before:mr-1 before:content-[':']">
-              {student.address}
+              {siswa.alamat}
             </p>
 
             <p>Status Peserta Didik</p>
             <p className="capitalize before:mr-1 before:content-[':']">
-              {student.status}
+              {siswa.status}
             </p>
           </div>
         </div>
@@ -60,10 +76,10 @@ const studentPageView = (student, setStudentPage, files) => {
             </Table.Head>
             <Table.Body className="divide-y">
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                <Table.Cell className="text-center">{student.sick}</Table.Cell>
-                <Table.Cell className="text-center">{student.leave}</Table.Cell>
+                <Table.Cell className="text-center">{siswa.sakit}</Table.Cell>
+                <Table.Cell className="text-center">{siswa.izin}</Table.Cell>
                 <Table.Cell className="text-center">
-                  {student.absent}
+                  {siswa.tanpaKet}
                 </Table.Cell>
               </Table.Row>
             </Table.Body>
@@ -104,21 +120,36 @@ const studentPageView = (student, setStudentPage, files) => {
 
 const LoginPage = () => {
   const [studentPage, setStudentPage] = useState(false);
-  const [student, setStudent] = useState(null);
-  const [username, setUsername] = useState("");
-  const [NIS, setNIS] = useState("");
+  const [siswa, setSiswa] = useState([])
+  const [nama, setnama] = useState('')
+  const [kelas, setkelas] = useState('')
+  const [nis, setnis] = useState('')
+  const [alamat, setalamat] = useState('')
+  const [sakit, setsakit] = useState('')
+  const [izin, setizin] = useState('')
+  const [tanpaKet, settanpaKet] = useState('')
+  const [dokumen, setdokumen] = useState('')
+  const [fotoMurid, setfotoMurid] = useState('')
 
-  const students = useQuery({
-    queryKey: ["students"],
-    queryFn: () => studentServices.getAllStudents(),
-  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const siswwaResponse = await axios.get("http://localhost:8080/siswa");
+        setSiswa(siswwaResponse.data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+    fetchData();
+  }, []);
 
   const files = useQuery({
     queryKey: ["files"],
     queryFn: () => fileServices.getAllFile(),
   });
 
-  if (students.isLoading || files.isLoading)
+  if (siswa.isLoading || files.isLoading)
     return (
       <main className="flex h-screen items-center justify-center">
         <div>
@@ -128,12 +159,36 @@ const LoginPage = () => {
     );
 
   if (studentPage) {
-    return studentPageView(student, setStudentPage, files);
+    return studentPageView(
+      setStudentPage,
+      files,
+      siswa, 
+      setSiswa,
+      nama, setnama,
+      kelas, setkelas,
+      nis, setnis,
+      alamat, setalamat,
+      sakit, setsakit,
+      izin, setizin,
+      tanpaKet, settanpaKet,
+      dokumen, setdokumen,
+      fotoMurid, setfotoMurid,
+    );
   }
 
-  const findStudent = students.data.find(
-    (f) => f.name === username && String(f.NIS) === NIS,
+  const findStudent = siswa.find(
+    (f) => f.nama === nama && String(f.nis) === nis,
   );
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (findStudent) {
+      setSiswa(findStudent);
+      setStudentPage(true);
+    } else {
+      alert("nama atau nis salah!");
+    }
+  };
 
   return (
     <main className="relative mx-auto flex h-[900px] max-w-7xl flex-col items-center justify-center gap-16 px-4 py-12 font-antonio lg:px-6">
@@ -145,11 +200,7 @@ const LoginPage = () => {
 
       <form
         className="flex w-full flex-col items-center justify-center gap-6 font-poppins"
-        onSubmit={(e) => {
-          e.preventDefault();
-          setStudent(findStudent);
-          setStudentPage(true);
-        }}
+        onSubmit={handleLogin}
       >
         <div className="text-gray-blue absolute left-4 top-12 font-poppins lg:left-6">
           <Link
@@ -166,9 +217,9 @@ const LoginPage = () => {
           <input
             type="text"
             id="name"
-            name="name"
+            name="nama"
             className="rounded border-gray-400"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setnama(e.target.value)}
           />
         </div>
 
@@ -177,9 +228,9 @@ const LoginPage = () => {
           <input
             type="password"
             id="nisn"
-            name="nisn"
+            name="nis"
             className="rounded border-gray-400"
-            onChange={(e) => setNIS(e.target.value)}
+            onChange={(e) => setnis(e.target.value)}
           />
         </div>
 

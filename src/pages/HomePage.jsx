@@ -118,7 +118,7 @@ const HomePage = () => {
             </div>
 
             <div className="mx-auto flex flex-col items-center gap-6 md:grid md:grid-cols-2 lg:grid-cols-4">
-              {news.map((n, id) => (
+              {news.slice(0,4).map((n, id) => (
                 <NewsCard
                   key={id}
                   title={n.judulBerita}
@@ -148,7 +148,7 @@ const HomePage = () => {
             </div>
 
             <div className="divide-y divide-solid divide-gray-400">
-              {notice.map((a, id) => (
+              {notice.slice(0,3).map((a, id) => (
                 <div key={id}>
                   <Link to={`/pengumuman/${a.id}`}>
                     <Notice

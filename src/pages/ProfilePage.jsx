@@ -1,4 +1,3 @@
-import { classNames } from "../helper";
 import { Carousel } from "flowbite-react";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 

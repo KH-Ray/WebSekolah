@@ -1,20 +1,192 @@
+import Notice from "../../components/Notice";
 import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { Button, Flowbite, Spinner } from "flowbite-react";
-import { Editor } from "@tinymce/tinymce-react";
-import { Modal } from "flowbite-react";
-import axios from "axios";
+import { Modal, Spinner } from "flowbite-react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Editor } from "@tinymce/tinymce-react";
 import { customButtonTheme } from "../../themes/flowbiteThemes";
+import { Button, Flowbite } from "flowbite-react";
 
-const AdminNews = () => {
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+function stripTags(html) {
+  return html.replace(/<\/?[^>]+(>|$)/g, "");
+}
+
+const addNewsPage = (
+  openModal,
+  setOpenModal,
+  setAddNews,
+  sampul, setSampul,
+  judulBerita, setJudulBerita,
+  isiBerita, setIsiBerita,
+  date, setDate,
+  msg, setMsg,
+  navigate
+) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('sampul', sampul);
+    formData.append('judulBerita', judulBerita);
+    formData.append('isiBerita', isiBerita);
+    formData.append('date', date);
+
+    try {
+      const response = await axios.post('http://localhost:8080/admin/berita', formData);
+
+      console.log(response.data);
+
+      if (response.data.Status === 'Success') {
+        navigate('/berita');
+        setMsg('File Successfully Uploaded');
+      } else {
+        setMsg('Error');
+      }
+      window.location.reload();
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      setMsg('Error' + error.message);
+    }
+  };
+  return (
+    <main className="h-screen overflow-auto px-24 py-6 font-poppins">
+      <div className="focus-visible:border-none">
+         <Modal
+          dismissible
+          show={openModal}
+          onClose={() => setOpenModal(false)}
+          size="md"
+        >
+          <Modal.Body>
+            <div className="px-8 py-2 font-poppins">
+              <p className="mb-6 text-center text-xl">
+                Apakah anda yakin mengisi dengan benar?
+              </p>
+              <div className="flex items-center justify-center gap-8">
+                <button className="bg-semi-green h-full w-full rounded-lg px-8 py-4 text-white"
+                  type="submit"
+                  onClick={(e)=>
+                    {
+                      setOpenModal(false)
+                      handleSubmit(e)
+                    }}>
+                  Simpan
+                </button>
+                <button
+                  className="h-full w-full rounded-lg border border-solid border-black px-8 py-4"
+                  onClick={(e)=>
+                    {
+                      setOpenModal(false)
+                    }}
+                >
+                  Batal
+                </button>
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
+      </div>
+
+      <div className="flex flex-col gap-8">
+        <div className="text-gray-blue">
+          <button
+            className="flex items-center gap-2 text-gray-600 hover:cursor-pointer"
+            onClick={() => setAddNews(false)}
+          >
+            <ArrowLeftIcon className="h-6 w-6" /> Kembali
+          </button>
+        </div>
+
+        <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+          <div className="flex flex-col gap-4">
+            <p className="text-2xl font-medium">Gambar Sampul</p>
+            <label className="flex h-40 w-full items-center justify-center gap-4 rounded-xl border border-solid border-gray-500 text-3xl text-blue-800 hover:cursor-pointer">
+              <input
+                type="file"
+                name="sampul"
+                onChange={(e) => setSampul(e.target.files[0])}
+                accept="image/png, image/jpeg"
+                className="hidden"
+              />
+              <PlusIcon className="h-16 w-16" /> Tambahkan Gambar Sampul
+            </label>
+          </div>
+          <div className="flex flex-col gap-4">
+            <label htmlFor="judulBerita" className="text-2xl font-medium">
+              Judul Berita
+            </label>
+            <input
+              type="text"
+              name="judulBerita"
+              onChange={(e) => setJudulBerita(e.target.value)}
+              id="news title"
+              className="rounded-lg border border-solid border-gray-500"
+            />
+          </div>
+          <div className="flex flex-col gap-4">
+            <label htmlFor="date" className="text-2xl font-medium">
+              Waktu Berita
+            </label>
+            <input
+              type="date"
+              name="date"
+              onChange={(e) => setDate(e.target.value)}
+              id="date"
+              className="rounded-lg border border-solid border-gray-500"
+            />
+            </div>
+          <div className="flex flex-col gap-4">
+            <label
+              className="text-2xl font-medium"
+              htmlFor="announcement content"
+            >
+              Isi Berita
+            </label>
+            <Editor
+              name="isiBerita"
+              apiKey="o0pzftir0e6adwmb92z8ig9705xxtb5i7kurqh1a3j7q41qe"
+              init={{
+                plugins:
+                  "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
+                toolbar:
+                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
+                resize: false,
+                height: "500",
+              }}
+              onEditorChange={setIsiBerita}
+            />
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <Flowbite theme={{ theme: customButtonTheme }}>
+              <Button
+                color="border-semi-green"
+                size="lg"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenModal(true);
+                }}
+              >
+                Simpan
+              </Button>
+            </Flowbite>
+          </div>
+        </form>
+      </div>
+    </main>
+  );
+};
+
+const AdminAnnouncement = () => {
   const [openModal, setOpenModal] = useState(false);
   const [sampul, setSampul] = useState('');
   const [judulBerita, setJudulBerita] = useState('');
   const [isiBerita, setIsiBerita] = useState('');
   const [date, setDate] = useState('');
   const [msg, setMsg] = useState('');
-  const [selectedNewsId, setSelectedNewsId] = useState(null); 
+  const [addNews, setAddNews] = useState(false); 
   const navigate = useNavigate();
 
   const [news, setNews] = useState([]);
@@ -30,53 +202,6 @@ const AdminNews = () => {
     fetchData();
   }, []);
 
-  const handleEditNews = (selectedNews) => {
-    setSelectedNewsId(selectedNews.ID);
-    setSampul(selectedNews.sampul);
-    setJudulBerita(selectedNews.judulBerita);
-    setIsiBerita(selectedNews.isiBerita);
-    setDate(selectedNews.date);
-
-    setOpenModal(true);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append('sampul', sampul);
-    formData.append('judulBerita', judulBerita);
-    formData.append('isiBerita', isiBerita);
-    formData.append('date', date);
-
-    try {
-      let response;
-
-      if (selectedNewsId) {
-        response = await axios.put(`http://localhost:8080/admin/berita/${selectedNewsId}`, formData);
-      } else {
-        response = await axios.post('http://localhost:8080/admin/berita', formData);
-      }
-
-      if (response.data.Status === 'Success') {
-        navigate('/admin/berita');
-        setMsg('File Successfully Uploaded');
-        setOpenModal(false);
-        setSampul('');
-        setJudulBerita('');
-        setIsiBerita('');
-        setDate('');
-        setSelectedNewsId(null);
-      } else {
-        setMsg('Error');
-      }
-      window.location.reload();
-    } catch (error) {
-      console.error('Error submitting data:', error);
-      setMsg('Error' + error.message);
-    }
-  };
-
   if (news.isLoading)
     return (
       <main className="flex h-screen items-center justify-center">
@@ -86,16 +211,36 @@ const AdminNews = () => {
       </main>
     );
 
+  if (addNews) {
+    return addNewsPage(
+      openModal,
+      setOpenModal,
+      setAddNews,
+      sampul, setSampul,
+      judulBerita, setJudulBerita,
+      isiBerita, setIsiBerita,
+      date, setDate,
+      msg, setMsg,
+      navigate
+    );
+  }
+
   return (
     <main className="h-screen overflow-auto px-24 py-6 font-poppins">
       <p className="mb-8 block text-4xl font-semibold">Halaman Berita</p>
 
-      <div className="flex flex-col-reverse gap-4">
+      <div
+        className="flex h-40 w-full items-center justify-center gap-4 rounded-xl border border-solid border-gray-500 text-3xl text-blue-800 hover:cursor-pointer"
+        onClick={() => setAddNews(true)}
+      >
+        <PlusIcon className="h-16 w-16" /> Tambahkan Berita
+      </div>
+
+      <div className="divide-y divide-solid divide-gray-400">
         {news.map((n) => (
           <div
-            onClick={() => handleEditNews(n)}
             key={n.ID}
-            className="relative h-48 w-full overflow-hidden rounded-xl"
+            className="relative h-48 w-full overflow-hidden rounded-xl mt-5"
           >
             <img
               className="h-full w-full object-cover"
@@ -107,110 +252,9 @@ const AdminNews = () => {
             </p>
           </div>
         ))}
-
-        <div
-          className="flex h-40 w-full items-center justify-center gap-4 rounded-xl border border-solid border-gray-500 text-3xl text-blue-800 hover:cursor-pointer"
-          onClick={() => {
-            setSelectedNewsId(null); 
-            setOpenModal(true);
-          }}
-        >
-          <PlusIcon className="h-16 w-16" /> Tambahkan Berita
-        </div>
       </div>
-
-      <Modal
-        dismissible
-        show={openModal}
-        onClose={() => setOpenModal(false)}
-        size="full"
-      >
-        <Modal.Body>
-          <div className="text-gray-blue">
-          <button
-            className="flex items-center gap-2 text-gray-600 hover:cursor-pointer"
-            onClick={() => setOpenModal(false)}
-          >
-            <ArrowLeftIcon className="h-6 w-6" /> Kembali
-          </button>
-        </div>
-          <form className="px-8 py-2 font-poppins" onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-4">
-              <p className="text-2xl font-medium">Gambar Sampul</p>
-              <label className="flex h-40 w-full items-center justify-center gap-4 rounded-xl border border-solid border-gray-500 text-3xl text-blue-800 hover:cursor-pointer">
-                <input
-                  type="file"
-                  name="sampul"
-                  onChange={(e) => setSampul(e.target.files[0])}
-                  accept="image/png, image/jpeg"
-                  className="hidden"
-                />
-                <PlusIcon className="h-16 w-16" /> Tambahkan Gambar Sampul
-              </label>
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <label htmlFor="judulBerita" className="text-2xl font-medium">
-                Judul Berita
-              </label>
-              <input
-                type="text"
-                name="judulBerita"
-                value={judulBerita}
-                onChange={(e) => setJudulBerita(e.target.value)}
-                id="news title"
-                className="rounded-lg border border-solid border-gray-500"
-              />
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <label htmlFor="date" className="text-2xl font-medium">
-                Waktu Berita
-              </label>
-              <input
-                type="date"
-                name="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                id="date"
-                className="rounded-lg border border-solid border-gray-500"
-              />
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <label htmlFor="isiBerita" className="text-2xl font-medium">
-                Isi Berita
-              </label>
-              <Editor
-                name="isiBerita"
-                apiKey="o0pzftir0e6adwmb92z8ig9705xxtb5i7kurqh1a3j7q41qe"
-                init={{
-                  plugins:
-                    "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-                  toolbar:
-                    "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
-                  resize: false,
-                  height: "500",
-                }}
-                onEditorChange={setIsiBerita}
-                value={isiBerita}
-              />
-            </div>
-
-            <Flowbite theme={{ theme: customButtonTheme }}>
-              <Button
-                color="border-semi-green"
-                size="lg"
-                type="submit"
-              >
-                Simpan
-              </Button>
-            </Flowbite>
-          </form>
-        </Modal.Body>
-      </Modal>
     </main>
   );
 };
 
-export default AdminNews;
+export default AdminAnnouncement;
