@@ -1,0 +1,7 @@
+.our-app-wrapper {
+  all: initial;
+}
+
+.our-app-wrapper * {
+  all: revert;
+}

@@ -22,7 +22,7 @@ const modalValidation = (openModal, setOpenModal) => {
             Apakah anda yakin mengisi dengan benar?
           </p>
           <div className="flex items-center justify-center gap-8">
-            <button className="h-full w-full rounded-lg bg-semi-green px-8 py-4 text-white">
+            <button className="bg-dark-green-sec h-full w-full rounded-lg px-8 py-4 text-white">
               Simpan
             </button>
             <button
@@ -111,7 +111,7 @@ const addNewsPage = (openModal, setAddNews, setOpenModal) => {
 
           <Flowbite theme={{ theme: customButtonTheme }}>
             <Button
-              color="border-semi-green"
+              color="dark-green-fullWidth"
               size="lg"
               type="submit"
               onClick={(e) => {

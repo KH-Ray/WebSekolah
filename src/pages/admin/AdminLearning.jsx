@@ -29,7 +29,7 @@ const AdminLearning = () => {
         <div className="flex">
           <div className="ml-auto">
             <Flowbite theme={{ theme: customButtonTheme }}>
-              <Button color="border-semi-green-fixedWidth" size="lg">
+              <Button color="dark-green" size="lg">
                 Simpan
               </Button>
             </Flowbite>

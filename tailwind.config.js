@@ -26,6 +26,7 @@ export default withMT({
         "main-gray": "#E2E2E2",
         "dark-gray": "#474747",
         "main-yellow": "#FFCF40",
+        "dark-green-sec": "#71985B",
       },
     },
   },

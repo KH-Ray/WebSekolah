@@ -81,7 +81,7 @@ const adminSchoolGroundModal = (
               <textarea
                 id="place description"
                 name="place description"
-                className="h-52 rounded border-[1.5px] border-solid border-gray-400 px-2 py-1"
+                className="h-52 resize-none rounded border-[1.5px] border-solid border-gray-400 px-2 py-1"
               ></textarea>
             </div>
           </div>
@@ -109,7 +109,7 @@ const adminSchoolGroundModal = (
 
           <div className="flex justify-end">
             <Flowbite theme={{ theme: customButtonTheme }}>
-              <Button color="border-semi-green-fixedWidth" size="lg">
+              <Button color="dark-green" size="lg">
                 Simpan
               </Button>
             </Flowbite>
@@ -240,7 +240,7 @@ const AdminSchoolGround = () => {
 
           <div className="flex justify-end">
             <Flowbite theme={{ theme: customButtonTheme }}>
-              <Button color="border-semi-green-fixedWidth" size="lg">
+              <Button color="dark-green" size="lg">
                 Simpan
               </Button>
             </Flowbite>

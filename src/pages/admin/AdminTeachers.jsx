@@ -67,7 +67,7 @@ const adminTeacherModal = (
             </div>
 
             <Flowbite theme={{ theme: customButtonTheme }}>
-              <Button color="border-semi-green" size="lg">
+              <Button color="dark-green-fullWidth" size="lg">
                 Simpan
               </Button>
             </Flowbite>
@@ -143,7 +143,7 @@ const AdminTeachers = () => {
                     console.log("Delete Teacher");
                   }}
                 >
-                  <XCircleIcon className="z-10 h-8 w-8 stroke-dark-gray hover:opacity-50" />
+                  {/* <XCircleIcon className="z-10 h-8 w-8 stroke-dark-gray hover:opacity-50" /> */}
                 </button>
               </Box>
               <p className="mb-2 text-lg font-bold">

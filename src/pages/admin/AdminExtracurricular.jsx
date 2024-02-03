@@ -3,8 +3,9 @@ import Box from "../../components/PhotoBox";
 import extracurriculerServices from "../../services/extracurriculer";
 import fileServices from "../../services/files";
 import { useQuery } from "@tanstack/react-query";
-import { Modal, Spinner } from "flowbite-react";
+import { Button, Flowbite, Modal, Spinner } from "flowbite-react";
 import { useState } from "react";
+import { customButtonTheme } from "../../themes/flowbiteThemes";
 
 const adminExtracurriculerModal = (
   extracurriculerData,
@@ -104,6 +105,19 @@ const adminExtracurriculerModal = (
               <PlusIcon className="h-8 w-8" /> Pilih Dokumen
             </label>
           </div>
+
+          <Flowbite theme={{ theme: customButtonTheme }}>
+            <Button
+              color="dark-green-fullWidth"
+              size="lg"
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenModal(true);
+              }}
+            >
+              Simpan
+            </Button>
+          </Flowbite>
         </form>
       </Modal.Body>
     </Modal>

@@ -110,7 +110,7 @@ const addAnnoucementPage = (
 
             <Flowbite theme={{ theme: customButtonTheme }}>
               <Button
-                color="border-semi-green"
+                color="dark-green-fullWidth"
                 size="lg"
                 onClick={(e) => {
                   e.preventDefault();
