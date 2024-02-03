@@ -3,13 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import TeachersPage from "./pages/TeachersPage";
-import LearningPage from "./pages/LearningPage";
 import LoginPage from "./pages/LoginPage";
 import NewsPage from "./pages/NewsPage";
 import ExtracurricularPage from "./pages/ExtracurricularPage";
 import StudentsPage from "./pages/StudentsPage";
 import RabuCeria from "./pages/RabuCeria";
-import ActivitiesPage from "./pages/ActivitiesPage";
 
 import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
@@ -18,9 +16,7 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import AdminHeader from "./components/AdminHeader";
 import AdminNav from "./components/AdminNav";
 import AdminHome from "./pages/admin/AdminHome";
-import AdminLearning from "./pages/admin/AdminLearning";
 import AdminRabuCeria from "./pages/admin/AdminRabuCeria";
-import AdminActivities from "./pages/admin/AdminActivities";
 import AdminProfile from "./pages/admin/AdminProfile";
 import AdminTeachers from "./pages/admin/AdminTeachers";
 import AdminNews from "./pages/admin/AdminNews";
@@ -70,7 +66,6 @@ const App = () => {
         <Route path="/login" element={MainPage(<LoginPage />)} />
         <Route path="/profile" element={MainPage(<ProfilePage />)} />
         <Route path="/guru" element={MainPage(<TeachersPage />)} />
-        <Route path="/organisasi" element={MainPage(<LearningPage />)} />
         <Route path="/berita" element={MainPage(<NewsPage />)} />
         <Route path="/berita/:id" element={MainPage(<NewPage />)} />
         <Route path="/pengumuman" element={MainPage(<AnnoucementsPage />)} />
@@ -81,7 +76,6 @@ const App = () => {
         />
         <Route path="/siswa" element={MainPage(<StudentsPage />)} />
         <Route path="/rabuceria" element={MainPage(<RabuCeria />)} />
-        <Route path="/kegiatan" element={MainPage(<ActivitiesPage />)} />
         <Route path="/dikmensi" element={MainPage(<DimensionsPage />)} />
         <Route path="/galeri" element={MainPage(<GalleryPage />)} />
 
@@ -89,10 +83,6 @@ const App = () => {
         <Route path="/admin/beranda" element={AdminPage(<AdminHome />)} />
         <Route path="/admin/profil" element={AdminPage(<AdminProfile />)} />
         <Route path="/admin/guru" element={AdminPage(<AdminTeachers />)} />
-        <Route
-          path="/admin/organisasi"
-          element={AdminPage(<AdminLearning />)}
-        />
         <Route path="/admin/berita" element={AdminPage(<AdminNews />)} />
         <Route
           path="/admin/pengumuman"
@@ -110,10 +100,6 @@ const App = () => {
         <Route
           path="/admin/rabuceria"
           element={AdminPage(<AdminRabuCeria />)}
-        />
-        <Route
-          path="/admin/kegiatan"
-          element={AdminPage(<AdminActivities />)}
         />
         <Route
           path="/admin/dikmensi"
