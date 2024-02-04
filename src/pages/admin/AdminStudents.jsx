@@ -13,7 +13,7 @@ import { Button, Flowbite, Spinner, Table } from "flowbite-react";
 import { useState } from "react";
 import { customButtonTheme } from "../../themes/flowbiteThemes";
 
-const studentPageView = (student, setStudentPage, files) => {
+const studentPageView = (student, setStudent, setStudentPage, files) => {
   return (
     <main className="h-screen overflow-auto font-poppins">
       <div className="mx-auto my-12 flex max-w-7xl flex-col gap-8 px-4 lg:px-6">
@@ -35,19 +35,56 @@ const studentPageView = (student, setStudentPage, files) => {
             <Box styles="w-52 h-52"></Box>
           </div>
 
-          <div className="grid grid-cols-2">
+          <div className="grid w-full grid-cols-[180px_1fr]">
             <p>Nama Peserta Didik</p>
-            <p className="before:mr-1 before:content-[':']">{student.name}</p>
+            <p className="before:relative before:-top-1 before:mr-4 before:content-[':']">
+              <input
+                type="text"
+                placeholder="Nama Peserta Didik"
+                value={student.name || ""}
+                className="relative -top-1 w-11/12 border-none p-0"
+                onChange={({ target }) => {
+                  setStudent({ ...student, name: target.value });
+                }}
+              />
+            </p>
 
             <p>Kelas Peserta Didik</p>
-            <p className="before:mr-1 before:content-[':']">{student.class}</p>
+            <p className="before:relative before:-top-1 before:mr-4 before:content-[':']">
+              <input
+                type="text"
+                placeholder="Kelas Peserta Didik"
+                value={student.class || ""}
+                className="relative -top-1 w-11/12 border-none p-0"
+                onChange={({ target }) => {
+                  setStudent({ ...student, class: target.value });
+                }}
+              />
+            </p>
 
-            <p>NIS Peserta Didik</p>
-            <p className="before:mr-1 before:content-[':']">{student.NIS}</p>
+            <p>NISN Peserta Didik</p>
+            <p className="before:relative before:-top-1 before:mr-4 before:content-[':']">
+              <input
+                type="text"
+                placeholder="NISN Peserta Didik"
+                value={student.NIS || ""}
+                className="relative -top-1 w-11/12 border-none p-0"
+                onChange={({ target }) => {
+                  setStudent({ ...student, NIS: target.value });
+                }}
+              />
+            </p>
 
             <p>Alamat</p>
-            <p className="leading-6 before:mr-1 before:content-[':']">
-              {student.address}
+            <p className="leading-6 before:relative before:-top-[76px] before:mr-1 before:content-[':']">
+              <textarea
+                className="relative -top-3 h-full w-11/12 resize-none overflow-auto border-none"
+                placeholder="Alamat Peserta Didik"
+                value={student.address || ""}
+                onChange={({ target }) => {
+                  setStudent({ ...student, address: target.value });
+                }}
+              ></textarea>
             </p>
           </div>
         </div>
@@ -67,10 +104,44 @@ const studentPageView = (student, setStudentPage, files) => {
             </Table.Head>
             <Table.Body className="divide-y">
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                <Table.Cell className="text-center">{student.sick}</Table.Cell>
-                <Table.Cell className="text-center">{student.leave}</Table.Cell>
                 <Table.Cell className="text-center">
-                  {student.absent}
+                  <div className="w-full">
+                    <input
+                      type="text"
+                      placeholder="Jumlah Sakit"
+                      value={student.sick ?? ""}
+                      className="w-full border-none p-0 text-center"
+                      onChange={({ target }) => {
+                        setStudent({ ...student, sick: target.value });
+                      }}
+                    />
+                  </div>
+                </Table.Cell>
+                <Table.Cell className="text-center">
+                  <div className="w-full">
+                    <input
+                      type="text"
+                      placeholder="Jumlah Izin"
+                      value={student.leave ?? ""}
+                      className="w-full border-none p-0 text-center"
+                      onChange={({ target }) => {
+                        setStudent({ ...student, leave: target.value });
+                      }}
+                    />
+                  </div>
+                </Table.Cell>
+                <Table.Cell className="text-center">
+                  <div className="w-full">
+                    <input
+                      type="text"
+                      placeholder="Jumlah Tanpa Keterangan"
+                      value={student.absent ?? ""}
+                      className="w-full border-none p-0 text-center"
+                      onChange={({ target }) => {
+                        setStudent({ ...student, absent: target.value });
+                      }}
+                    />
+                  </div>
                 </Table.Cell>
               </Table.Row>
             </Table.Body>
@@ -116,7 +187,7 @@ const studentPageView = (student, setStudentPage, files) => {
 
 const AdminStudents = () => {
   const [studentPage, setStudentPage] = useState(false);
-  const [student, setStudent] = useState(null);
+  const [student, setStudent] = useState({});
 
   const students = useQuery({
     queryKey: ["students"],
@@ -138,7 +209,7 @@ const AdminStudents = () => {
     );
 
   if (studentPage) {
-    return studentPageView(student, setStudentPage, files);
+    return studentPageView(student, setStudent, setStudentPage, files);
   }
 
   return (
@@ -156,7 +227,7 @@ const AdminStudents = () => {
               icon={<MagnifyingGlassIcon />}
             />
           </div>
-          <div className="">
+          <div>
             <Pagination count={4} variant="outlined" shape="rounded" />
           </div>
         </div>
@@ -184,6 +255,15 @@ const AdminStudents = () => {
                 </Box>
               );
             })}
+            <div
+              className="mt-2 flex h-20 w-full items-center justify-center gap-4 rounded-xl border border-solid border-gray-500 py-2 text-3xl text-blue-800 hover:cursor-pointer"
+              onClick={() => {
+                setStudent({});
+                setStudentPage(true);
+              }}
+            >
+              <PlusIcon className="h-10 w-10" /> Tambahkan Peserta Didik
+            </div>
           </div>
         </div>
       </div>
