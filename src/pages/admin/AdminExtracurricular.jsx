@@ -1,5 +1,4 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
-import Box from "../../components/PhotoBox";
 import { Button, Flowbite } from "flowbite-react";
 import { customButtonTheme } from "../../themes/flowbiteThemes";
 import fileServices from "../../services/files";
@@ -9,14 +8,12 @@ import { useState, useEffect } from "react";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { setId } from "@material-tailwind/react/components/Tabs/TabsContext";
 
 const adminExtracurriculerModal = (
   extracurricular,
   setExtracurricular,
   openModal,
   setOpenModal,
-  files,
   tittle,
   setTittle,
   schedule,
@@ -32,7 +29,9 @@ const adminExtracurriculerModal = (
   selectedEkskulId,
   setselectedEkskulId,
   handleSubmit,
-  handleEditEkskuls
+  handleEditEkskuls,
+  picture2, setPicture2,
+  picture3, setPicture3
 ) => {
   return (
     <Modal
@@ -111,30 +110,23 @@ const adminExtracurriculerModal = (
 
           <div className="flex flex-col gap-4">
             <p className="font-medium">Unggah Gambar</p>
-            <div className="flex flex-wrap gap-8">
-              {files.data?.map((f) => {
-                return (
-                  <div
-                    key={f.id}
-                    className="flex h-44 w-64 flex-col items-center justify-center gap-2 rounded border border-solid border-black"
-                  >
-                    <img
-                      src={f.type}
-                      alt="document image"
-                      className="h-20 w-20"
-                    />
-                    <p className="capitalize">{f.name}</p>
-                  </div>
-                );
-              })}
-            </div>
             <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
               <input
                 type="file"
-                className="hidden"
                 onChange={(e) => setPicture(e.target.files[0])}
               />
-              <PlusIcon className="h-8 w-8" /> Pilih Dokumen
+            </label>
+            <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
+              <input
+                type="file"
+                onChange={(e) => setPicture2(e.target.files[0])}
+              />
+            </label>
+            <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
+              <input
+                type="file"
+                onChange={(e) => setPicture3(e.target.files[0])}
+              />
             </label>
           </div>
           <div className="ml-auto pb-6">
@@ -155,7 +147,6 @@ const adminExtracurriculerModal1 = (
   setExtracurricular1,
   openModal1,
   setOpenModal1,
-  files,
   tittle,
   setTittle,
   schedule,
@@ -168,10 +159,12 @@ const adminExtracurriculerModal1 = (
   setPicture,
   navigate,
   setMsg,
-  selectedEkskulId,
-  setselectedEkskulId,
+  selectedEkskulId1,
+  setselectedEkskulId1,
   handleSubmit1,
-  handleEditEkskuls1
+  handleEditEkskuls1,
+  picture2, setPicture2,
+  picture3, setPicture3
 ) => {
   return (
     <Modal
@@ -206,7 +199,7 @@ const adminExtracurriculerModal1 = (
               <input
                 className="rounded border-[1.5px] border-solid border-gray-400 px-2 py-1"
                 type="date"
-                name="exracurricular schedule"
+                name="schedule"
                 value={schedule}
                 onChange={(e) => setSchedule(e.target.value)}
                 id="exracurricular schedule"
@@ -250,31 +243,25 @@ const adminExtracurriculerModal1 = (
 
           <div className="flex flex-col gap-4">
             <p className="font-medium">Unggah Gambar</p>
-            <div className="flex flex-wrap gap-8">
-              {files.data?.map((f) => {
-                return (
-                  <div
-                    key={f.id}
-                    className="flex h-44 w-64 flex-col items-center justify-center gap-2 rounded border border-solid border-black"
-                  >
-                    <img
-                      src={f.type}
-                      alt="document image"
-                      className="h-20 w-20"
-                    />
-                    <p className="capitalize">{f.name}</p>
-                  </div>
-                );
-              })}
-            </div>
-            <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
-              <input
-                type="file"
-                className="hidden"
-                onChange={(e) => setPicture(e.target.files[0])}
-              />
-              <PlusIcon className="h-8 w-8" /> Pilih Dokumen
-            </label>
+       
+              <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
+                <input
+                  type="file"
+                  onChange={(e) => setPicture(e.target.files[0])}
+                />
+              </label>
+              <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
+                <input
+                  type="file"
+                  onChange={(e) => setPicture2(e.target.files[0])}
+                />
+              </label>
+              <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
+                <input
+                  type="file"
+                  onChange={(e) => setPicture3(e.target.files[0])}
+                />
+              </label>
           </div>
           <div className="ml-auto pb-6">
             <Flowbite theme={{ theme: customButtonTheme }}>
@@ -299,8 +286,11 @@ const AdminExtracurricular = () => {
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
   const [picture, setPicture] = useState('');
+  const [picture2, setPicture2] = useState('');
+  const [picture3, setPicture3] = useState('');
   const [msg, setMsg] = useState('');
   const [selectedEkskulId, setselectedEkskulId] = useState(null);
+  const [selectedEkskulId1, setselectedEkskulId1] = useState(null);
   const [ekskul, setEkskul] = useState([]);
   const [ekskul1, setEkskul1] = useState([]);
 
@@ -334,6 +324,8 @@ const AdminExtracurricular = () => {
   const handleEditEkskuls = (selectedEkskul) => {
     setselectedEkskulId(selectedEkskul.ID);
     setPicture(selectedEkskul.picture);
+    setPicture2(selectedEkskul.picture2);
+    setPicture3(selectedEkskul.picture3);
     setTittle(selectedEkskul.tittle);
     setSchedule(selectedEkskul.schedule);
     setLocation(selectedEkskul.location);
@@ -342,13 +334,15 @@ const AdminExtracurricular = () => {
     setOpenModal(true);
   };
 
-  const handleEditEkskuls1 = (selectedEkskul) => {
-    setselectedEkskulId(selectedEkskul.ID);
-    setPicture(selectedEkskul.picture);
-    setTittle(selectedEkskul.tittle);
-    setSchedule(selectedEkskul.schedule);
-    setLocation(selectedEkskul.location);
-    setDescription(selectedEkskul.description);
+  const handleEditEkskuls1 = (selectedEkskul1) => {
+    setselectedEkskulId1(selectedEkskul1.ID);
+    setPicture(selectedEkskul1.picture);
+    setPicture2(selectedEkskul1.picture2);
+    setPicture3(selectedEkskul1.picture3);
+    setTittle(selectedEkskul1.tittle);
+    setSchedule(selectedEkskul1.schedule);
+    setLocation(selectedEkskul1.location);
+    setDescription(selectedEkskul1.description);
 
     setOpenModal(true);
   };
@@ -362,6 +356,8 @@ const AdminExtracurricular = () => {
     formData.append('location', location);
     formData.append('description', description);
     formData.append('picture', picture);
+    formData.append('picture2', picture2);
+    formData.append('picture3', picture3);
 
     try {
       let response;
@@ -377,6 +373,8 @@ const AdminExtracurricular = () => {
         setMsg('File Successfully Uploaded');
         setOpenModal(false);
         setPicture('');
+        setPicture2('');
+        setPicture3('');
         setTittle('');
         setSchedule('');
         setLocation('');
@@ -401,12 +399,14 @@ const AdminExtracurricular = () => {
     formData.append('location', location);
     formData.append('description', description);
     formData.append('picture', picture);
+    formData.append('picture2', picture2);
+    formData.append('picture3', picture3);
 
     try {
       let response;
 
-      if (selectedEkskulId) {
-        response = await axios.put(`http://localhost:8080/admin/ekstrakurikuler/pilihan/${selectedEkskulId}`, formData);
+      if (selectedEkskulId1) {
+        response = await axios.put(`http://localhost:8080/admin/ekstrakurikuler/pilihan/${selectedEkskulId1}`, formData);
       } else {
         response = await axios.post('http://localhost:8080/admin/ekstrakurikuler/pilihan', formData);
       }
@@ -416,11 +416,13 @@ const AdminExtracurricular = () => {
         setMsg('File Successfully Uploaded');
         setOpenModal(false);
         setPicture('');
+        setPicture2('');
+        setPicture3('');
         setTittle('');
         setSchedule('');
         setLocation('');
         setDescription('');
-        setselectedEkskulId(null);
+        setselectedEkskulId1(null);
       } else {
         setMsg('Error');
       }
@@ -430,11 +432,6 @@ const AdminExtracurricular = () => {
       setMsg('Error' + error.message);
     }
   };
-
-  const files = useQuery({
-    queryKey: ["files"],
-    queryFn: () => fileServices.getAllFile(),
-  });
 
   if (extracurricular.isLoading)
     return (
@@ -453,7 +450,6 @@ const AdminExtracurricular = () => {
           setExtracurricular,
           openModal,
           setOpenModal,
-          files,
           tittle,
           setTittle,
           schedule,
@@ -469,7 +465,9 @@ const AdminExtracurricular = () => {
           selectedEkskulId,
           setselectedEkskulId,
           handleSubmit,
-          handleEditEkskuls
+          handleEditEkskuls,
+          picture2, setPicture2,
+          picture3, setPicture3
         )}
       </div>
       <div className="focus-visible:border-none">
@@ -478,7 +476,6 @@ const AdminExtracurricular = () => {
           setExtracurricular1,
           openModal1,
           setOpenModal1,
-          files,
           tittle,
           setTittle,
           schedule,
@@ -491,10 +488,12 @@ const AdminExtracurricular = () => {
           setPicture,
           navigate,
           setMsg,
-          selectedEkskulId,
-          setselectedEkskulId,
+          selectedEkskulId1,
+          setselectedEkskulId1,
           handleSubmit1,
-          handleEditEkskuls1
+          handleEditEkskuls1,
+          picture2, setPicture2,
+          picture3, setPicture3
         )}
       </div>
       <div className="mx-auto my-12 flex max-w-7xl flex-col gap-8 px-4 lg:px-6">

@@ -1,4 +1,5 @@
 import { Spinner } from "flowbite-react";
+import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -54,9 +55,15 @@ const NewPage = () => {
           </h1>
         </div>
       </div>
-
       <article className="mx-auto my-12 flex max-w-7xl flex-col gap-6 px-4 text-justify leading-6 lg:px-6">
-        {stripTags(currentNew.isiBerita)}
+      <div className="flex items-center gap-2 text-sm text-gray-700">
+        <CalendarDaysIcon className="h-6 w-6" />
+        <div>{currentNew.date}</div>
+      </div>
+        <div
+          className="our-app-wrapper block break-all !font-poppins"
+          dangerouslySetInnerHTML={{ __html: currentNew.isiBerita }}
+        ></div>
       </article>
     </main>
   );

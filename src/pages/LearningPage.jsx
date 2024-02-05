@@ -1,10 +1,84 @@
+import { classNames } from "../helper";
+
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+function stripTags(html) {
+  return html.replace(/<\/?[^>]+(>|$)/g, "");
+}
+
+const intracurricular = (proker) => {
+  return (
+    <>
+      <div>
+        {
+          proker.map(prokerItem => (
+            <div key={prokerItem.ID}>
+              <div>{stripTags(prokerItem.intrakrikuler)}</div>
+            </div>
+            )
+          )
+        }
+      </div>
+    </>
+  );
+};
+
+const cocurricular = (proker) => {
+  return (
+    <>
+      <div>
+        {
+          proker.map(prokerItem => (
+            <div key={prokerItem.ID}>
+              <div>{stripTags(prokerItem.kokurikuler)}</div>
+            </div>
+            )
+          )
+        }
+      </div>
+    </>
+  );
+};
+
+const extracurricular = (proker) => {
+  return (
+    <>
+      <div>
+        {
+          proker.map(prokerItem => (
+            <div key={prokerItem.ID}>
+              <div>{stripTags(prokerItem.ekstrakurikuler)}</div>
+            </div>
+            )
+          )
+        }
+      </div>
+    </>
+  );
+};
 
 const LearningPage = () => {
-  const sections = [
-    { title: "Intrakurikuler", current: true },
-    { title: "Ko - Kurikuler", current: false },
-    { title: "Ekstrakurikuler", current: false },
-  ];
+  const [proker, setproker] = useState([]);
+   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const prokerResponse = await axios.get("http://localhost:8080/organisasi");
+        setproker(prokerResponse.data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const [sections, setSections] = useState([
+    { title: "Intrakurikuler", current: true, content: intracurricular(proker) },
+    { title: "Ko - Kurikuler", current: false, content: cocurricular(proker) },
+    { title: "Ekstrakurikuler", current: false, content: extracurricular(proker) },
+  ]);
+
+  const currentPage = sections.filter((s) => s.current)[0];
 
   return (
     <main className="font-poppins">
@@ -21,56 +95,39 @@ const LearningPage = () => {
 
       <div className="mx-auto my-12 flex max-w-7xl flex-col-reverse gap-8 px-4 leading-6 sm:grid sm:grid-cols-[60fr_40fr] sm:gap-0 lg:px-6">
         <div>
-          <h1 className="py-2 text-2xl font-semibold uppercase">pengantar</h1>
-          <article className="text-justify">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat
-            eaque consequatur adipisci vitae sint ex maiores perferendis quam
-            laborum omnis, rem, exercitationem, inventore cumque fugit animi
-            sequi. Adipisci quod blanditiis aliquam itaque temporibus, nesciunt
-            illum consequuntur pariatur ducimus? Nihil obcaecati corrupti
-            numquam dolore dolorum deserunt, incidunt laborum nulla ipsa,
-            tenetur praesentium quod unde eligendi suscipit tempora doloremque,
-            reiciendis pariatur? Dignissimos ut sit, voluptate voluptatibus
-            veniam odit vero consectetur libero optio laboriosam earum officiis
-            eum modi est fuga ducimus placeat aperiam illum porro! Repellat
-            veritatis dolore recusandae dolor magni possimus eos quos laudantium
-            nesciunt, similique incidunt laborum nemo eius, esse est? Lorem
-            ipsum dolor sit amet consectetur adipisicing elit. Quas eligendi
-            consequuntur esse quos quo deleniti impedit, quod, culpa, maxime
-            quis sed tempora? Quas a maxime sequi hic? Ad, beatae. Magni iure
-            non eos quam enim vero magnam dolorum harum, minus nihil dolorem
-            ipsa rem ab est aperiam impedit nam molestiae quis asperiores cumque
-            consectetur. Exercitationem voluptatum incidunt quisquam fuga
-            explicabo corrupti quaerat, voluptas modi sapiente voluptatem
-            deleniti eos iusto repellendus. Quam debitis quaerat modi
-            exercitationem. Numquam quisquam iure esse debitis necessitatibus,
-            alias temporibus hic dolores sunt veniam blanditiis sit adipisci
-            nulla voluptatem? Assumenda corporis iusto harum minima id, nobis
-            voluptatem. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Id quaerat soluta odio ex. Est mollitia fuga obcaecati quibusdam
-            cumque, alias ducimus molestias. Perferendis ratione beatae sed?
-            Quibusdam assumenda, nisi quos error, saepe voluptatem odit sint
-            dolorum blanditiis commodi numquam autem! Eveniet doloribus vero
-            aperiam reiciendis doloremque optio ullam repudiandae natus, sequi
-            saepe! Error minima in reiciendis aliquid similique qui! In, illum
-            labore. Earum quasi nostrum non voluptas repellat vitae deserunt
-            tenetur dolore sunt debitis at, ducimus dolor unde adipisci
-            praesentium odit, consectetur laudantium. Praesentium est quos rem
-            eum officia ipsa ullam, fuga explicabo velit minima tempore modi ea
-            exercitationem dolor?
-          </article>
+          <div className="mx-auto my-12 flex max-w-7xl flex-col-reverse gap-8 px-4 leading-6 sm:gap-0 lg:px-6">
+            <div>
+              <h1 className="mb-2 py-2 text-2xl font-semibold">
+                {currentPage.title}
+              </h1>
+              <article className="flex flex-col gap-6 text-justify">
+                {currentPage.title === 'Intrakurikuler' ? intracurricular(proker)
+                : currentPage.title === 'Ko - Kurikuler' ? cocurricular(proker)
+                : extracurricular(proker)}
+              </article>
+            </div>
+          </div>
         </div>
-
         <aside className="space-y-2 justify-self-center">
           {sections.map((section, i) => (
-            <div key={i} className="flex w-64 flex-col">
+            <div key={i} className="flex w-full flex-col sm:w-64">
               <button
+                value={section.title}
                 className={classNames(
                   section.current
-                    ? "bg-dark-green font-semibold text-white"
+                    ? "bg-semi-green font-semibold text-white"
                     : "bg-light-green text-black",
-                  "rounded-lg px-12 py-4",
+                  "w-full rounded-lg px-12 py-4",
                 )}
+                onClick={(e) => {
+                  setSections(
+                    sections.map((s) =>
+                      s.title === e.target.value
+                        ? { ...s, current: true }
+                        : { ...s, current: false },
+                    ),
+                  );
+                }}
               >
                 {section.title}
               </button>

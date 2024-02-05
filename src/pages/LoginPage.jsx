@@ -12,19 +12,19 @@ import { useEffect } from "react";
 import axios from "axios";
 
 const studentPageView = (
-      setStudentPage,
-      files,
-      siswa, 
-      setSiswa,
-      nama, setnama,
-      kelas, setkelas,
-      nis, setnis,
-      alamat, setalamat,
-      sakit, setsakit,
-      izin, setizin,
-      tanpaKet, settanpaKet,
-      dokumen, setdokumen,
-      fotoMurid, setfotoMurid,) => {
+  setStudentPage,
+  siswa, 
+  setSiswa,
+  nama, setnama,
+  kelas, setkelas,
+  nis, setnis,
+  alamat, setalamat,
+  sakit, setsakit,
+  izin, setizin,
+  tanpaKet, settanpaKet,
+  dokumen, setdokumen,
+  fotoMurid, setfotoMurid,
+  downloadFile) => {
   return (
     <main className="h-full font-poppins">
       <div className="mx-auto my-12 flex max-w-7xl flex-col gap-8 px-4 lg:px-6">
@@ -35,7 +35,7 @@ const studentPageView = (
         <div className="flex flex-col gap-4 sm:flex-row">
           <div className="flex items-center justify-center sm:block">
             <Box styles="w-52 h-52">
-              <img src={fotoMurid || logo} alt="" />
+              <img src={`http://localhost:8080/${siswa.fotoMurid}`} alt={siswa.nama} />
             </Box>
           </div>
 
@@ -88,27 +88,14 @@ const studentPageView = (
 
         <form className="flex flex-col gap-4">
           <p className="text-2xl font-medium">Unggah Dokumen</p>
-
-          <div className="flex flex-wrap justify-center gap-8 sm:justify-start">
-            {files.data.map((f) => {
-              return (
-                <div
-                  key={f.id}
-                  className="flex h-44 w-64 flex-col items-center justify-center gap-2 rounded border border-solid border-black"
-                >
-                  <img
-                    src={f.type}
-                    alt="document image"
-                    className="h-20 w-20"
-                  />
-                  <p className="capitalize">{f.name}</p>
-                </div>
-              );
-            })}
-          </div>
-
+              {/* <p className="capitalize">{siswa.dokumen}</p> */}
+              <img src={`http://localhost:8080/${siswa.dokumen}`} alt={siswa.dokumen} />
           <Flowbite theme={{ theme: customButtonTheme }}>
-            <FlowButton color="dark-green" size="lg">
+            <FlowButton
+              color="dark-green"
+              size="lg"
+              onClick={() => downloadFile(siswa.dokumen)}
+            >
               Unduh
             </FlowButton>
           </Flowbite>
@@ -144,12 +131,28 @@ const LoginPage = () => {
     fetchData();
   }, []);
 
-  const files = useQuery({
-    queryKey: ["files"],
-    queryFn: () => fileServices.getAllFile(),
-  });
+  const downloadFile = async (fileName) => {
+    try {
+      const url = `http://localhost:8080/siswa/download/${fileName}`;
+      const response = await axios.get(url, {
+        responseType: 'blob'
+      });
 
-  if (siswa.isLoading || files.isLoading)
+      const blob = new Blob([response.data]);
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.setAttribute("download", fileName); 
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Error downloading file:", error);
+    }
+  };
+
+  if (siswa.isLoading)
     return (
       <main className="flex h-screen items-center justify-center">
         <div>
@@ -161,7 +164,6 @@ const LoginPage = () => {
   if (studentPage) {
     return studentPageView(
       setStudentPage,
-      files,
       siswa, 
       setSiswa,
       nama, setnama,
@@ -173,6 +175,7 @@ const LoginPage = () => {
       tanpaKet, settanpaKet,
       dokumen, setdokumen,
       fotoMurid, setfotoMurid,
+      downloadFile
     );
   }
 
@@ -224,7 +227,7 @@ const LoginPage = () => {
         </div>
 
         <div className="mb-6 flex w-1/2 flex-col gap-2">
-          <label htmlFor="nisn">NISN</label>
+          <label htmlFor="nisn">Password</label>
           <input
             type="password"
             id="nisn"

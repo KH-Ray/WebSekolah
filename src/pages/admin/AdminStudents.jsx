@@ -36,7 +36,10 @@ const studentPageView = (student,
           <div className="text-gray-blue">
             <button
               className="flex items-center gap-2 hover:cursor-pointer"
-              onClick={() => setStudentPage(false)}
+              onClick={() => {
+                setStudentPage(false);
+                window.location.reload();
+              }}
             >
               <ArrowLeftIcon className="h-6 w-6" /> Kembali
             </button>
@@ -49,11 +52,19 @@ const studentPageView = (student,
           <div className="flex gap-4">
             <div>
               <Box styles="w-52 h-52">
-                <input
-                  type="file"
-                  name="fotoMurid"
-                  onChange={(e) => setfotoMurid(e.target.files[0])}/>
+                <label>
+                  <input
+                    placeholder="foto"
+                    type="file"
+                    name="fotoMurid"
+                    className="hidden"
+                    onChange={(e) => {
+                      setfotoMurid(e.target.files[0]);
+    
+                    }} />
+                </label>
               </Box>
+              
             </div>
 
             <div className="grid grid-cols-2">
@@ -143,7 +154,7 @@ const studentPageView = (student,
 
             <p className="text-2xl font-medium">Unggah Dokumen</p>
 
-            <div className="flex flex-wrap gap-8">
+            {/* <div className="flex flex-wrap gap-8">
               {files.data?.map((f) => {
                 return (
                   <div
@@ -159,13 +170,19 @@ const studentPageView = (student,
                   </div>
                 );
               })}
-            </div>
+            </div> */}
 
-            <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
-              <input type="file" className="hidden" />
+          <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
+            <input
+              type="file"
+              className="hidden"
+              name="dokumen"
+              onChange={(e) => {
+                setdokumen(e.target.files[0]);
+              
+              }}/>
               <PlusIcon className="h-8 w-8" /> Pilih Dokumen
-            </label>
-
+          </label>
             <Flowbite theme={{ theme: customButtonTheme }}>
               <Button color="dark-green" size="lg" type="submit">
                 Unggah
@@ -206,6 +223,7 @@ const AdminStudents = () => {
   }, [])
 
   const handleEditSiswa = (selectedSiswa) => {
+
     setSelectedSiswaId(selectedSiswa.ID);
     setnama(selectedSiswa.nama);
     setkelas(selectedSiswa.kelas);
@@ -214,8 +232,8 @@ const AdminStudents = () => {
     setsakit(selectedSiswa.sakit);
     setizin(selectedSiswa.izin);
     settanpaKet(selectedSiswa.tanpaKet);
-    setdokumen(selectedSiswa.dokumen);
     setfotoMurid(selectedSiswa.fotoMurid);
+    setdokumen(selectedSiswa.dokumen);
   };
 
   const handleSubmit = async (e) => {
@@ -342,6 +360,15 @@ const AdminStudents = () => {
                 </Box>
               );
             })}
+            <div
+              className="mt-2 flex h-20 w-full items-center justify-center gap-4 rounded-xl border border-solid border-gray-500 py-2 text-3xl text-blue-800 hover:cursor-pointer"
+              onClick={(e) => {
+                setStudent();
+                setStudentPage(true);
+              }}
+            >
+              <PlusIcon className="h-10 w-10" /> Tambahkan Peserta Didik
+            </div>
           </div>
         </div>
       </div>

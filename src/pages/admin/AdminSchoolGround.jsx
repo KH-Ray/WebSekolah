@@ -1,18 +1,22 @@
 import { Button, Carousel, Flowbite, Modal } from "flowbite-react";
 import places from "../../places";
 import { classNames, getFloorImages } from "../../helper";
-import { useState } from "react";
 import { PhotoIcon, PlusIcon } from "@heroicons/react/24/outline";
 import {
   customButtonTheme,
   customModalTheme,
 } from "../../themes/flowbiteThemes";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const schoolGroundsModal = (
   openSchoolGroundModal,
   setOpenSchoolGroundModal,
   place,
   setPlace,
+  foto, setfoto,
+  nama, setnama,
+  deskripsi, setdeskripsi,
 ) => {
   return (
     <Flowbite theme={{ theme: customModalTheme }}>
@@ -28,12 +32,12 @@ const schoolGroundsModal = (
         <Modal.Body>
           <div className="flex flex-col gap-4 p-4 font-poppins">
             <p className="text-3xl font-bold">
-              <strong>{place?.title}</strong>
+              <strong>{place?.nama}</strong>
             </p>
-            <p className="leading-6">{place?.content}</p>
+            <p className="leading-6">{place?.deskripsi}</p>
             <img
-              src="https://i.ibb.co/6tKXXbV/foto-gedung-2.jpg"
-              alt={`${place?.title} foto modal`}
+              src={`http://localhost:8080/${place?.foto}`}
+              alt={`${place?.nama} foto modal`}
             />
           </div>
         </Modal.Body>
@@ -46,6 +50,11 @@ const adminSchoolGroundModal = (
   photos,
   openAdminSchoolGroundModal,
   setAdminSchoolGroundModal,
+  foto, setfoto,
+  nama, setnama,
+  deskripsi, setdeskripsi,
+  handleSubmit1, handleSubmit2,
+  handleSubmit3, currentSlide
 ) => {
   return (
     <Modal
@@ -57,64 +66,167 @@ const adminSchoolGroundModal = (
       }}
     >
       <Modal.Body>
-        <form className="p-4 font-poppins">
-          <div className="mb-8 flex flex-col gap-8">
-            <div className="flex flex-col gap-2">
-              <label className="text-2xl font-medium" htmlFor="Place title">
-                Nama Ruangan
-              </label>
-              <input
-                className="rounded border-[1.5px] border-solid border-gray-400 px-2 py-1"
-                type="text"
-                name="Place title"
-                id="Place title"
-              />
-            </div>
+        {
+          currentSlide === 0
+          ? <form className="p-4 font-poppins" onSubmit={handleSubmit1}>
+              <div className="mb-8 flex flex-col gap-8">
+                <div className="flex flex-col gap-2">
+                  <label className="text-2xl font-medium" htmlFor="Place title">
+                    Nama Ruangan
+                  </label>
+                  <input
+                    className="rounded border-[1.5px] border-solid border-gray-400 px-2 py-1"
+                    type="text"
+                    name="nama"
+                    value={nama}
+                    onChange={(e) => setnama(e.target.value)}
+                    id="Place title"
+                  />
+                </div>
 
-            <div className="flex flex-col gap-2">
-              <label
-                className="text-2xl font-medium"
-                htmlFor="place description"
-              >
-                Deskirpsi Ruangan
-              </label>
-              <textarea
-                id="place description"
-                name="place description"
-                className="h-52 resize-none rounded border-[1.5px] border-solid border-gray-400 px-2 py-1"
-              ></textarea>
-            </div>
-          </div>
-
-          <div className="mb-4 flex flex-col gap-4">
-            <p className="text-2xl font-medium">Foto Ruangan</p>
-            <div className="flex flex-wrap gap-8">
-              {photos.map((photo, i) => {
-                return (
-                  <div
-                    key={i}
-                    className="flex h-44 w-64 flex-col items-center justify-center gap-2 rounded border border-solid border-black"
+                <div className="flex flex-col gap-2">
+                  <label
+                    className="text-2xl font-medium"
+                    htmlFor="place description"
                   >
-                    <PhotoIcon className="h-16 w-16" />
-                    <p className="capitalize">{photo.title}</p>
-                  </div>
-                );
-              })}
-            </div>
-            <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
-              <input type="file" className="hidden" />
-              <PlusIcon className="h-8 w-8" /> Pilih Dokumen
-            </label>
-          </div>
+                    Deskirpsi Ruangan
+                  </label>
+                  <textarea
+                    id="place description"
+                    name="deskripsi"
+                    value={deskripsi}
+                    onChange={(e) => setdeskripsi(e.target.value)}
+                    className="h-52 resize-none rounded border-[1.5px] border-solid border-gray-400 px-2 py-1"
+                  ></textarea>
+                </div>
+              </div>
 
-          <div className="flex justify-end">
-            <Flowbite theme={{ theme: customButtonTheme }}>
-              <Button color="dark-green" size="lg">
-                Simpan
-              </Button>
-            </Flowbite>
-          </div>
-        </form>
+              <div className="mb-4 flex flex-col gap-4">
+                <p className="text-2xl font-medium">Foto Ruangan</p>
+                <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={(e) => setfoto(e.target.files[0])}/>
+                  <PlusIcon className="h-8 w-8" /> Pilih Dokumen
+                </label>
+              </div>
+
+              <div className="flex justify-end">
+                <Flowbite theme={{ theme: customButtonTheme }}>
+                  <Button color="dark-green" size="lg" type="submit">
+                    Simpan
+                  </Button>
+                </Flowbite>
+              </div>
+            </form>
+            : currentSlide === 1 
+            ? <form className="p-4 font-poppins" onSubmit={handleSubmit2}>
+                <div className="mb-8 flex flex-col gap-8">
+                  <div className="flex flex-col gap-2">
+                    <label className="text-2xl font-medium" htmlFor="Place title">
+                      Nama Ruangan
+                    </label>
+                    <input
+                      className="rounded border-[1.5px] border-solid border-gray-400 px-2 py-1"
+                      type="text"
+                      name="nama"
+                      value={nama}
+                      onChange={(e) => setnama(e.target.value)}
+                      id="Place title"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label
+                      className="text-2xl font-medium"
+                      htmlFor="place description"
+                    >
+                      Deskirpsi Ruangan
+                    </label>
+                    <textarea
+                      id="place description"
+                      name="deskripsi"
+                      value={deskripsi}
+                      onChange={(e) => setdeskripsi(e.target.value)}
+                      className="h-52 resize-none rounded border-[1.5px] border-solid border-gray-400 px-2 py-1"
+                    ></textarea>
+                  </div>
+                </div>
+
+                <div className="mb-4 flex flex-col gap-4">
+                  <p className="text-2xl font-medium">Foto Ruangan</p>
+                  <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
+                    <input
+                      type="file"
+                      className="hidden"
+                      onChange={(e) => setfoto(e.target.files[0])}/>
+                    <PlusIcon className="h-8 w-8" /> Pilih Dokumen
+                  </label>
+                </div>
+
+                <div className="flex justify-end">
+                  <Flowbite theme={{ theme: customButtonTheme }}>
+                    <Button color="dark-green" size="lg" type="submit">
+                      Simpan
+                    </Button>
+                  </Flowbite>
+                </div>
+              </form>
+          : <form className="p-4 font-poppins" onSubmit={handleSubmit3}>
+            <div className="mb-8 flex flex-col gap-8">
+              <div className="flex flex-col gap-2">
+                <label className="text-2xl font-medium" htmlFor="Place title">
+                  Nama Ruangan
+                </label>
+                <input
+                  className="rounded border-[1.5px] border-solid border-gray-400 px-2 py-1"
+                  type="text"
+                  name="nama"
+                  value={nama}
+                  onChange={(e) => setnama(e.target.value)}
+                  id="Place title"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label
+                  className="text-2xl font-medium"
+                  htmlFor="place description"
+                >
+                  Deskirpsi Ruangan
+                </label>
+                <textarea
+                  id="place description"
+                  name="deskripsi"
+                  value={deskripsi}
+                  onChange={(e) => setdeskripsi(e.target.value)}
+                  className="h-52 resize-none rounded border-[1.5px] border-solid border-gray-400 px-2 py-1"
+                ></textarea>
+              </div>
+            </div>
+
+            <div className="mb-4 flex flex-col gap-4">
+              <p className="text-2xl font-medium">Foto Ruangan</p>
+              <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
+                <input
+                  type="file"
+                  className="hidden"
+                  onChange={(e) => setfoto(e.target.files[0])}/>
+                <PlusIcon className="h-8 w-8" /> Pilih Dokumen
+              </label>
+            </div>
+
+            <div className="flex justify-end">
+              <Flowbite theme={{ theme: customButtonTheme }}>
+                <Button color="dark-green" size="lg" type="submit">
+                  Simpan
+                </Button>
+              </Flowbite>
+            </div>
+          </form>
+        }
+        
       </Modal.Body>
     </Modal>
   );
@@ -127,7 +239,214 @@ const AdminSchoolGround = () => {
     useState(false);
   const [openSchoolGroundModal, setOpenSchoolGroundModal] = useState(false);
 
-  const placeObj = places[0];
+  const placeObj = places;
+
+
+  // pake db
+  const [openModal, setOpenModal] = useState(false);
+  const [denahRuangan, setDenahRuangan] = useState([]);
+  const [denahDetail, setDenahDetail] = useState([]);
+  const [denahDetail1, setDenahDetail1] = useState([]);
+  const [denahDetail2, setDenahDetail2] = useState([]);
+  const [msg, setMsg] = useState('');
+  const [fotoDenah, setfotoDenah] = useState('');
+  const [foto, setfoto] = useState('');
+  const [nama, setnama] = useState('');
+  const [deskripsi, setdeskripsi] = useState('');
+  const [selectedDenahRuangId, setselectedDenahRuangId] = useState(null);
+  const [selectedDenahDetailId, setselectedDenahDetailId] = useState(null);
+
+ useEffect(() => {
+    const fetchData = async () => {
+      try {
+ 
+      const response1 = await axios.get('http://localhost:8080/denahruang');
+      setDenahRuangan(response1.data);
+
+      const response2 = await axios.get('http://localhost:8080/denahdetail');
+      setDenahDetail(response2.data);
+        
+      const response3 = await axios.get('http://localhost:8080/denahdetail1');
+      setDenahDetail1(response3.data);
+        
+      const response4 = await axios.get('http://localhost:8080/denahdetail2');
+      setDenahDetail2(response4.data);
+        
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      }
+    };
+   fetchData();
+ }, []);
+  
+  const handleEditDenahRuang = (selectedDenahRuang) => {
+    setselectedDenahRuangId(selectedDenahRuang.ID);
+    setfotoDenah(selectedDenahRuang.fotoDenah);
+  };
+
+  const handleEditDenahDetail = (selectedDenahDeatail) => {
+    setselectedDenahDetailId(selectedDenahDeatail.ID);
+    setfoto(selectedDenahDeatail.foto);
+    setnama(selectedDenahDeatail.nama);
+    setdeskripsi(selectedDenahDeatail.deskripsi);
+
+    setOpenModal(true);
+  };
+
+  const handleEditDenahDetail1 = (selectedDenahDeatail) => {
+    setselectedDenahDetailId(selectedDenahDeatail.ID);
+    setfoto(selectedDenahDeatail.foto);
+    setnama(selectedDenahDeatail.nama);
+    setdeskripsi(selectedDenahDeatail.deskripsi);
+
+    setOpenModal(true);
+  };
+
+  const handleEditDenahDetail2 = (selectedDenahDeatail) => {
+    setselectedDenahDetailId(selectedDenahDeatail.ID);
+    setfoto(selectedDenahDeatail.foto);
+    setnama(selectedDenahDeatail.nama);
+    setdeskripsi(selectedDenahDeatail.deskripsi);
+
+    setOpenModal(true);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('fotoDenah', fotoDenah);
+
+    try {
+      let response;
+
+      if (selectedDenahRuangId) {
+        response = await axios.put(`http://localhost:8080/admin/denahruang/${selectedDenahRuangId}`, formData);
+      } else {
+        response = await axios.post('http://localhost:8080/admin/denahruang', formData);
+      }
+
+      if (response.data.Status === 'Success') {
+        navigate('/admin/denah');
+        setMsg('File Successfully Uploaded');
+        setfotoDenah('');
+        setselectedDenahRuangId(null);
+      } else {
+        setMsg('Error');
+      }
+      window.location.reload();
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      setMsg('Error' + error.message);
+    }
+  };
+
+  const handleSubmit1 = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('nama', nama);
+    formData.append('deskripsi', deskripsi);
+    formData.append('foto', foto);
+
+    try {
+      let response;
+
+      if (selectedDenahDetailId) {
+        response = await axios.put(`http://localhost:8080/admin/denahdetail/${selectedDenahDetailId}`, formData);
+      } else {
+        response = await axios.post('http://localhost:8080/admin/denahdetail', formData);
+      }
+
+      if (response.data.Status === 'Success') {
+        navigate('/admin/denah');
+        setMsg('File Successfully Uploaded');
+        setOpenModal(false);
+        setfoto('');
+        setnama('');
+        setdeskripsi('');
+        setselectedDenahDetailId(null);
+      } else {
+        setMsg('Error');
+      }
+      window.location.reload();
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      setMsg('Error' + error.message);
+    }
+  };
+
+  const handleSubmit2 = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('nama', nama);
+    formData.append('deskripsi', deskripsi);
+    formData.append('foto', foto);
+
+    try {
+      let response;
+
+      if (selectedDenahDetailId) {
+        response = await axios.put(`http://localhost:8080/admin/denahdetail1/${selectedDenahDetailId}`, formData);
+      } else {
+        response = await axios.post('http://localhost:8080/admin/denahdetail1', formData);
+      }
+
+      if (response.data.Status === 'Success') {
+        navigate('/admin/denah');
+        setMsg('File Successfully Uploaded');
+        setOpenModal(false);
+        setfoto('');
+        setnama('');
+        setdeskripsi('');
+        setselectedDenahDetailId(null);
+      } else {
+        setMsg('Error');
+      }
+      window.location.reload();
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      setMsg('Error' + error.message);
+    }
+  };
+
+  const handleSubmit3 = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('nama', nama);
+    formData.append('deskripsi', deskripsi);
+    formData.append('foto', foto);
+
+    try {
+      let response;
+
+      if (selectedDenahDetailId) {
+        response = await axios.put(`http://localhost:8080/admin/denahdetail2/${selectedDenahDetailId}`, formData);
+      } else {
+        response = await axios.post('http://localhost:8080/admin/denahdetail2', formData);
+      }
+
+      if (response.data.Status === 'Success') {
+        navigate('/admin/denah');
+        setMsg('File Successfully Uploaded');
+        setOpenModal(false);
+        setfoto('');
+        setnama('');
+        setdeskripsi('');
+        setselectedDenahDetailId(null);
+      } else {
+        setMsg('Error');
+      }
+      window.location.reload();
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      setMsg('Error' + error.message);
+    }
+  };
+
+
 
   return (
     <main className="max-h-full min-h-screen p-12 font-poppins">
@@ -135,12 +454,23 @@ const AdminSchoolGround = () => {
         placeObj.photos,
         openAdminSchoolGroundModal,
         setAdminSchoolGroundModal,
+        foto, setfoto,
+        nama, setnama,
+        deskripsi, setdeskripsi,
+        handleSubmit1, 
+        handleSubmit2,
+        handleSubmit3,
+        currentSlide
       )}
       {schoolGroundsModal(
         openSchoolGroundModal,
         setOpenSchoolGroundModal,
         place,
         setPlace,
+        foto, setfoto,
+        nama, setnama,
+        deskripsi, setdeskripsi,
+        handleSubmit
       )}
 
       <div className="h-full">
@@ -148,7 +478,7 @@ const AdminSchoolGround = () => {
           Halaman Denah
         </h1>
 
-        <form>
+        <form onSubmit={handleSubmit || handleSubmit1}>
           <div className="relative">
             <p className="absolute left-1/2 top-8 z-10 -translate-x-1/2 text-xl font-bold text-dark-green">
               Lantai {currentSlide + 1}
@@ -162,70 +492,74 @@ const AdminSchoolGround = () => {
               }}
               slide={false}
             >
-              <img
-                className="scale-75"
-                src={getFloorImages().lantai1}
-                alt="Denah Sekolah 1"
-              />
-              <img
-                className="scale-75"
-                src={getFloorImages().lantai2}
-                alt="Denah Sekolah 2"
-              />
-              <img
-                className="scale-75"
-                src={getFloorImages().lantai3}
-                alt="Denah Sekolah 3"
-              />
+              {
+                denahRuangan.map((ruanggItem) => (
+                  <div
+                    key={ruanggItem.ID}
+                    onClick={() => handleEditDenahRuang(ruanggItem)}>
+                    <img
+                      className="scale-75"
+                      src={`http://localhost:8080/${ruanggItem.fotoDenah}`}
+                      alt="Denah Sekolah"
+                    />
+                  </div>
+                ))
+              }
             </Carousel>
 
             <label className="absolute -bottom-2 right-4 mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
-              <input type="file" className="hidden" />
+              <input
+                type="file"
+                className="hidden"
+                name="fotoDenah"
+                onChange={(e) => setfotoDenah(e.target.files[0])}/>
               <PlusIcon className="h-8 w-8" /> Pilih Gambar
             </label>
           </div>
 
           <div>
             <div className="mb-4 grid grid-cols-1 gap-4 bg-light-gray-green px-16 py-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {currentSlide === 0
-                ? placeObj.first.map((f, i) => (
+             {currentSlide === 0
+                ? denahDetail.map((f, i) => (
                     <div
                       key={i}
                       className="flex h-14 w-full items-center justify-center rounded bg-dark-seagreen px-1 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer"
                       onClick={() => {
                         setPlace(f);
+                        handleEditDenahDetail(f);
                         setOpenSchoolGroundModal(true);
                       }}
                     >
-                      {f.title}
+                      {f.nama}
                     </div>
                   ))
                 : currentSlide === 1
-                  ? placeObj.second.map((s, i) => (
+                  ? denahDetail1.map((s, i) => (
                       <div
                         key={i}
                         className="flex h-14 w-full items-center justify-center rounded bg-dark-seagreen px-1 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer"
                         onClick={() => {
                           setPlace(s);
+                          handleEditDenahDetail1(s);
                           setOpenSchoolGroundModal(true);
                         }}
                       >
-                        {s.title}
+                        {s.nama}
                       </div>
                     ))
-                  : placeObj.third.map((t, i) => (
+                  : denahDetail2.map((t, i) => (
                       <div
                         key={i}
                         className="flex h-14 w-full items-center justify-center rounded bg-dark-seagreen px-1 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer"
                         onClick={() => {
                           setPlace(t);
+                          handleEditDenahDetail2(t);
                           setOpenSchoolGroundModal(true);
                         }}
                       >
-                        {t.title}
+                        {t.nama}
                       </div>
                     ))}
-
               <button
                 type="button"
                 className="flex h-14 w-full items-center justify-center gap-2 rounded bg-[#d9d9d9] text-base text-[#7f7f7f] hover:cursor-pointer"
@@ -240,7 +574,7 @@ const AdminSchoolGround = () => {
 
           <div className="flex justify-end">
             <Flowbite theme={{ theme: customButtonTheme }}>
-              <Button color="dark-green" size="lg">
+              <Button color="dark-green" size="lg" type="submit">
                 Simpan
               </Button>
             </Flowbite>

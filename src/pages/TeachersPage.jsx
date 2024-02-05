@@ -9,55 +9,41 @@ const adminTeacherModal = (
   setViewguru,
   openModal,
   guru, setGuru,
-  setOpenModal
+  setOpenModal,
+  closeModal,
+  selectedGuru
 ) => {
   return (
     <Flowbite theme={{ theme: customModalTheme }}>
       <Modal
         dismissible
         show={openModal}
-        onClose={() => {
-          setGuru({
-            data: [],
-            isLoading: false,
-          });
-          setOpenModal(false);
-        }}
+        onClose={closeModal}
       >
         <Modal.Body>
-          <button
-            className="flex items-center gap-2 text-gray-600 hover:cursor-pointer"
-            onClick={() => {
-              setOpenModal(false);
-              window.location.reload();
-            }}
-              
-          >
-            <ArrowLeftIcon className="h-6 w-6" /> Kembali
-          </button>
           <div className="flex flex-col items-center gap-8 p-2 sm:flex-row sm:p-8">
             <div className="bottom-1/2 h-60 w-60 flex-none">
               <Box styles="h-60 w-60">
-                <img src={`http://localhost:8080/${guru?.fotoGuru}`} alt="" />
+                <img src={`http://localhost:8080/${selectedGuru?.fotoGuru}`} alt="" />
               </Box>
             </div>
 
             <div className="flex w-full flex-col justify-evenly gap-4 font-poppins">
               <div className="space-y-1">
                 <strong className="text-xl font-bold">
-                  {guru?.name}
+                  {selectedGuru?.name}
                 </strong>
-                <p className="leading-6">{guru?.position}</p>
+                <p className="leading-6">{selectedGuru?.position}</p>
               </div>
 
               <div className="space-y-1">
                 <strong className="font-bold">Pendidikan</strong>
-                <p className="leading-6">{guru?.education}</p>
+                <p className="leading-6">{selectedGuru?.education}</p>
               </div>
 
               <div className="space-y-1">
                 <strong className="font-bold">Prestasi</strong>
-                <p className="leading-6">{guru?.achievement}</p>
+                <p className="leading-6">{selectedGuru?.achievement}</p>
               </div>
             </div>
           </div>
@@ -70,6 +56,7 @@ const adminTeacherModal = (
 const TeachersPage = () => {
   const [viewGuru, setViewguru] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [selectedGuru, setSelectedGuru] = useState(null);
   const [guru, setGuru] = useState({
     data: [],
     isLoading: true,
@@ -94,25 +81,11 @@ const TeachersPage = () => {
 
   fetchData();
 }, []);
-  
-  if (guru.isLoading) {
-    return (
-      <main className="flex h-screen items-center justify-center">
-        <div>
-          <Spinner size="xl" />
-        </div>
-      </main>
-    );
-  }
 
-  if (viewGuru) {
-    return adminTeacherModal(
-      setViewguru,
-      openModal,
-      guru, setGuru,
-      setOpenModal
-    )
-  }
+  const closeModal = () => {
+    setOpenModal(false);
+    setSelectedGuru(null);
+  };
 
   return (
     <main className="font-poppins">
@@ -121,7 +94,9 @@ const TeachersPage = () => {
           setViewguru,
           openModal,
           guru, setGuru,
-          setOpenModal
+          setOpenModal,
+          closeModal,
+          selectedGuru
         )}
       </div>
       <div className=" bg-main-gray">
@@ -135,9 +110,9 @@ const TeachersPage = () => {
         {guru.data?.length > 0 && (
           <div className="mb-12 flex flex-col items-center justify-center text-center"
             onClick={() => {
-                setOpenModal(true);
-                setGuru(guru.data[0]);
-              }}>
+              setOpenModal(true); 
+              setSelectedGuru(guru.data[0]);
+            }}>
             <Box styles="lg:w-64 lg:h-64 w-56 h-56 mb-2">
               <img src={`http://localhost:8080/${guru.data[0]?.fotoGuru}`} alt="" />
             </Box>
@@ -155,7 +130,7 @@ const TeachersPage = () => {
               className="flex flex-col items-center justify-center text-center"
               onClick={() => {
                 setOpenModal(true);
-                setGuru(guruItem);
+                setSelectedGuru(guruItem);
               }}
             >
               <Box styles="lg:w-64 lg:h-64 w-56 h-56 mb-2">

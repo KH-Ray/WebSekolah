@@ -1,19 +1,18 @@
 import { Button, Flowbite } from "flowbite-react";
 import { customButtonTheme } from "../../themes/flowbiteThemes";
 import { Editor } from "@tinymce/tinymce-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import "../../revert.css";
+
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-function stripTags(html) {
-  return html.replace(/<\/?[^>]+(>|$)/g, "");
-}
 
 const AdminDimensions = () => {
   const [isiDikmensi, setIsiDikmensi] = useState('');
   const [msg, setMsg] = useState('');
   const [selectedDikmensiId, setSelectedDikmensiId] = useState(null);
+  const editorRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -74,11 +73,14 @@ const AdminDimensions = () => {
           <article className="leading-6 mb-5">
             {
               dikmensi.map(dikmensiItem => (
-                <div
-                  key={dikmensiItem.ID}
-                  onClick={() => handleEditDikmensi(dikmensiItem)}>
-                    {stripTags(dikmensiItem.isiDikmensi)}
-                </div>
+                <div style={{ width: '100%', overflowX: 'auto' }}
+                    key={dikmensiItem.ID}
+                    onClick={() => handleEditDikmensi(dikmensiItem)}>
+                    <div
+                      className="our-app-wrapper block break-all !font-poppins"
+                      dangerouslySetInnerHTML={{ __html: dikmensiItem.isiDikmensi }}
+                    ></div>
+                  </div>
                 )
               )
             }
@@ -86,15 +88,17 @@ const AdminDimensions = () => {
           <div className="mb-6">
             <Editor
               value={isiDikmensi}
+              onInit={(evt, editor) => (editorRef.current = editor)}
               textareaName="isiDikmensi"
               apiKey="o0pzftir0e6adwmb92z8ig9705xxtb5i7kurqh1a3j7q41qe"
               init={{
-                plugins:
-                  "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-                toolbar:
-                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
-                resize: false,
-                height: "500",
+              height: 500,
+              plugins:
+                "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
+              toolbar:
+                "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
+              content_style:
+                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
               }}
               onEditorChange={setIsiDikmensi}
             />

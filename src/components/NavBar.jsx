@@ -12,7 +12,7 @@ import { useState } from "react";
 
 const navigation = [
   { name: "Beranda", link: "/" },
-  { name: "Profile", link: "/profile" },
+  { name: "Profile", link: "/profil" },
   {
     name: "Data",
     link: null,

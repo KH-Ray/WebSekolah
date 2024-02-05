@@ -1,10 +1,7 @@
 import { Spinner } from "flowbite-react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-function stripTags(html) {
-  return html.replace(/<\/?[^>]+(>|$)/g, "");
-}
+import "../revert.css";
 
 const RabuCeria = () => {
   const [rabuceria, setRabuceria] = useState([]);
@@ -43,9 +40,13 @@ const RabuCeria = () => {
       <div className="mx-auto my-12 max-w-7xl px-4 lg:px-6">
         <article className="leading-6">
           {
-            rabuceria.map((rabuceriaItem, id) => (
-              <div key={id}>
-                  {stripTags(rabuceriaItem.description)}
+            rabuceria.map((rabuceriaItem) => (
+              <div style={{ width: '100%', overflowX: 'auto' }}
+              key={rabuceriaItem.ID}>
+                <div
+                  className="our-app-wrapper block break-all !font-poppins"
+                  dangerouslySetInnerHTML={{ __html: rabuceriaItem.description }}
+                ></div>
               </div>
               )
             )

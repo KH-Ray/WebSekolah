@@ -1,6 +1,7 @@
 import { Spinner } from "flowbite-react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "../revert.css";
 
 function stripTags(html) {
   return html.replace(/<\/?[^>]+(>|$)/g, "");
@@ -42,13 +43,17 @@ const DimensionsPage = () => {
       <div className="mx-auto my-12 max-w-7xl px-4 lg:px-6">
         <article className="leading-6">
           {
-            dikmensi.map((dikmensiItem, id) => (
-              <div key={id}>
-                  {stripTags(dikmensiItem.isiDikmensi)}
-              </div>
+              dikmensi.map(dikmensiItem => (
+                <div style={{ width: '100%', overflowX: 'auto' }}
+                    key={dikmensiItem.ID}>
+                    <div
+                      className="our-app-wrapper block break-all !font-poppins"
+                      dangerouslySetInnerHTML={{ __html: dikmensiItem.isiDikmensi }}
+                    ></div>
+                  </div>
+                )
               )
-            )
-          }
+            }
         </article>
       </div>
     </main>

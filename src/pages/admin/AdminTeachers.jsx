@@ -217,8 +217,7 @@ const AdminTeachers = () => {
           <Box
             styles="w-48 h-48 mb-2 relative group hover:cursor-pointer"
             onClick={() => {
-              setPosition("Kepala Sekolah");
-              setOpenModal(true);
+               openEditModal(guru.data[0]);
             }}
           >
             <img src={`http://localhost:8080/${guru.data[0]?.fotoGuru}`} alt="" />

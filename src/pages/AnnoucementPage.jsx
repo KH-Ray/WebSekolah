@@ -1,15 +1,10 @@
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
-import fileServices from "../services/files";
-import { useQuery } from "@tanstack/react-query";
 import { Spinner } from "flowbite-react";
 import { useParams } from "react-router-dom";
 
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-
-function stripTags(html) {
-  return html.replace(/<\/?[^>]+(>|$)/g, "");
-}
+import "../revert.css";
 
 const AnnoucementPage = () => {
   const { id } = useParams();
@@ -31,12 +26,29 @@ const AnnoucementPage = () => {
     fetchData();
   }, [id]);
 
-  const files = useQuery({
-    queryKey: ["files"],
-    queryFn: () => fileServices.getAllFile(),
-  });
+   const downloadFile = async (fileName) => {
+    try {
+      const url = `http://localhost:8080/pengumuman/download/${fileName}`;
+      const response = await axios.get(url, {
+        responseType: 'blob'
+      });
 
-  if (!notice || files.isLoading) {
+      const blob = new Blob([response.data]);
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.setAttribute("download", fileName); 
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Error downloading file:", error);
+    }
+  };
+
+
+  if (!notice) {
     return (
       <main className="flex h-screen items-center justify-center">
         <div>
@@ -68,26 +80,22 @@ const AnnoucementPage = () => {
           <CalendarDaysIcon className="h-6 w-6" />
           <div>{currentAnnoucement.date}</div>
         </div>
-
-        {stripTags(currentAnnoucement.descNotice)}
-
+        <div
+          className="our-app-wrapper block break-all !font-poppins"
+          dangerouslySetInnerHTML={{ __html: currentAnnoucement.descNotice }}
+        ></div>
         <div className="flex flex-wrap gap-8">
-          {notice.map((f) => {
-            if (f.id !== 1) return;
-
-            return (
-              <div
-                key={f.id}
-                className="flex h-44 w-64 flex-col items-center justify-center gap-2 rounded border border-solid border-black"
-              >
-                <img src={f.type} alt="document image" className="h-20 w-20" />
-                <p className="capitalize">{f.name}</p>
-              </div>
-            );
-          })}
+            <div
+              key={currentAnnoucement.ID}
+            >
+              <p className="capitalize">{currentAnnoucement.document}</p>
+            </div>
+          
         </div>
-
-        <button className="w-36 rounded-lg bg-dark-green px-8 py-4 text-white">
+        <button
+          className="w-36 rounded-lg bg-dark-green px-8 py-4 text-white"
+          onClick={() => downloadFile(currentAnnoucement.document)}
+        >
           Unduh
         </button>
       </div>

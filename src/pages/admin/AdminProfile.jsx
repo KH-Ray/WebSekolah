@@ -2,14 +2,11 @@ import { Button, Flowbite } from "flowbite-react";
 import { customButtonTheme } from "../../themes/flowbiteThemes";
 import { Editor } from "@tinymce/tinymce-react";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import "../../revert.css";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-function stripTags(html) {
-  return html.replace(/<\/?[^>]+(>|$)/g, "");
-}
 
 const AdminProfile = () => {
   const [kataPen, setKataPen] = useState('');
@@ -17,6 +14,7 @@ const AdminProfile = () => {
   const [struktur, setStruktur] = useState('');
   const [msg, setMsg] = useState('');
   const [selectedProfilId, setSelectedProfilId] = useState(null); 
+  const editorRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -87,10 +85,13 @@ const AdminProfile = () => {
             <div className="mb-5">
               {
                 profil.map(introItem => (
-                  <div
+                  <div style={{ width: '100%', overflowX: 'auto' }}
                     key={introItem.ID}
                     onClick={() => handleEditProfil(introItem)}>
-                    <div>{stripTags(introItem.kataPen)}</div>
+                    <div
+                      className="our-app-wrapper block break-all !font-poppins"
+                      dangerouslySetInnerHTML={{ __html: introItem.kataPen }}
+                    ></div>
                   </div>
                   )
                 )
@@ -98,15 +99,17 @@ const AdminProfile = () => {
             </div>
             <div className="mb-8">
               <Editor
+                onInit={(evt, editor) => (editorRef.current = editor)}
                 textareaName="kataPen"
                 apiKey="o0pzftir0e6adwmb92z8ig9705xxtb5i7kurqh1a3j7q41qe"
                 init={{
-                  plugins:
-                    "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-                  toolbar:
-                    "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
-                  resize: false,
-                  height: "500",
+                height: 500,
+                plugins:
+                  "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
+                toolbar:
+                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
+                content_style:
+                  "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
                 }}
                 value={kataPen}
                 onEditorChange={setKataPen}
@@ -118,12 +121,15 @@ const AdminProfile = () => {
               Visi dan Misi
             </p>
             <div className="mb-5">
-              {
+               {
                 profil.map(visimisiItem => (
-                  <div
+                  <div style={{ width: '100%', overflowX: 'auto' }}
                     key={visimisiItem.ID}
                     onClick={() => handleEditProfil(visimisiItem)}>
-                    <div>{stripTags(visimisiItem.visimisi)}</div>
+                    <div
+                      className="our-app-wrapper block break-all !font-poppins"
+                      dangerouslySetInnerHTML={{ __html: visimisiItem.visimisi }}
+                    ></div>
                   </div>
                   )
                 )
@@ -132,14 +138,16 @@ const AdminProfile = () => {
             <div className="mb-8">
               <Editor
                 textareaName="visimisi"
+                onInit={(evt, editor) => (editorRef.current = editor)}
                 apiKey="o0pzftir0e6adwmb92z8ig9705xxtb5i7kurqh1a3j7q41qe"
                 init={{
-                  plugins:
-                    "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-                  toolbar:
-                    "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
-                  resize: false,
-                  height: "500",
+                height: 500,
+                plugins:
+                  "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
+                toolbar:
+                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
+                content_style:
+                  "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
                 }}
                 value={visimisi}
                 onEditorChange={setVisimisi}
@@ -151,16 +159,7 @@ const AdminProfile = () => {
               Struktur Organisasi
             </p>
             <div className="mb-5">
-              {
-                profil.map(strukturItem => (
-                  <div
-                    key={strukturItem.ID}
-                    onClick={() => handleEditProfil(strukturItem)}>
-                  <img src={`http://localhost:8080/${strukturItem.struktur}`} alt="Struktur Organisasi" />
-                </div>
-                )
-                )
-              }
+     
             </div>
             <div className="mb-8">
               <div className="flex h-96 w-full items-center justify-center rounded-lg border-2 border-solid border-gray-200/75 hover:cursor-pointer">

@@ -1,17 +1,14 @@
 import Notice from "../../components/Notice";
 import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Modal, Spinner } from "flowbite-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import "../../revert.css";
 import { Editor } from "@tinymce/tinymce-react";
 import { customButtonTheme } from "../../themes/flowbiteThemes";
 import { Button, Flowbite } from "flowbite-react";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-function stripTags(html) {
-  return html.replace(/<\/?[^>]+(>|$)/g, "");
-}
 
 const addNewsPage = (
   openModal,
@@ -22,7 +19,8 @@ const addNewsPage = (
   isiBerita, setIsiBerita,
   date, setDate,
   msg, setMsg,
-  navigate
+  navigate,
+  editorRef
 ) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -120,6 +118,7 @@ const addNewsPage = (
             <input
               type="text"
               name="judulBerita"
+              value={judulBerita}
               onChange={(e) => setJudulBerita(e.target.value)}
               id="news title"
               className="rounded-lg border border-solid border-gray-500"
@@ -132,6 +131,7 @@ const addNewsPage = (
             <input
               type="date"
               name="date"
+              value={date}
               onChange={(e) => setDate(e.target.value)}
               id="date"
               className="rounded-lg border border-solid border-gray-500"
@@ -145,15 +145,18 @@ const addNewsPage = (
               Isi Berita
             </label>
             <Editor
+              value={isiBerita}
+              onInit={(evt, editor) => (editorRef.current = editor)}
               name="isiBerita"
               apiKey="o0pzftir0e6adwmb92z8ig9705xxtb5i7kurqh1a3j7q41qe"
               init={{
-                plugins:
-                  "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-                toolbar:
-                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
-                resize: false,
-                height: "500",
+              height: 500,
+              plugins:
+                "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
+              toolbar:
+                "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
+              content_style:
+                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
               }}
               onEditorChange={setIsiBerita}
             />
@@ -188,6 +191,7 @@ const AdminAnnouncement = () => {
   const [msg, setMsg] = useState('');
   const [addNews, setAddNews] = useState(false); 
   const navigate = useNavigate();
+  const editorRef = useRef(null);
 
   const [news, setNews] = useState([]);
   useEffect(() => {
@@ -221,7 +225,8 @@ const AdminAnnouncement = () => {
       isiBerita, setIsiBerita,
       date, setDate,
       msg, setMsg,
-      navigate
+      navigate,
+      editorRef
     );
   }
 

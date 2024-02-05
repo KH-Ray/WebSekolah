@@ -7,42 +7,47 @@ const extracurricularModal = (
   openModal,
   setOpenModal,
   ekskul,
-  setEkskul
+  setEkskul,
+  selectedekskul, setSelectedekskul,
+  closeModal
 ) => {
   return (
     <Modal
       dismissible
       show={openModal}
-      onClose={() => {
-        setOpenModal(false);
-      }}
+      onClose={closeModal}
     >
       <Modal.Body>  
-        <button
-            className="flex items-center gap-2 text-gray-600 hover:cursor-pointer"
-            onClick={() => {
-              setOpenModal(false);
-              window.location.reload();
-            }}  
-          >
-            <ArrowLeftIcon className="h-6 w-6" /> Kembali
-          </button>
         <div className="flex flex-col gap-4 font-poppins leading-5">
           <h1 className="text-3xl font-bold capitalize">
-            {ekskul.tittle}
+            {selectedekskul?.tittle}
           </h1>
 
           <div>
-            <p>Waktu : Hari {ekskul.schedule}</p>
-            <p>Tempat: {ekskul.location}</p>
+            <p>Waktu : Hari {selectedekskul?.schedule}</p>
+            <p>Tempat: {selectedekskul?.location}</p>
           </div>
 
-          <p>{ekskul.description}</p>
+          <p>{selectedekskul?.description}</p>
 
           <div className="flex justify-center">
             <img
               className="h-48 w-64 rounded-lg"
-              src={`http://localhost:8080/${ekskul.picture}`}
+              src={`http://localhost:8080/${selectedekskul?.picture}`}
+              alt=""
+            />
+          </div>
+          <div className="flex justify-center">
+            <img
+              className="h-48 w-64 rounded-lg"
+              src={`http://localhost:8080/${selectedekskul?.picture2}`}
+              alt=""
+            />
+          </div>
+          <div className="flex justify-center">
+            <img
+              className="h-48 w-64 rounded-lg"
+              src={`http://localhost:8080/${selectedekskul?.picture3}`}
               alt=""
             />
           </div>
@@ -56,44 +61,49 @@ const extracurricularModal1 = (
   openModal1,
   setOpenModal1,
   ekskul1,
-  setEkskul1
+  setEkskul1,
+  selectedekskul1, setSelectedekskul1,
+  closeModal1
 ) => {
   return (
     <Modal
       dismissible
       show={openModal1}
-      onClose={() => {
-        setOpenModal1(false);
-      }}
+      onClose={closeModal1}
     >
       <Modal.Body>
-        <button
-            className="flex items-center gap-2 text-gray-600 hover:cursor-pointer"
-            onClick={() => {
-              setOpenModal1(false);
-              window.location.reload();
-            }}
-          >
-            <ArrowLeftIcon className="h-6 w-6" /> Kembali
-          </button>
         <div className="flex flex-col gap-4 font-poppins leading-5">
           <h1 className="text-3xl font-bold capitalize">
-            {ekskul1.tittle}
+            {selectedekskul1?.tittle}
           </h1>
 
           <div>
-            <p>Waktu : Hari {ekskul1.schedule}</p>
-            <p>Tempat: {ekskul1.location}</p>
+            <p>Waktu : Hari {selectedekskul1?.schedule}</p>
+            <p>Tempat: {selectedekskul1?.location}</p>
           </div>
 
-          <p>{ekskul1.description}</p>
+          <p>{selectedekskul1?.description}</p>
 
           <div className="flex justify-center">
             <img
               className="h-48 w-64 rounded-lg"
-              src={`http://localhost:8080/${ekskul1.picture}`}
+              src={`http://localhost:8080/${selectedekskul1?.picture}`}
               alt=""
             />
+            <div className="flex justify-center">
+            <img
+              className="h-48 w-64 rounded-lg"
+              src={`http://localhost:8080/${selectedekskul1?.picture2}`}
+              alt=""
+            />
+            </div>
+            <div className="flex justify-center">
+            <img
+              className="h-48 w-64 rounded-lg"
+              src={`http://localhost:8080/${selectedekskul1?.picture3}`}
+              alt=""
+            />
+          </div>
           </div>
         </div>  
       </Modal.Body>
@@ -106,6 +116,8 @@ const ExtracurricularPage = () => {
   const [openModal1, setOpenModal1] = useState(false);
   const [ekskul, setEkskul] = useState([]);
   const [ekskul1, setEkskul1] = useState([]);
+  const [selectedekskul, setSelectedekskul] = useState(null);
+  const [selectedekskul1, setSelectedekskul1] = useState(null);
 
 
   useEffect(() => {
@@ -124,14 +136,15 @@ const ExtracurricularPage = () => {
     fetchData();
   }, []);
 
-  if (ekskul.isLoading)
-    return (
-      <main className="flex h-screen items-center justify-center">
-        <div>
-          <Spinner size="xl" />
-        </div>
-      </main>
-    );
+   const closeModal = () => {
+    setOpenModal(false);
+    setSelectedekskul(null);
+  };
+
+   const closeModal1 = () => {
+    setOpenModal1(false);
+    setSelectedekskul1(null);
+  };
 
   return (
     <main className="font-poppins">
@@ -140,7 +153,9 @@ const ExtracurricularPage = () => {
           openModal,
           setOpenModal,
           ekskul,
-          setEkskul
+          setEkskul,
+          selectedekskul, setSelectedekskul,
+          closeModal
         )}
       </div>
       <div className="focus-visible:border-none">
@@ -148,7 +163,9 @@ const ExtracurricularPage = () => {
           openModal1,
           setOpenModal1,
           ekskul1,
-          setEkskul1
+          setEkskul1,
+          selectedekskul1, setSelectedekskul1,
+          closeModal1
         )}
       </div>
 
@@ -171,7 +188,7 @@ const ExtracurricularPage = () => {
               <div
                 key={e.ID}
                 onClick={() => {
-                  setEkskul(e);
+                  setSelectedekskul(e);
                   setOpenModal(true);
                 }}
                 className="relative flex h-56 w-full items-center justify-center overflow-hidden rounded-lg text-2xl capitalize text-white hover:cursor-pointer sm:w-56 lg:h-64 lg:w-64"
@@ -198,7 +215,7 @@ const ExtracurricularPage = () => {
               <div
                 key={e.ID}
                 onClick={() => {
-                  setEkskul1(e);
+                  setSelectedekskul1(e);
                   setOpenModal1(true);
                 }}
                 className="relative flex h-56 w-full items-center justify-center overflow-hidden rounded-lg text-2xl capitalize text-white hover:cursor-pointer sm:w-56 lg:h-64 lg:w-64"

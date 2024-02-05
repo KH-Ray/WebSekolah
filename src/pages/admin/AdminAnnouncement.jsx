@@ -1,7 +1,8 @@
 import Notice from "../../components/Notice";
 import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Modal, Spinner } from "flowbite-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import "../../revert.css";
 import { Editor } from "@tinymce/tinymce-react";
 import { customButtonTheme } from "../../themes/flowbiteThemes";
 import { Button, Flowbite } from "flowbite-react";
@@ -24,7 +25,7 @@ const addAnnoucementPage = (
   setMsg,
   navigate,
   judul, setjudul,
-  date, setdate
+  date, setdate, editorRef
 ) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -135,14 +136,16 @@ const addAnnoucementPage = (
             </label>
             <Editor
               name="descNotice"
+              onInit={(evt, editor) => (editorRef.current = editor)}
               apiKey="o0pzftir0e6adwmb92z8ig9705xxtb5i7kurqh1a3j7q41qe"
               init={{
-                plugins:
-                  "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-                toolbar:
-                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
-                resize: false,
-                height: "500",
+              height: 500,
+              plugins:
+                "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
+              toolbar:
+                "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
+              content_style:
+                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
               }}
               value={descNotice}
               onEditorChange={setDescNotice}
@@ -186,6 +189,7 @@ const AdminAnnouncement = () => {
   const [judul, setjudul] = useState('');
   const [date, setdate] = useState('');
   const [msg, setMsg] = useState('');
+  const editorRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -223,7 +227,7 @@ const AdminAnnouncement = () => {
       setMsg,
       navigate,
       judul, setjudul,
-      date, setdate
+      date, setdate, editorRef
     );
   }
 

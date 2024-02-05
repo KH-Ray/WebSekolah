@@ -68,7 +68,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={MainPage(<HomePage />)} />
         <Route path="/login" element={MainPage(<LoginPage />)} />
-        <Route path="/profile" element={MainPage(<ProfilePage />)} />
+        <Route path="/profil" element={MainPage(<ProfilePage />)} />
         <Route path="/guru" element={MainPage(<TeachersPage />)} />
         <Route path="/organisasi" element={MainPage(<LearningPage />)} />
         <Route path="/berita" element={MainPage(<NewsPage />)} />
@@ -95,6 +95,10 @@ const App = () => {
           path="/admin/organisasi"
           element={AdminPage(<AdminLearning />)}
         />
+        <Route
+          path="/admin/organisasi/:id"
+          element={AdminPage(<AdminLearning />)}
+        />
         <Route path="/admin/berita" element={AdminPage(<AdminNews />)} />
         <Route path="/admin/berita/:id" element={AdminPage(<AdminNews />)} />
         <Route
@@ -102,7 +106,7 @@ const App = () => {
           element={AdminPage(<AdminAnnouncement />)}
         />
         <Route
-          path="/admin/pengumuman/:id"
+          path="/pengumuman/:id/:fileName"
           element={AdminPage(<AdminAnnouncement />)}
         />
         <Route
@@ -145,7 +149,11 @@ const App = () => {
         />
         <Route path="/admin/galeri" element={AdminPage(<AdminGallery />)} />
         <Route path="/admin/galeri/:id" element={AdminPage(<AdminGallery />)} />
-         <Route path="/admin/denah" element={AdminPage(<AdminSchoolGround />)} />
+        <Route path="/admin/denah" element={AdminPage(<AdminSchoolGround />)} />
+        <Route path="/admin/denahruang" element={AdminPage(<AdminSchoolGround />)} />
+        <Route path="/admin/denahdetail" element={AdminPage(<AdminSchoolGround />)} />
+        <Route path="/admin/denahruang/:id" element={AdminPage(<AdminSchoolGround />)} />
+        <Route path="/admin/denahdetail/:id" element={AdminPage(<AdminSchoolGround />)} />
       </Routes>
     </Router>
   );
