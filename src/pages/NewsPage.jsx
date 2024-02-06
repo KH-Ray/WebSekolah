@@ -38,7 +38,7 @@ const NewsPage = () => {
           <div className="w-full sm:w-1/2">
             <Input
               label="Cari Berita"
-              color="teal"
+              color="green"
               icon={<MagnifyingGlassIcon />}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -51,7 +51,7 @@ const NewsPage = () => {
 
         <div className="flex flex-col-reverse gap-4">
           {news.data
-            .filter((n) => n.title.toLowerCase().includes(search))
+            .filter((n) => n.title.toLowerCase().includes(search.toLowerCase()))
             .map((n) => (
               <Link
                 key={n.id}

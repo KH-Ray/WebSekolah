@@ -10,6 +10,7 @@ const AdminRabuCeria = () => {
   const editorRef = useRef(null);
   const log = () => {
     if (editorRef.current) {
+      console.log(editorRef.current.getContent());
       setText(editorRef.current.getContent());
     }
   };
@@ -21,10 +22,10 @@ const AdminRabuCeria = () => {
           Halaman Rabu Ceria
         </h1>
         <div className="mb-6">
-          {/* <div
+          <div
             className="our-app-wrapper block break-all font-poppins"
             dangerouslySetInnerHTML={{ __html: text }}
-          ></div> */}
+          ></div>
 
           <Editor
             apiKey="o0pzftir0e6adwmb92z8ig9705xxtb5i7kurqh1a3j7q41qe"

@@ -6,8 +6,12 @@ import { Input } from "@material-tailwind/react";
 import { Pagination } from "@mui/material";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const AnnoucementPage = () => {
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(0);
+
   const annoucements = useQuery({
     queryKey: ["annoucements"],
     queryFn: () => annoucementServices.getAllAnnoucement(),
@@ -39,21 +43,29 @@ const AnnoucementPage = () => {
           <div className="w-full sm:w-1/2">
             <Input
               label="Masukan Nama Pengumuman"
-              color="teal"
+              color="green"
               icon={<MagnifyingGlassIcon />}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <div className="">
-            <Pagination count={4} variant="outlined" shape="rounded" />
+          <div>
+            <Pagination
+              count={page + 1}
+              variant="outlined"
+              shape="rounded"
+              onClick={(e) => console.log(e.target.innerText)}
+            />
           </div>
         </div>
 
         <div className="divide-y divide-solid divide-gray-400">
-          {annoucements.data.map((a) => (
-            <Link key={a.id} to={`/pengumuman/${a.id}`}>
-              <Notice title={a.title} date={a.date} subtitle={a.subtitle} />
-            </Link>
-          ))}
+          {annoucements.data
+            .filter((a) => a.title.toLowerCase().includes(search.toLowerCase()))
+            .map((a) => (
+              <Link key={a.id} to={`/pengumuman/${a.id}`}>
+                <Notice title={a.title} date={a.date} subtitle={a.subtitle} />
+              </Link>
+            ))}
         </div>
       </div>
     </main>

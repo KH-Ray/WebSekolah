@@ -169,7 +169,7 @@ const studentPageView = (student, setStudent, setStudentPage, files) => {
             })}
           </div>
 
-          <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
+          <label className="text-dark-greenhover:cursor-pointer mb-8 flex h-16 w-64 cursor-pointer items-center justify-center gap-2 rounded bg-main-seagreen text-lg text-dark-green">
             <input type="file" className="hidden" />
             <PlusIcon className="h-8 w-8" /> Pilih Dokumen
           </label>
@@ -188,6 +188,7 @@ const studentPageView = (student, setStudent, setStudentPage, files) => {
 const AdminStudents = () => {
   const [studentPage, setStudentPage] = useState(false);
   const [student, setStudent] = useState({});
+  const [search, setSearch] = useState("");
 
   const students = useQuery({
     queryKey: ["students"],
@@ -223,8 +224,9 @@ const AdminStudents = () => {
           <div className="w-full sm:w-1/2">
             <Input
               label="Masukan Nama Siswa atau Kelas"
-              color="blue"
+              color="green"
               icon={<MagnifyingGlassIcon />}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
           <div>
@@ -239,22 +241,26 @@ const AdminStudents = () => {
           </Box>
           <hr className="mb-2 border-t border-gray-400" />
           <div className="flex flex-col gap-2">
-            {students.data.map((s, i) => {
-              return (
-                <Box
-                  key={s.id}
-                  styles="w-full h-12 px-6 flex justify-between items-center !bg-main-seagreen hover:cursor-pointer"
-                  onClick={() => {
-                    setStudent(s);
-                    setStudentPage(true);
-                  }}
-                >
-                  <p>{i + 1}.</p>
-                  <p>{s.name}</p>
-                  <p>{s.class}</p>
-                </Box>
-              );
-            })}
+            {students.data
+              .filter((s) =>
+                s.name.toLowerCase().includes(search.toLowerCase()),
+              )
+              .map((s, i) => {
+                return (
+                  <Box
+                    key={s.id}
+                    styles="w-full h-12 px-6 flex justify-between items-center !bg-main-seagreen hover:cursor-pointer"
+                    onClick={() => {
+                      setStudent(s);
+                      setStudentPage(true);
+                    }}
+                  >
+                    <p>{i + 1}.</p>
+                    <p>{s.name}</p>
+                    <p>{s.class}</p>
+                  </Box>
+                );
+              })}
             <div
               className="mt-2 flex h-20 w-full items-center justify-center gap-4 rounded-xl border border-solid border-gray-500 py-2 text-3xl text-blue-800 hover:cursor-pointer"
               onClick={() => {

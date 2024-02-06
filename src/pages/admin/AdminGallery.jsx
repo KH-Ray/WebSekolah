@@ -39,7 +39,7 @@ const addPicturePage = (galleries, showDeleteButton) => {
         })}
       </div>
 
-      <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
+      <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-main-seagreen text-lg text-dark-green hover:cursor-pointer">
         <input type="file" className="hidden" />
         <PlusIcon className="h-8 w-8" /> Pilih Gambar
       </label>

@@ -283,6 +283,23 @@ const schoolGrounds = (
             />
           </>
         )}
+        {/* {places.map((place) => {
+          console.log(place.slice(arrayAt, arrayAt + 5));
+          return place.slice(arrayAt, arrayAt + 5).map((p, i) => {
+            return (
+              <div
+                key={i}
+                className="w-full rounded bg-dark-seagreen px-6 py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer lg:w-auto"
+                onClick={() => {
+                  setPlace(p);
+                  setOpenModal(true);
+                }}
+              >
+                {p.title}
+              </div>
+            );
+          });
+        })} */}
         {currentSlide === 0
           ? placeObj.first.slice(arrayAt, arrayAt + 5).map((f, i) => (
               <div

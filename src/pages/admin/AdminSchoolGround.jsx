@@ -101,9 +101,9 @@ const adminSchoolGroundModal = (
                 );
               })}
             </div>
-            <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
+            <label className="mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-main-seagreen text-lg text-dark-green hover:cursor-pointer">
               <input type="file" className="hidden" />
-              <PlusIcon className="h-8 w-8" /> Pilih Dokumen
+              <PlusIcon className="h-8 w-8" /> Pilih Gambar
             </label>
           </div>
 
@@ -179,7 +179,7 @@ const AdminSchoolGround = () => {
               />
             </Carousel>
 
-            <label className="absolute -bottom-2 right-4 mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded bg-[#d9d9d9] text-lg text-[#7f7f7f] hover:cursor-pointer">
+            <label className="absolute -bottom-2 right-4 mb-8 flex h-16 w-64 items-center justify-center gap-2 rounded border border-solid border-dark-green bg-light-gray-green text-lg text-dark-green hover:cursor-pointer">
               <input type="file" className="hidden" />
               <PlusIcon className="h-8 w-8" /> Pilih Gambar
             </label>
@@ -228,12 +228,12 @@ const AdminSchoolGround = () => {
 
               <button
                 type="button"
-                className="flex h-14 w-full items-center justify-center gap-2 rounded bg-[#d9d9d9] text-base text-[#7f7f7f] hover:cursor-pointer"
+                className="flex h-14 w-full items-center justify-center gap-2 rounded border border-solid border-dark-green bg-light-gray-green text-base text-dark-green hover:cursor-pointer"
                 onClick={() => {
                   setAdminSchoolGroundModal(true);
                 }}
               >
-                <PlusIcon className="h-6 w-6" /> Tambah
+                <PlusIcon className="h-6 w-6" /> Ruangan
               </button>
             </div>
           </div>

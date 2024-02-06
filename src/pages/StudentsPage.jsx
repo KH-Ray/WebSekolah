@@ -6,8 +6,11 @@ import { useQuery } from "@tanstack/react-query";
 import studentServices from "../services/students";
 import { Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const StudentsPage = () => {
+  const [search, setSearch] = useState("");
+
   const students = useQuery({
     queryKey: ["students"],
     queryFn: () => studentServices.getAllStudents(),
@@ -38,8 +41,9 @@ const StudentsPage = () => {
           <div className="w-full sm:w-1/2">
             <Input
               label="Masukan Nama Siswa atau Kelas"
-              color="teal"
+              color="green"
               icon={<MagnifyingGlassIcon />}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
 
@@ -60,18 +64,22 @@ const StudentsPage = () => {
           <hr className="mb-2 border-t border-gray-400" />
 
           <div className="mb-4 flex flex-col gap-2">
-            {students.data.map((s, i) => {
-              return (
-                <Box
-                  key={i}
-                  styles="w-full h-12 px-6 flex justify-between items-center !bg-main-seagreen"
-                >
-                  <p>{i + 1}.</p>
-                  <p>{s.name}</p>
-                  <p>{s.class}</p>
-                </Box>
-              );
-            })}
+            {students.data
+              .filter((s) =>
+                s.name.toLowerCase().includes(search.toLowerCase()),
+              )
+              .map((s, i) => {
+                return (
+                  <Box
+                    key={i}
+                    styles="w-full h-12 px-6 flex justify-between items-center !bg-main-seagreen"
+                  >
+                    <p>{i + 1}.</p>
+                    <p>{s.name}</p>
+                    <p>{s.class}</p>
+                  </Box>
+                );
+              })}
           </div>
         </div>
 
