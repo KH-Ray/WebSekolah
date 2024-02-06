@@ -11,6 +11,7 @@ const AdminNav = () => {
     { title: "Pengumuman", link: "/pengumuman", current: false },
     { title: "Ekstrakurikuler", link: "/ekstrakurikuler", current: false },
     { title: "Peserta Didik", link: "/siswa", current: false },
+    { title: "Program Kerja", link: "/program-kerja", current: false },
     { title: "Rabu Ceria", link: "/rabuceria", current: false },
     { title: "Dikmensi", link: "/dikmensi", current: false },
     { title: "Galeri", link: "/galeri", current: false },

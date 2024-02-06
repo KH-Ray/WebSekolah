@@ -27,6 +27,7 @@ const navigation = [
     subLinks: [
       { name: "Berita", link: "/berita" },
       { name: "Pengumuman", link: "/pengumuman" },
+      { name: "Program Kerja", link: "/program-kerja" },
     ],
   },
   {

@@ -31,6 +31,8 @@ import AdminDimensions from "./pages/admin/AdminDimensions";
 import GalleryPage from "./pages/GalleryPage";
 import AdminGallery from "./pages/admin/AdminGallery";
 import AdminSchoolGround from "./pages/admin/AdminSchoolGround";
+import LearningPage from "./pages/LearningPage";
+import AdminLearning from "./pages/admin/AdminLearning";
 
 const MainPage = (page) => {
   return (
@@ -75,6 +77,7 @@ const App = () => {
           element={MainPage(<ExtracurricularPage />)}
         />
         <Route path="/siswa" element={MainPage(<StudentsPage />)} />
+        <Route path="/program-kerja" element={MainPage(<LearningPage />)} />
         <Route path="/rabuceria" element={MainPage(<RabuCeria />)} />
         <Route path="/dikmensi" element={MainPage(<DimensionsPage />)} />
         <Route path="/galeri" element={MainPage(<GalleryPage />)} />
@@ -97,6 +100,10 @@ const App = () => {
           element={AdminPage(<AdminExtracurricular />)}
         />
         <Route path="/admin/siswa" element={AdminPage(<AdminStudents />)} />
+        <Route
+          path="/admin/program-kerja"
+          element={AdminPage(<AdminLearning />)}
+        />
         <Route
           path="/admin/rabuceria"
           element={AdminPage(<AdminRabuCeria />)}
