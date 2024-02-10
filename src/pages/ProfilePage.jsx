@@ -259,52 +259,36 @@ const schoolGrounds = (
       </div>
       <div
         className={classNames(
-          currentSlide === 0
-            ? "justify-between gap-2 lg:gap-0"
-            : "justify-center gap-2 lg:gap-20",
-          "flex flex-col items-center rounded-lg bg-light-gray-green px-4 py-4 lg:flex-row lg:px-2 lg:py-8",
+          "flex flex-col items-center justify-between gap-2 rounded-lg bg-light-gray-green px-4 py-4 lg:flex-row lg:gap-4 lg:px-2 lg:py-8",
         )}
       >
-        {currentSlide === 0 && (
-          <>
-            <ChevronUpIcon
-              className="h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer lg:hidden"
-              onClick={() => {
-                if (arrayAt <= 0) return;
-                setArrayAt(Math.abs(arrayAt - 5));
-              }}
-            />
-            <ChevronLeftIcon
-              className="hidden h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer lg:block"
-              onClick={() => {
-                if (arrayAt <= 0) return;
-                setArrayAt(Math.abs(arrayAt - 5));
-              }}
-            />
-          </>
-        )}
-        {/* {places.map((place) => {
-          console.log(place.slice(arrayAt, arrayAt + 5));
-          return place.slice(arrayAt, arrayAt + 5).map((p, i) => {
-            return (
-              <div
-                key={i}
-                className="w-full rounded bg-dark-seagreen px-6 py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer lg:w-auto"
-                onClick={() => {
-                  setPlace(p);
-                  setOpenModal(true);
-                }}
-              >
-                {p.title}
-              </div>
-            );
-          });
-        })} */}
+        <>
+          <ChevronUpIcon
+            className={classNames(
+              currentSlide === 0 ? "block" : "invisible",
+              "h-12 w-12 flex-none stroke-dark-green p-2 hover:cursor-pointer lg:hidden",
+            )}
+            onClick={() => {
+              if (arrayAt <= 0) return;
+              setArrayAt(Math.abs(arrayAt - 5));
+            }}
+          />
+          <ChevronLeftIcon
+            className={classNames(
+              currentSlide === 0 ? "block" : "invisible",
+              "hidden h-12 w-12 flex-none stroke-dark-green p-2 hover:cursor-pointer lg:block",
+            )}
+            onClick={() => {
+              if (arrayAt <= 0) return;
+              setArrayAt(Math.abs(arrayAt - 5));
+            }}
+          />
+        </>
         {currentSlide === 0
           ? placeObj.first.slice(arrayAt, arrayAt + 5).map((f, i) => (
               <div
                 key={i}
-                className="w-full rounded bg-dark-seagreen px-6 py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer lg:w-auto"
+                className="h-full w-full rounded bg-dark-seagreen py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer"
                 onClick={() => {
                   setPlace(f);
                   setOpenModal(true);
@@ -317,7 +301,7 @@ const schoolGrounds = (
             ? placeObj.second.map((s, i) => (
                 <div
                   key={i}
-                  className="w-full rounded bg-dark-seagreen px-6 py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer lg:w-auto"
+                  className="h-full w-full rounded bg-dark-seagreen py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer"
                   onClick={() => {
                     setPlace(s);
                     setOpenModal(true);
@@ -329,7 +313,7 @@ const schoolGrounds = (
             : placeObj.third.map((t, i) => (
                 <div
                   key={i}
-                  className="w-full rounded bg-dark-seagreen px-6 py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer lg:w-auto"
+                  className="h-full w-full rounded bg-dark-seagreen py-3 text-center text-sm font-semibold tracking-wide text-white hover:cursor-pointer"
                   onClick={() => {
                     setPlace(t);
                     setOpenModal(true);
@@ -338,17 +322,23 @@ const schoolGrounds = (
                   {t.title}
                 </div>
               ))}
-        {currentSlide === 0 && (
+        {true && (
           <>
             <ChevronDownIcon
-              className="h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer lg:hidden"
+              className={classNames(
+                currentSlide === 0 ? "block" : "invisible",
+                "h-12 w-12 flex-none stroke-dark-green p-2 hover:cursor-pointer lg:hidden",
+              )}
               onClick={() => {
                 if (arrayAt >= 15) return;
                 setArrayAt(Math.abs(arrayAt + 5));
               }}
             />
             <ChevronRightIcon
-              className="hidden h-12 w-12 stroke-dark-green p-2 hover:cursor-pointer lg:block"
+              className={classNames(
+                currentSlide === 0 ? "block" : "invisible",
+                "hidden h-12 w-12 flex-none stroke-dark-green p-2 hover:cursor-pointer lg:block",
+              )}
               onClick={() => {
                 if (arrayAt >= 15) return;
                 setArrayAt(Math.abs(arrayAt + 5));
